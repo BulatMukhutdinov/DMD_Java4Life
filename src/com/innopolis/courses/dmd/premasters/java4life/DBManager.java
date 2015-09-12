@@ -4,18 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class DBManager {
     public static final String URL = "jdbc:postgresql://localhost:5432/";
     public static final String USER = "postgres";
     public static final String PASS = "postgres";
-    public static final String DN_NAME = "dmd_dblp";
-    private final static Logger logger = Logger.getLogger(DBManager.class.getName());
+    public static final String DB_NAME = "dmd_dblp";
+    private final static LoggerWrapper logger = LoggerWrapper.getInstance();
 
-    static {
-        App.createLogger();
-    }
     /*
         public static List<LeaderBoard> getRecords() {
             try (Connection conn = DriverManager.getConnection(URL + "snake", USER, PASS);
@@ -65,24 +62,24 @@ public class DBManager {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
              Statement stmt = conn.createStatement()) {
             Class.forName("org.postgresql.Driver");
-            System.out.println("Connecting to database...");
-            String sql = "CREATE DATABASE " + DN_NAME;
+            logger.wrapper.log(Level.INFO, "Connecting to database...");
+            String sql = "CREATE DATABASE " + DB_NAME;
             stmt.executeUpdate(sql);
+            logger.wrapper.log(Level.INFO, "Database created successfully");
         } catch (SQLException sqlException) {
             if (sqlException.getSQLState().equals("42P04")) {
-                // Database already exists error
+                logger.wrapper.log(Level.WARNING, "Database already exists");
             } else {
-                // Some other problems, e.g. Server down, no permission, etc
-                sqlException.printStackTrace();
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            logger.wrapper.log(Level.SEVERE, "Some troubles with JDBC: ", e);
         }
-        System.out.println("Database created successfully...");
+
     }
 
     public static void createTable() {
-        try (Connection conn = DriverManager.getConnection(URL + DN_NAME, USER, PASS);
+        try (Connection conn = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
         ) {
             Statement stmt = conn.createStatement();
             Class.forName("org.postgresql.Driver");
