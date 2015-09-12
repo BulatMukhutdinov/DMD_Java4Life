@@ -16,8 +16,9 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
 
     public static void main(String[] args) {
-        getDataSource();
-        DBManager.initDB();
+        //getDataSource();
+        DBManager.createDB();
+        DBManager.createTables();
     }
 
     private static void getDataSource() {
