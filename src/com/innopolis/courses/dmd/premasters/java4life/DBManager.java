@@ -87,7 +87,9 @@ public class DBManager {
             Statement stmt = conn.createStatement();
             Class.forName("org.postgresql.Driver");
             System.out.println("Creating table...");
-            String sql = "create table if not exists record(id serial, name varchar(200), score int ,_time double precision )";
+            String sql = "create table if not exists record(id serial, mdate varchar(200), key varchar(200), " +
+                    "author varchar(200), title varchar(500), pages varchar(50), year int, " +
+                    "volume int, journal varchar(300), number int, path varchar(200), doi varchar(200))";
             stmt.execute(sql);
             System.out.println("Table created successfully...");
         } catch (SQLException se) {
