@@ -6,7 +6,9 @@ package com.innopolis.courses.dmd.premasters.java4life;
 public class Record {
     private String mdate;
     private String key;
-    private String author;
+    private String publtype;
+    private String[] authors;
+    private String
     private String title; // could be long
     private String pages;
     private int year;
@@ -15,6 +17,28 @@ public class Record {
     private int number;
     private String path;
     private String doi;
+
+    editor character varying,
+    title character varying,
+    booktitle character varying,
+    pages character varying,
+    year character varying,
+    address character varying,
+    journal character varying,
+    volume character varying,
+    number character varying,
+    month character varying,
+    url character varying,
+    ee character varying,
+    cdrom character varying,
+    cite character varying,
+    publisher character varying,
+    note character varying,
+    crossref character varying,
+    isbn character varying,
+    series character varying,
+    school character varying,
+    chapter character varying
 
     /**
      * <p>Creates new record of an article</p>
