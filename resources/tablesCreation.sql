@@ -50,33 +50,12 @@ CREATE TABLE "DBLP"."Article" (
 ALTER TABLE "DBLP"."Article" OWNER TO postgres;
 
 CREATE TABLE "DBLP"."Authors" (
-  key character varying,
-  author character varying,
-  "authorsID" integer NOT NULL
+  key character varying NOT NULL,
+  author character varying NOT NULL
 );
 
 
 ALTER TABLE "DBLP"."Authors" OWNER TO postgres;
-
-CREATE SEQUENCE "DBLP"."Authors_authorsID_seq"
-START WITH 1
-INCREMENT BY 1
-CACHE 1;
-
-
-ALTER TABLE "DBLP"."Authors_authorsID_seq" OWNER TO postgres;
-
-CREATE SEQUENCE "DBLP"."Authors_authorsID_seq1"
-START WITH 1
-INCREMENT BY 1
-CACHE 1;
-
-
-ALTER TABLE "DBLP"."Authors_authorsID_seq1" OWNER TO postgres;
-
-
-ALTER SEQUENCE "DBLP"."Authors_authorsID_seq1" OWNED BY "Authors"."authorsID";
-
 
 CREATE TABLE "DBLP"."Book" (
   key character varying NOT NULL,
@@ -299,7 +278,7 @@ ADD CONSTRAINT key_article PRIMARY KEY (key);
 
 
 ALTER TABLE ONLY "DBLP"."Authors"
-ADD CONSTRAINT key_authors PRIMARY KEY ("authorsID");
+ADD CONSTRAINT key_author PRIMARY KEY (key, author);
 
 ALTER TABLE ONLY "DBLP"."Book"
 ADD CONSTRAINT key_book PRIMARY KEY (key);
