@@ -1,9 +1,7 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class LoggerWrapper {
     public static final Logger wrapper = Logger.getLogger(LoggerWrapper.class.getName());
@@ -20,19 +18,45 @@ public class LoggerWrapper {
 
     private static void createLogger() {
         try {
-            FileHandler fh = new FileHandler("Log Info");
-            wrapper.addHandler(fh);
+            FileHandler fileHandler = new FileHandler("logs/Log Info", true);
+            wrapper.addHandler(fileHandler);
             HtmlFormatter htmlformatter = new HtmlFormatter();
-            FileHandler htmlFile = new FileHandler("Log Info.htm");
+            FileHandler htmlFile = new FileHandler("logs/Log Info.htm", true);
             htmlFile.setFormatter(htmlformatter);
             wrapper.addHandler(htmlFile);
+            wrapper.addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    if (getFormatter() == null) {
+                        setFormatter(new SimpleFormatter());
+                    }
+                    try {
+                        String message = getFormatter().format(record);
+                        if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
+                            System.err.write(message.getBytes());
+                        } else {
+                            System.out.write(message.getBytes());
+                        }
+                    } catch (Exception exception) {
+                        reportError(null, exception, ErrorManager.FORMAT_FAILURE);
+                    }
+                }
+                @Override
+                public void flush() {
+                }
+
+                @Override
+                public void close() throws SecurityException {
+                }
+            });
+            wrapper.setUseParentHandlers(false);
         } catch (SecurityException e) {
             wrapper.log(Level.SEVERE,
-                    "Не удалось создать файл лога из-за политики безопасности.",
+                    "Failed to create a log file because of security policies.",
                     e);
         } catch (IOException e) {
             wrapper.log(Level.SEVERE,
-                    "Не удалось создать файл лога из-за ошибки ввода-вывода.",
+                    "Failed to create a log file because of an error IO.",
                     e);
         }
     }

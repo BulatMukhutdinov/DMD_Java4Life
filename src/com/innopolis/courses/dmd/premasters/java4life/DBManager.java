@@ -1,5 +1,6 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ public class DBManager {
     public static final String URL = "jdbc:postgresql://localhost:5432/";
     public static final String USER = "postgres";
     public static final String PASS = "postgres";
-    public static final String DB_NAME = "dmd_dblp";
+    public static final String SQL_SCRIPT = "resources/dbInitialization.sql";
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
 
     /*
@@ -58,41 +59,44 @@ public class DBManager {
             }
         }
     */
-    public static void createDB() {
+    public static void initDB() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
              Statement stmt = conn.createStatement()) {
+            logger.wrapper.log(Level.INFO, "Check if driver set...");
             Class.forName("org.postgresql.Driver");
-            logger.wrapper.log(Level.INFO, "Connecting to database...");
-            String sql = "CREATE DATABASE " + DB_NAME;
-            stmt.executeUpdate(sql);
-            logger.wrapper.log(Level.INFO, "Database created successfully");
-        } catch (SQLException sqlException) {
-            if (sqlException.getSQLState().equals("42P04")) {
-                logger.wrapper.log(Level.WARNING, "Database already exists");
-            } else {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
+            logger.wrapper.log(Level.INFO, "Driver set correctly");
+            String line;
+            StringBuffer stringBuffer = new StringBuffer();
+            logger.wrapper.log(Level.INFO, "Looking for sql script");
+            FileReader fileReader = new FileReader(new File(SQL_SCRIPT));
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            logger.wrapper.log(Level.INFO, "Start reading from script...");
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
             }
+            bufferedReader.close();
+            logger.wrapper.log(Level.INFO, "Successfully read from script");
+            // here is our splitter ! We use ";" as a delimiter for each request
+            // then we are sure to have well formed statements
+            String[] queries = stringBuffer.toString().split(";");
+            logger.wrapper.log(Level.INFO, "Start executing queries...");
+            for (int i = 0; i < queries.length; i++) {
+                // we ensure that there is no spaces before or after the request string
+                // in order to not execute empty statements
+                if (!queries[i].trim().equals("")) {
+                    stmt.executeUpdate(queries[i]);
+                    logger.wrapper.log(Level.INFO, queries[i]);
+                }
+            }
+            logger.wrapper.log(Level.INFO, "Database successfully initialized");
+        } catch (FileNotFoundException e) {
+            logger.wrapper.log(Level.SEVERE, "SQL script file NOT founded. Failed to initialized database.");
+        } catch (IOException e) {
+            logger.wrapper.log(Level.SEVERE, "Input/Output exception:  ", e);
+        } catch (SQLException sqlException) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
         } catch (ClassNotFoundException e) {
             logger.wrapper.log(Level.SEVERE, "Some troubles with JDBC: ", e);
-        }
-
-    }
-
-    public static void createTable() {
-        try (Connection conn = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
-        ) {
-            Statement stmt = conn.createStatement();
-            Class.forName("org.postgresql.Driver");
-            System.out.println("Creating table...");
-            String sql = "create table if not exists record(id serial, mdate varchar(200), key varchar(200), " +
-                    "author varchar(200), title varchar(500), pages varchar(50), year int, " +
-                    "volume int, journal varchar(300), number int, path varchar(200), doi varchar(200))";
-            stmt.execute(sql);
-            System.out.println("Table created successfully...");
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
