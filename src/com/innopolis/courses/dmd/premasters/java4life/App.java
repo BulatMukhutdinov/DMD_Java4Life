@@ -9,13 +9,25 @@ public class App {
     private final static Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
+        createLogger();
+        logger.log(Level.INFO, "Record of the log with INFO level");
+        logger.log(Level.WARNING, "Record of the log with WARNING level");
+        try {
+            throw new Exception("Test message about error");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Record of the log with SEVERE level" + e);
+        }
+
+    }
+
+    public static void createLogger() {
         try {
             FileHandler fh = new FileHandler("Log Info");
             logger.addHandler(fh);
             HtmlFormatter htmlformatter = new HtmlFormatter();
-            FileHandler htmlfile = new FileHandler("Log Info.htm");
-            htmlfile.setFormatter(htmlformatter);
-            logger.addHandler(htmlfile);
+            FileHandler htmlFile = new FileHandler("Log Info.htm");
+            htmlFile.setFormatter(htmlformatter);
+            logger.addHandler(htmlFile);
         } catch (SecurityException e) {
             logger.log(Level.SEVERE,
                     "Не удалось создать файл лога из-за политики безопасности.",
@@ -25,9 +37,5 @@ public class App {
                     "Не удалось создать файл лога из-за ошибки ввода-вывода.",
                     e);
         }
-        logger.log(Level.INFO, "Запись лога с уровнем INFO (информационная)");
-        logger.log(Level.WARNING, "Запись лога с уровнем WARNING (Предупреждение)");
-        logger.log(Level.SEVERE, "Запись лога с уровнем SEVERE (серъёзная ошибка)",
-                new Exception("Проверочное сообщение об ошибке"));
     }
 }
