@@ -4,13 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class DBManager {
     public static final String URL = "jdbc:postgresql://localhost:5432/";
     public static final String USER = "postgres";
     public static final String PASS = "postgres";
     public static final String DN_NAME = "dmd_dblp";
+    private final static Logger logger = Logger.getLogger(DBManager.class.getName());
 
+    static {
+        App.createLogger();
+    }
     /*
         public static List<LeaderBoard> getRecords() {
             try (Connection conn = DriverManager.getConnection(URL + "snake", USER, PASS);

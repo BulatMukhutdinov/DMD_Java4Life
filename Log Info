@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2015-09-12T14:56:05</date>
-  <millis>1442058965660</millis>
+  <date>2015-09-12T15:11:18</date>
+  <millis>1442059878338</millis>
   <sequence>0</sequence>
   <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Record of the log with INFO level</message>
 </record>
 <record>
-  <date>2015-09-12T14:56:05</date>
-  <millis>1442058965690</millis>
+  <date>2015-09-12T15:11:18</date>
+  <millis>1442059878392</millis>
   <sequence>1</sequence>
   <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
   <level>WARNING</level>
@@ -24,8 +24,8 @@
   <message>Record of the log with WARNING level</message>
 </record>
 <record>
-  <date>2015-09-12T14:56:05</date>
-  <millis>1442058965691</millis>
+  <date>2015-09-12T15:11:18</date>
+  <millis>1442059878394</millis>
   <sequence>2</sequence>
   <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
   <level>SEVERE</level>

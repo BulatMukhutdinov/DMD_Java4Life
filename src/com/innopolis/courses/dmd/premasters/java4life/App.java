@@ -17,7 +17,7 @@ public class App {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Record of the log with SEVERE level" + e);
         }
-
+        DBManager.createDB();
     }
 
     public static void createLogger() {
