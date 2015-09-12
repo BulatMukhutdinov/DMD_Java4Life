@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-12T14:33:48</date>
+  <millis>1442057628100</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.App</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Запись лога с уровнем INFO (информационная)</message>
+</record>
+<record>
+  <date>2015-09-12T14:33:48</date>
+  <millis>1442057628129</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
+  <level>WARNING</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.App</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Запись лога с уровнем WARNING (Предупреждение)</message>
+</record>
+<record>
+  <date>2015-09-12T14:33:48</date>
+  <millis>1442057628130</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.App</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.App</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Запись лога с уровнем SEVERE (серъёзная ошибка)</message>
+  <exception>
+    <message>java.lang.Exception: Проверочное сообщение об ошибке</message>
+    <frame>
+      <class>com.innopolis.courses.dmd.premasters.java4life.App</class>
+      <method>main</method>
+      <line>38</line>
+    </frame>
+    <frame>
+      <class>sun.reflect.NativeMethodAccessorImpl</class>
+      <method>invoke0</method>
+    </frame>
+    <frame>
+      <class>sun.reflect.NativeMethodAccessorImpl</class>
+      <method>invoke</method>
+      <line>62</line>
+    </frame>
+    <frame>
+      <class>sun.reflect.DelegatingMethodAccessorImpl</class>
+      <method>invoke</method>
+      <line>43</line>
+    </frame>
+    <frame>
+      <class>java.lang.reflect.Method</class>
+      <method>invoke</method>
+      <line>497</line>
+    </frame>
+    <frame>
+      <class>com.intellij.rt.execution.application.AppMain</class>
+      <method>main</method>
+      <line>134</line>
+    </frame>
+  </exception>
+</record>
+</log>
