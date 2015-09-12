@@ -11,7 +11,9 @@ public class DBManager {
     public static final String URL = "jdbc:postgresql://localhost:5432/";
     public static final String USER = "postgres";
     public static final String PASS = "postgres";
-    public static final String SQL_SCRIPT = "resources/dbInitialization.sql";
+    public static final String DB_CREATION = "resources/dbCreation.sql";
+    public static final String TABLES_CREATION = "resources/tablesCreation.sql";
+    public static final String DB_NAME = "DBLP";
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
 
     /*
@@ -59,7 +61,7 @@ public class DBManager {
             }
         }
     */
-    public static void initDB() {
+    public static void createDB() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
              Statement stmt = conn.createStatement()) {
             logger.wrapper.log(Level.INFO, "Check if driver set...");
@@ -67,15 +69,15 @@ public class DBManager {
             logger.wrapper.log(Level.INFO, "Driver set correctly");
             String line;
             StringBuffer stringBuffer = new StringBuffer();
-            logger.wrapper.log(Level.INFO, "Looking for sql script");
-            FileReader fileReader = new FileReader(new File(SQL_SCRIPT));
+            logger.wrapper.log(Level.INFO, "Looking for db creation script");
+            FileReader fileReader = new FileReader(new File(DB_CREATION));
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             logger.wrapper.log(Level.INFO, "Start reading from script...");
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
             bufferedReader.close();
-            logger.wrapper.log(Level.INFO, "Successfully read from script");
+            logger.wrapper.log(Level.INFO, "Successfully read db creation script");
             // here is our splitter ! We use ";" as a delimiter for each request
             // then we are sure to have well formed statements
             String[] queries = stringBuffer.toString().split(";");
@@ -88,7 +90,7 @@ public class DBManager {
                     logger.wrapper.log(Level.INFO, queries[i]);
                 }
             }
-            logger.wrapper.log(Level.INFO, "Database successfully initialized");
+            logger.wrapper.log(Level.INFO, "Database successfully created");
         } catch (FileNotFoundException e) {
             logger.wrapper.log(Level.SEVERE, "SQL script file NOT founded. Failed to initialized database.");
         } catch (IOException e) {
@@ -98,5 +100,43 @@ public class DBManager {
         } catch (ClassNotFoundException e) {
             logger.wrapper.log(Level.SEVERE, "Some troubles with JDBC: ", e);
         }
+    }
+
+    public static void createTables() {
+        try (Connection conn = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
+        ) {
+            Statement stmt = conn.createStatement();
+            String line;
+            StringBuffer stringBuffer = new StringBuffer();
+            logger.wrapper.log(Level.INFO, "Looking for tables creation script");
+            FileReader fileReader = new FileReader(new File(TABLES_CREATION));
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            logger.wrapper.log(Level.INFO, "Start reading from script...");
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+            bufferedReader.close();
+            logger.wrapper.log(Level.INFO, "Successfully read tables creation script");
+            // here is our splitter ! We use ";" as a delimiter for each request
+            // then we are sure to have well formed statements
+            String[] queries = stringBuffer.toString().split(";");
+            logger.wrapper.log(Level.INFO, "Start executing queries...");
+            for (int i = 0; i < queries.length; i++) {
+                // we ensure that there is no spaces before or after the request string
+                // in order to not execute empty statements
+                if (!queries[i].trim().equals("")) {
+                    stmt.executeUpdate(queries[i]);
+                    logger.wrapper.log(Level.INFO, queries[i]);
+                }
+            }
+            logger.wrapper.log(Level.INFO, "Tables successfully created");
+        } catch (FileNotFoundException e) {
+            logger.wrapper.log(Level.SEVERE, "SQL script file NOT founded. Failed to initialized database.");
+        } catch (IOException e) {
+            logger.wrapper.log(Level.SEVERE, "Input/Output exception:  ", e);
+        } catch (SQLException sqlException) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
+        }
+
     }
 }
