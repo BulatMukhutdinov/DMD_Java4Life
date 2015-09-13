@@ -269,9 +269,6 @@ CREATE TABLE "DBLP"."Www" (
 
 ALTER TABLE "DBLP"."Www" OWNER TO postgres;
 
-ALTER TABLE ONLY "DBLP"."Authors" ALTER COLUMN "authorsID" SET DEFAULT nextval('"Authors_authorsID_seq1"'::regclass);
-
-
 
 ALTER TABLE ONLY "DBLP"."Article"
 ADD CONSTRAINT key_article PRIMARY KEY (key);
