@@ -1,4 +1,9 @@
 package com.innopolis.courses.dmd.premasters.java4life;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Nikolay Yushkevich,
  *         created on 12.09.2015
@@ -7,67 +12,105 @@ public class Record {
     private String mdate;
     private String key;
     private String publtype;
-    private String[] authors;
-    private String
+    private String reviewid;
+    private String rating;
+    private List<String> authors;
+    private String editor;
     private String title; // could be long
+    private String booktitle;
     private String pages;
-    private int year;
-    private int volume;
+    private String year;
+    private String address;
+    private String volume;
     private String journal;
-    private int number;
-    private String path;
-    private String doi;
+    private String number;
+    private String month;
+    private String url;
+    private String ee;
+    private String cdrom;
+    private String cite;
+    private String publisher;
+    private String note;
+    private String crossref;
+    private String isbn;
+    private String series;
+    private String school;
+    private String chapter;
 
-    editor character varying,
-    title character varying,
-    booktitle character varying,
-    pages character varying,
-    year character varying,
-    address character varying,
-    journal character varying,
-    volume character varying,
-    number character varying,
-    month character varying,
-    url character varying,
-    ee character varying,
-    cdrom character varying,
-    cite character varying,
-    publisher character varying,
-    note character varying,
-    crossref character varying,
-    isbn character varying,
-    series character varying,
-    school character varying,
-    chapter character varying
+    //    key character varying NOT NULL,
+    //    mdate character varying,
+    //    publtype character varying,
+    //    reviewid character varying,
+    //    rating character varying,
+    //    editor character varying,
+    //    title character varying,
+    //    booktitle character varying,
+    //    pages character varying,
+    //    year character varying,
+    //    address character varying,
+    //    journal character varying,
+    //    volume character varying,
+    //    number character varying,
+    //    month character varying,
+    //    url character varying,
+    //    ee character varying,
+    //    cdrom character varying,
+    //    cite character varying,
+    //    publisher character varying,
+    //    note character varying,
+    //    crossref character varying,
+    //    isbn character varying,
+    //    series character varying,
+    //    school character varying,
+    //    chapter character varying
+
+    public Record() {
+        List<String> authors = new ArrayList<String>();
+    }
 
     /**
      * <p>Creates new record of an article</p>
      *
      * @param mdate The date (String datatype)
      * @param key  The key, which is in the article tag
-     * @param author  The author
+     * @param authors  The author
      * @param title  The title
      * @param pages  The number of pages (interval)
      * @param year  The year of issue (int datatype)
      * @param volume  The volume (int datatype)
      * @param number  The number of volume in this year (interval)
-     * @param path  The link of DBLP
-     * @param doi  The link in DOI system
+     * @param url  The link of DBLP
+     * @param ee  The link in DOI system
      *
      */
-    public Record(String mdate, String key, String author, String title, String pages, int year, int volume, String journal, int number, String path, String doi) {
+    public Record(String mdate, String key, String publtype, String reviewid, String rating, ArrayList<String> authors, String editor, String title, String booktitle, String pages, String year, String address, String volume, String journal, String number, String month, String url, String ee, String cdrom, String cite, String publisher, String note, String crossref, String isbn, String series, String school, String chapter) {
         this.mdate = mdate;
         this.key = key;
-        this.author = author;
+        this.publtype = publtype;
+        this.reviewid = reviewid;
+        this.rating = rating;
+        this.authors = authors;
+        this.editor = editor;
         this.title = title;
+        this.booktitle = booktitle;
         this.pages = pages;
         this.year = year;
+        this.address = address;
         this.volume = volume;
         this.journal = journal;
         this.number = number;
-        this.path = path;
-        this.doi = doi;
-
+        this.month = month;
+        this.url = url;
+        this.ee = ee;
+        this.cdrom = cdrom;
+        this.cite = cite;
+        this.publisher = publisher;
+        this.note = note;
+        this.crossref = crossref;
+        this.isbn = isbn;
+        this.series = series;
+        this.school = school;
+        this.chapter = chapter;
     }
 
     public String getMdate() {
@@ -86,12 +129,44 @@ public class Record {
         this.key = key;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getPubltype() {
+        return publtype;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPubltype(String publtype) {
+        this.publtype = publtype;
+    }
+
+    public String getReviewid() {
+        return reviewid;
+    }
+
+    public void setReviewid(String reviewid) {
+        this.reviewid = reviewid;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = new ArrayList<String>(authors);
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
     }
 
     public String getTitle() {
@@ -102,6 +177,14 @@ public class Record {
         this.title = title;
     }
 
+    public String getBooktitle() {
+        return booktitle;
+    }
+
+    public void setBooktitle(String booktitle) {
+        this.booktitle = booktitle;
+    }
+
     public String getPages() {
         return pages;
     }
@@ -110,19 +193,27 @@ public class Record {
         this.pages = pages;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public int getVolume() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(String volume) {
         this.volume = volume;
     }
 
@@ -134,44 +225,140 @@ public class Record {
         this.journal = journal;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public String getDoi() {
-        return doi;
+    public String getMonth() {
+        return month;
     }
 
-    public void setDoi(String doi) {
-        this.doi = doi;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getEe() {
+        return ee;
+    }
+
+    public void setEe(String ee) {
+        this.ee = ee;
+    }
+
+    public String getCdrom() {
+        return cdrom;
+    }
+
+    public void setCdrom(String cdrom) {
+        this.cdrom = cdrom;
+    }
+
+    public String getCite() {
+        return cite;
+    }
+
+    public void setCite(String cite) {
+        this.cite = cite;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getCrossref() {
+        return crossref;
+    }
+
+    public void setCrossref(String crossref) {
+        this.crossref = crossref;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(String chapter) {
+        this.chapter = chapter;
     }
 
     @Override
     public String toString() {
         return "Record{" +
-                "mdate=" + mdate +
+                "mdate='" + mdate + '\'' +
                 ", key='" + key + '\'' +
-                ", author='" + author + '\'' +
+                ", publtype='" + publtype + '\'' +
+                ", reviewid='" + reviewid + '\'' +
+                ", rating='" + rating + '\'' +
+                ", authors=" + authors +
+                ", editor='" + editor + '\'' +
                 ", title='" + title + '\'' +
+                ", booktitle='" + booktitle + '\'' +
                 ", pages='" + pages + '\'' +
-                ", year=" + year +
-                ", volume=" + volume +
+                ", year='" + year + '\'' +
+                ", address='" + address + '\'' +
+                ", volume='" + volume + '\'' +
                 ", journal='" + journal + '\'' +
-                ", number=" + number +
-                ", doi='" + doi + '\'' +
-                ", path='" + path + '\'' +
+                ", number='" + number + '\'' +
+                ", month='" + month + '\'' +
+                ", url='" + url + '\'' +
+                ", ee='" + ee + '\'' +
+                ", cdrom='" + cdrom + '\'' +
+                ", cite='" + cite + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", note='" + note + '\'' +
+                ", crossref='" + crossref + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", series='" + series + '\'' +
+                ", school='" + school + '\'' +
+                ", chapter='" + chapter + '\'' +
                 '}';
     }
 
@@ -182,17 +369,41 @@ public class Record {
 
         Record record = (Record) o;
 
-        if (getYear() != record.getYear()) return false;
-        if (getVolume() != record.getVolume()) return false;
-        if (getNumber() != record.getNumber()) return false;
         if (!getMdate().equals(record.getMdate())) return false;
         if (!getKey().equals(record.getKey())) return false;
-        if (!getAuthor().equals(record.getAuthor())) return false;
+        if (getPubltype() != null ? !getPubltype().equals(record.getPubltype()) : record.getPubltype() != null)
+            return false;
+        if (getReviewid() != null ? !getReviewid().equals(record.getReviewid()) : record.getReviewid() != null)
+            return false;
+        if (getRating() != null ? !getRating().equals(record.getRating()) : record.getRating() != null) return false;
+        if (getAuthors() != null ? !getAuthors().equals(record.getAuthors()) : record.getAuthors() != null)
+            return false;
+        if (getEditor() != null ? !getEditor().equals(record.getEditor()) : record.getEditor() != null) return false;
         if (!getTitle().equals(record.getTitle())) return false;
-        if (!getPages().equals(record.getPages())) return false;
-        if (!getJournal().equals(record.getJournal())) return false;
-        if (!getPath().equals(record.getPath())) return false;
-        return getDoi().equals(record.getDoi());
+        if (getBooktitle() != null ? !getBooktitle().equals(record.getBooktitle()) : record.getBooktitle() != null)
+            return false;
+        if (getPages() != null ? !getPages().equals(record.getPages()) : record.getPages() != null) return false;
+        if (getYear() != null ? !getYear().equals(record.getYear()) : record.getYear() != null) return false;
+        if (getAddress() != null ? !getAddress().equals(record.getAddress()) : record.getAddress() != null)
+            return false;
+        if (getVolume() != null ? !getVolume().equals(record.getVolume()) : record.getVolume() != null) return false;
+        if (getJournal() != null ? !getJournal().equals(record.getJournal()) : record.getJournal() != null)
+            return false;
+        if (getNumber() != null ? !getNumber().equals(record.getNumber()) : record.getNumber() != null) return false;
+        if (getMonth() != null ? !getMonth().equals(record.getMonth()) : record.getMonth() != null) return false;
+        if (getUrl() != null ? !getUrl().equals(record.getUrl()) : record.getUrl() != null) return false;
+        if (getEe() != null ? !getEe().equals(record.getEe()) : record.getEe() != null) return false;
+        if (getCdrom() != null ? !getCdrom().equals(record.getCdrom()) : record.getCdrom() != null) return false;
+        if (getCite() != null ? !getCite().equals(record.getCite()) : record.getCite() != null) return false;
+        if (getPublisher() != null ? !getPublisher().equals(record.getPublisher()) : record.getPublisher() != null)
+            return false;
+        if (getNote() != null ? !getNote().equals(record.getNote()) : record.getNote() != null) return false;
+        if (getCrossref() != null ? !getCrossref().equals(record.getCrossref()) : record.getCrossref() != null)
+            return false;
+        if (getIsbn() != null ? !getIsbn().equals(record.getIsbn()) : record.getIsbn() != null) return false;
+        if (getSeries() != null ? !getSeries().equals(record.getSeries()) : record.getSeries() != null) return false;
+        if (getSchool() != null ? !getSchool().equals(record.getSchool()) : record.getSchool() != null) return false;
+        return !(getChapter() != null ? !getChapter().equals(record.getChapter()) : record.getChapter() != null);
 
     }
 
@@ -200,15 +411,31 @@ public class Record {
     public int hashCode() {
         int result = getMdate().hashCode();
         result = 31 * result + getKey().hashCode();
-        result = 31 * result + getAuthor().hashCode();
+        result = 31 * result + (getPubltype() != null ? getPubltype().hashCode() : 0);
+        result = 31 * result + (getReviewid() != null ? getReviewid().hashCode() : 0);
+        result = 31 * result + (getRating() != null ? getRating().hashCode() : 0);
+        result = 31 * result + (getAuthors() != null ? getAuthors().hashCode() : 0);
+        result = 31 * result + (getEditor() != null ? getEditor().hashCode() : 0);
         result = 31 * result + getTitle().hashCode();
-        result = 31 * result + getPages().hashCode();
-        result = 31 * result + getYear();
-        result = 31 * result + getVolume();
-        result = 31 * result + getJournal().hashCode();
-        result = 31 * result + getNumber();
-        result = 31 * result + getPath().hashCode();
-        result = 31 * result + getDoi().hashCode();
+        result = 31 * result + (getBooktitle() != null ? getBooktitle().hashCode() : 0);
+        result = 31 * result + (getPages() != null ? getPages().hashCode() : 0);
+        result = 31 * result + (getYear() != null ? getYear().hashCode() : 0);
+        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
+        result = 31 * result + (getVolume() != null ? getVolume().hashCode() : 0);
+        result = 31 * result + (getJournal() != null ? getJournal().hashCode() : 0);
+        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + (getMonth() != null ? getMonth().hashCode() : 0);
+        result = 31 * result + (getUrl() != null ? getUrl().hashCode() : 0);
+        result = 31 * result + (getEe() != null ? getEe().hashCode() : 0);
+        result = 31 * result + (getCdrom() != null ? getCdrom().hashCode() : 0);
+        result = 31 * result + (getCite() != null ? getCite().hashCode() : 0);
+        result = 31 * result + (getPublisher() != null ? getPublisher().hashCode() : 0);
+        result = 31 * result + (getNote() != null ? getNote().hashCode() : 0);
+        result = 31 * result + (getCrossref() != null ? getCrossref().hashCode() : 0);
+        result = 31 * result + (getIsbn() != null ? getIsbn().hashCode() : 0);
+        result = 31 * result + (getSeries() != null ? getSeries().hashCode() : 0);
+        result = 31 * result + (getSchool() != null ? getSchool().hashCode() : 0);
+        result = 31 * result + (getChapter() != null ? getChapter().hashCode() : 0);
         return result;
     }
 }
