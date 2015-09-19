@@ -32,6 +32,8 @@ public class App {
             logger.wrapper.log(Level.INFO, "Downloading successfully complete");
             Compressor compressor = new Compressor();
             compressor.unGunzipFile("resources/" + FILE_NAME, "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+            fos.flush();
+            fos.close();
         } catch (MalformedURLException e) {
             logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
             System.exit(1);
