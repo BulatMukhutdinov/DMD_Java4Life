@@ -1,18 +1,8 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
-/**
- * @author Nikolay Yushkevich,
- * created on 16.09.2015
- */
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Nikolay Yushkevich,
- *         created on 12.09.2015
- */
 public class Record {
     private String mdate;
     private String key;
@@ -50,17 +40,16 @@ public class Record {
     /**
      * <p>Creates new record of an article</p>
      *
-     * @param mdate The date (String datatype)
-     * @param key  The key, which is in the article tag
-     * @param authors  The author
-     * @param title  The title
-     * @param pages  The number of pages (interval)
-     * @param year  The year of issue (int datatype)
+     * @param mdate   The date (String datatype)
+     * @param key     The key, which is in the article tag
+     * @param authors The author
+     * @param title   The title
+     * @param pages   The number of pages (interval)
+     * @param year    The year of issue (int datatype)
      * @param volume  The volume (int datatype)
      * @param number  The number of volume in this year (interval)
-     * @param url  The link of DBLP
-     * @param ee  The link in DOI system
-     *
+     * @param url     The link of DBLP
+     * @param ee      The link in DOI system
      */
     public Record(String mdate, String key, String publtype, String reviewid, String rating, ArrayList<String> authors, String editor, String title, String booktitle, String pages, String year, String address, String volume, String journal, String number, String month, String url, String ee, String cdrom, String cite, String publisher, String note, String crossref, String isbn, String series, String school, String chapter) {
         this.mdate = mdate;

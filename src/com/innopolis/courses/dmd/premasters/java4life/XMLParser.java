@@ -1,8 +1,4 @@
 package com.innopolis.courses.dmd.premasters.java4life;
-/**
- * @author Nikolay Yushkevich,
- *         created on 13.09.2015
- */
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;

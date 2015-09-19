@@ -5,7 +5,7 @@ import java.util.logging.*;
 
 public class LoggerWrapper {
     public static final Logger wrapper = Logger.getLogger(LoggerWrapper.class.getName());
-
+    public static final String LOG_PATH = "logs/Log Info";
     private static LoggerWrapper instance = null;
 
     public static LoggerWrapper getInstance() {
@@ -18,10 +18,10 @@ public class LoggerWrapper {
 
     private static void createLogger() {
         try {
-            FileHandler fileHandler = new FileHandler("logs/Log Info", true);
+            FileHandler fileHandler = new FileHandler(LOG_PATH, true);
             wrapper.addHandler(fileHandler);
             HtmlFormatter htmlformatter = new HtmlFormatter();
-            FileHandler htmlFile = new FileHandler("logs/Log Info.htm", true);
+            FileHandler htmlFile = new FileHandler(LOG_PATH + ".htm", true);
             htmlFile.setFormatter(htmlformatter);
             wrapper.addHandler(htmlFile);
             wrapper.addHandler(new Handler() {
@@ -41,6 +41,7 @@ public class LoggerWrapper {
                         reportError(null, exception, ErrorManager.FORMAT_FAILURE);
                     }
                 }
+
                 @Override
                 public void flush() {
                 }

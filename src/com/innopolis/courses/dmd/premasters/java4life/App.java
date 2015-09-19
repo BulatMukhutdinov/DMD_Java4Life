@@ -16,14 +16,12 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
 
     public static void main(String[] args) {
-        //getDataSource();
         DBManager.createDB();
-        DBManager.createTables();
         XMLParser xmlParser = new XMLParser();
-        xmlParser.STAXParse("example.xml");
+        xmlParser.STAXParse(getDataSource());
     }
 
-    private static void getDataSource() {
+    private static String getDataSource() {
         URL website;
         try {
             logger.wrapper.log(Level.INFO, "Downloading source...");
@@ -36,17 +34,21 @@ public class App {
             compressor.unGunzipFile("resources/" + FILE_NAME, "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
         } catch (MalformedURLException e) {
             logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
         } catch (FileNotFoundException e) {
             logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
         } catch (IOException e) {
             logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
         }
         logger.wrapper.log(Level.INFO, "Deleting compressed file...");
         File compressedFile = new File("resources/" + FILE_NAME);
-        if (compressedFile.delete()){
+        if (compressedFile.delete()) {
             logger.wrapper.log(Level.INFO, "Deleting successfully complete");
-        }else{
+        } else {
             logger.wrapper.log(Level.WARNING, "Deleting failed");
         }
+        return "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
     }
 }
