@@ -1,100 +1,275 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 /**
  * @author Nikolay Yushkevich,
- * created on 12.09.2015
+ *         created on 13.09.2015
  */
 
-import org.w3c.dom.*;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.File;
-//
-//private String mdate;
-//private String key;
-//private String author;
-//private String title; // could be long
-//private String pages;
-//private int year;
-//private int volume;
-//private String journal;
-//private int number;
-//private String path;
-//private String doi;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
 
 public class XMLParser {
-    public void parseXML (String filePath) {
-        try { //TODO: Rewrite whole class, it's not working yet
-            File file = new File(filePath);
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(file);
-            doc.getDocumentElement().normalize();
-            System.out.println("Root element " + doc.getDocumentElement().getNodeName());
-            NodeList nodeLst = doc.getElementsByTagName("article");
-            System.out.println("Information of all articles");
-            for (int s = 0; s < nodeLst.getLength(); s++) {
-                Node fstNode = nodeLst.item(s);
-                if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element fstElmnt = (Element) fstNode;
-                    String mdate = fstElmnt.getAttribute("mdate");
-                    String key = fstElmnt.getAttribute("key");
-                    System.out.println("Mdate : " + mdate);
-                    System.out.println("Key : " + key);
-                    NodeList fstNmElmntLst = fstElmnt.getElementsByTagName("title");
-                    Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
-                    NodeList fstNm = fstNmElmnt.getChildNodes();
-                    System.out.println("Title : " + ((Node) fstNm.item(0)).getNodeValue());
-                    NodeList lstNmElmntLst = fstElmnt.getElementsByTagName("author");
-                    for (int i = 0; i <lstNmElmntLst.getLength() ; i++) {
-                        Element lstNmElmnt = (Element) lstNmElmntLst.item(i);
-                        NodeList lstNm = lstNmElmnt.getChildNodes();
-                        for (int j = 0; j < lstNm.getLength(); j++) {
-                            System.out.println("Author : " + ((Node) lstNm.item(j)).getNodeValue());
+
+    public static final String URL = "jdbc:postgresql://localhost:5432/";
+    public static final String USER = "postgres";
+    public static final String PASS = "postgres";
+    public static final String DB_NAME = "DBLP";
+    private final static LoggerWrapper logger = LoggerWrapper.getInstance();
+    private static Connection connection;
+    private static Statement statement;
+
+    private static void createConnection(){
+        try {
+            connection = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
+        } catch (SQLException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+          }
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+        }
+    }
+
+    private static void insertRecordIntoDbUserTable(Record record, String table) throws SQLException {
+        String insertTableSQL = "";
+        if  (table == "article"){
+            insertTableSQL = "INSERT INTO " + "dblp."+table+" "
+                    + "(key, mdate, publtype, reviewid, rating, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
+                    "('"+ record.getKey() +"', '"+ record.getMdate() +"', '"+ record.getPubltype() +"', '"+ record.getReviewid() +"', '"+ record.getRating() +"', '"+ record.getEditor() +"', '"+ record.getTitle() +"', '"+ record.getBooktitle() +"', '"+ record.getPages() +"', '"+ record.getYear() +"', '"+ record.getAddress() +"', '"+ record.getJournal() +"', '"+ record.getVolume() +"', '"+ record.getNumber() +"', '"+ record.getMonth() +"', '"+ record.getUrl() +"', '"+ record.getEe() +"', '"+ record.getCdrom() +"', '"+ record.getCite() +"', '"+ record.getPublisher() +"', '"+ record.getNote() +"', '"+ record.getCrossref() +"', '"+ record.getIsbn() +"', '"+ record.getSeries() +"', '"+ record.getSchool() +"', '"+ record.getChapter()+"')";
+        } else {
+            insertTableSQL = "INSERT INTO " + "dblp."+table+" "
+                    + "(key, mdate, publtype, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
+                    "('"+ record.getKey() +"', '"+ record.getMdate() +"', '"+ record.getPubltype() +"', '"+ record.getEditor() +"', '"+ record.getTitle() +"', '"+ record.getBooktitle() +"', '"+ record.getPages() +"', '"+ record.getYear() +"', '"+ record.getAddress() +"', '"+ record.getJournal() +"', '"+ record.getVolume() +"', '"+ record.getNumber() +"', '"+ record.getMonth() +"', '"+ record.getUrl() +"', '"+ record.getEe() +"', '"+ record.getCdrom() +"', '"+ record.getCite() +"', '"+ record.getPublisher() +"', '"+ record.getNote() +"', '"+ record.getCrossref() +"', '"+ record.getIsbn() +"', '"+ record.getSeries() +"', '"+ record.getSchool() +"', '"+ record.getChapter()+"')";
+        }
+        try {
+
+            //System.out.println(insertTableSQL);
+            statement.executeUpdate(insertTableSQL);
+
+            for (int i = 0; i < record.getAuthors().size(); i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp.authors " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") +"', '"+ record.getAuthors().get(i).replaceAll("'", "''")+"')";
+
+                statement.executeUpdate(insertTableSQL2);
+                insertTableSQL2 = null;
+            }
+
+            //System.out.println("Record is inserted into " + table + " table!");
+
+        } catch (SQLException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+        }
+    }
+
+    public void STAXParse(String path) {
+        createConnection();
+
+        Record currRec = null;
+        String tagContent = "";
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        XMLStreamReader reader = null;
+        try {
+            reader = factory.createXMLStreamReader(new FileInputStream(new File(path)));
+        } catch (XMLStreamException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected XML Stream exception: " + e);
+        } catch (FileNotFoundException e) {
+            logger.wrapper.log(Level.SEVERE, "XML file was not found: " + e);
+        }
+
+        try {
+            while (reader.hasNext()) {
+                int event = reader.next();
+
+                switch (event) {
+                    case XMLStreamConstants.START_ELEMENT:
+                        if ("article".equals(reader.getLocalName())){
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("book".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("incollection".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("inproceedings".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("masterthesis".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("phdthesis".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("proceedings".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if("www".equals(reader.getLocalName())) {
+                            currRec = new Record();
+                            currRec.setMdate(reader.getAttributeValue(0)); //set mdate
+                            currRec.setKey(reader.getAttributeValue(1)); //set key
+                        } else if ("dblp".equals(reader.getLocalName())) {
+                            logger.wrapper.log(Level.INFO, "XMLParser started in " + LocalDateTime.now());
+                        } else if ("sup".equals(reader.getLocalName())){
+                                currRec.appendTitle(tagContent);
+                                break;
+                        } else if ("sub".equals(reader.getLocalName())){
+                            currRec.appendTitle(tagContent);
+                            break;
+                        } else if ("tt".equals(reader.getLocalName())){
+                            currRec.appendTitle(tagContent);
+                            break;
+                        } else if ("i".equals(reader.getLocalName())){
+                            currRec.appendTitle(tagContent);
+                            break;
                         }
-                    }
-                    NodeList pgsLst = fstElmnt.getElementsByTagName("pages");
-                    Element pgsElmt = (Element) pgsLst.item(0);
-                    NodeList pgs = pgsElmt.getChildNodes();
-                    System.out.println("Pages : " + ((Node) pgs.item(0)).getNodeValue());
+                        break;
 
-                    NodeList yearLst = fstElmnt.getElementsByTagName("year");
-                    Element yearElmt = (Element) yearLst.item(0);
-                    NodeList year = yearElmt.getChildNodes();
-                    System.out.println("Year : " + ((Node) year.item(0)).getNodeValue());
+                    case XMLStreamConstants.CHARACTERS:
+                        tagContent = reader.getText().trim();
+                        break;
 
-                    NodeList vlmLst = fstElmnt.getElementsByTagName("volume");
-                    Element vlmElmt = (Element) vlmLst.item(0);
-                    NodeList volume = vlmElmt.getChildNodes();
-                    System.out.println("Volume : " + ((Node) volume.item(0)).getNodeValue());
+                    case XMLStreamConstants.END_ELEMENT:
+                        switch (reader.getLocalName()) {
+                            case "article":
+                                insertRecordIntoDbUserTable(currRec, "article");
+                                break;
+                            case "book":
+                                insertRecordIntoDbUserTable(currRec, "book");
+                                break;
+                            case "incollection":
+                                insertRecordIntoDbUserTable(currRec, "incollection");
+                                break;
+                            case "inproceedings":
+                                insertRecordIntoDbUserTable(currRec, "inproceedings");
+                                break;
+                            case "masterthesis":
+                                insertRecordIntoDbUserTable(currRec, "masterthesis");
+                                break;
+                            case "phdthesis":
+                                insertRecordIntoDbUserTable(currRec, "phdthesis");
+                                break;
+                            case "proceedings":
+                                insertRecordIntoDbUserTable(currRec, "proceedings");
+                                break;
+                            case "www":
+                                insertRecordIntoDbUserTable(currRec, "www");
+                                break;
+                            case "author":
+                                currRec.getAuthors().add(tagContent);
+                                break;
+                            case "publtype":
+                                currRec.setPubltype(tagContent);
+                                break;
+                            case "reviewid":
+                                currRec.setReviewid(tagContent);
+                                break;
+                            case "rating":
+                                currRec.setRating(tagContent);
+                                break;
+                            case "editor":
+                                currRec.setEditor(tagContent);
+                                break;
+                            case "title":
+                                currRec.appendTitle(tagContent);
+                                break;
+                            case "sup":
+                                currRec.appendTitle(tagContent);
+                                break;
+                            case "sub":
+                                currRec.appendTitle(tagContent);
+                                break;
+                            case "i":
+                                currRec.appendTitle(tagContent);
+                                break;
+                            case "tt":
+                                currRec.appendTitle(tagContent);
+                                break;
+                            case "booktitle":
+                                currRec.setTitle(tagContent);
+                                break;
+                            case "pages":
+                                currRec.setPages(tagContent);
+                                break;
+                            case "year":
+                                currRec.setYear(tagContent);
+                                break;
+                            case "volume":
+                                currRec.setVolume(tagContent);
+                                break;
+                            case "address":
+                                currRec.setAddress(tagContent);
+                                break;
+                            case "number":
+                                currRec.setNumber(tagContent);
+                                break;
+                            case "month":
+                                currRec.setMonth(tagContent);
+                                break;
+                            case "journal":
+                                currRec.setJournal(tagContent);
+                                break;
+                            case "url":
+                                currRec.setUrl(tagContent);
+                                break;
+                            case "ee":
+                                currRec.setEe(tagContent);
+                                break;
+                            case "cdrom":
+                                currRec.setCdrom(tagContent);
+                                break;
+                            case "cite":
+                                currRec.setCite(tagContent);
+                                break;
+                            case "publisher":
+                                currRec.setPublisher(tagContent);
+                                break;
+                            case "note":
+                                currRec.setNote(tagContent);
+                                break;
+                            case "crossref":
+                                currRec.setCrossref(tagContent);
+                                break;
+                            case "isbn":
+                                currRec.setIsbn(tagContent);
+                                break;
+                            case "series":
+                                currRec.setSeries(tagContent);
+                                break;
+                            case "school":
+                                currRec.setSchool(tagContent);
+                                break;
+                            case "chapter":
+                                currRec.setChapter(tagContent);
+                                break;
+                            case "dblp":
+                                logger.wrapper.log(Level.INFO, "XMLParser finished in " + LocalDateTime.now());
+                                break;
+                        }
+                        break;
 
-                    NodeList jrnLst = fstElmnt.getElementsByTagName("journal");
-                    Element jrnElmt = (Element) jrnLst.item(0);
-                    NodeList journal = jrnElmt.getChildNodes();
-                    System.out.println("Journal : " + ((Node) journal.item(0)).getNodeValue());
-
-                    NodeList nbrLst = fstElmnt.getElementsByTagName("number");
-                    Element nbrElmt = (Element) nbrLst.item(0);
-                    if (nbrElmt == null) {
-                        System.out.println("Number : null");
-                    } else {
-                        NodeList number = nbrElmt.getChildNodes();
-                        System.out.println("Number : " + ((Node) number.item(0)).getNodeValue());
-                    }
-                    NodeList doiLst = fstElmnt.getElementsByTagName("ee");
-                    Element doiElmt = (Element) doiLst.item(0);
-                    NodeList doi = doiElmt.getChildNodes();
-                    System.out.println("DOI : " + ((Node) doi.item(0)).getNodeValue());
-
-                    NodeList pathLst = fstElmnt.getElementsByTagName("url");
-                    Element pathElmt = (Element) pathLst.item(0);
-                    NodeList path = pathElmt.getChildNodes();
-                    System.out.println("Path : " + ((Node) path.item(0)).getNodeValue());
-                    System.out.println("________________");
+                    case XMLStreamConstants.START_DOCUMENT:
+                        break;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (XMLStreamException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected XML exception during parsing: " + e);
+        } catch (SQLException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
         }
     }
 }

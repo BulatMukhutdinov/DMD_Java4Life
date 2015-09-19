@@ -1,8 +1,8 @@
 DROP SCHEMA IF EXISTS "public";
 
-CREATE SCHEMA "DBLP";
+CREATE SCHEMA dblp;
 
-ALTER SCHEMA "DBLP" OWNER TO postgres;
+ALTER SCHEMA dblp OWNER TO postgres;
 
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
@@ -10,14 +10,14 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = "DBLP", pg_catalog;
+SET search_path = dblp, pg_catalog;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 
-CREATE TABLE "DBLP"."Article" (
+CREATE TABLE "dblp"."article" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -47,17 +47,17 @@ CREATE TABLE "DBLP"."Article" (
 );
 
 
-ALTER TABLE "DBLP"."Article" OWNER TO postgres;
+ALTER TABLE dblp."article" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Authors" (
+CREATE TABLE dblp."authors" (
   key character varying NOT NULL,
   author character varying NOT NULL
 );
 
 
-ALTER TABLE "DBLP"."Authors" OWNER TO postgres;
+ALTER TABLE dblp."authors" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Book" (
+CREATE TABLE dblp."book" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -85,9 +85,9 @@ CREATE TABLE "DBLP"."Book" (
 );
 
 
-ALTER TABLE "DBLP"."Book" OWNER TO postgres;
+ALTER TABLE dblp."book" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Incollection" (
+CREATE TABLE dblp."incollection" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -115,9 +115,9 @@ CREATE TABLE "DBLP"."Incollection" (
 );
 
 
-ALTER TABLE "DBLP"."Incollection" OWNER TO postgres;
+ALTER TABLE dblp."incollection" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Inproceedings" (
+CREATE TABLE dblp."inproceedings" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -145,10 +145,10 @@ CREATE TABLE "DBLP"."Inproceedings" (
 );
 
 
-ALTER TABLE "DBLP"."Inproceedings" OWNER TO postgres;
+ALTER TABLE dblp."inproceedings" OWNER TO postgres;
 
 
-CREATE TABLE "DBLP"."Mastersthesis" (
+CREATE TABLE dblp."mastersthesis" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -176,10 +176,10 @@ CREATE TABLE "DBLP"."Mastersthesis" (
 );
 
 
-ALTER TABLE "DBLP"."Mastersthesis" OWNER TO postgres;
+ALTER TABLE dblp."mastersthesis" OWNER TO postgres;
 
 
-CREATE TABLE "DBLP"."Phdthesis" (
+CREATE TABLE dblp."phdthesis" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -207,9 +207,9 @@ CREATE TABLE "DBLP"."Phdthesis" (
 );
 
 
-ALTER TABLE "DBLP"."Phdthesis" OWNER TO postgres;
+ALTER TABLE dblp."phdthesis" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Proceedings" (
+CREATE TABLE dblp."proceedings" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -237,9 +237,9 @@ CREATE TABLE "DBLP"."Proceedings" (
 );
 
 
-ALTER TABLE "DBLP"."Proceedings" OWNER TO postgres;
+ALTER TABLE dblp."proceedings" OWNER TO postgres;
 
-CREATE TABLE "DBLP"."Www" (
+CREATE TABLE dblp."www" (
   key character varying NOT NULL,
   mdate character varying,
   publtype character varying,
@@ -267,38 +267,38 @@ CREATE TABLE "DBLP"."Www" (
 );
 
 
-ALTER TABLE "DBLP"."Www" OWNER TO postgres;
+ALTER TABLE dblp."www" OWNER TO postgres;
 
 
-ALTER TABLE ONLY "DBLP"."Article"
+ALTER TABLE ONLY dblp."article"
 ADD CONSTRAINT key_article PRIMARY KEY (key);
 
 
-ALTER TABLE ONLY "DBLP"."Authors"
+ALTER TABLE ONLY dblp."authors"
 ADD CONSTRAINT key_author PRIMARY KEY (key, author);
 
-ALTER TABLE ONLY "DBLP"."Book"
+ALTER TABLE ONLY dblp."book"
 ADD CONSTRAINT key_book PRIMARY KEY (key);
 
-ALTER TABLE ONLY "DBLP"."Incollection"
+ALTER TABLE ONLY dblp."incollection"
 ADD CONSTRAINT key_incollection PRIMARY KEY (key);
 
 
-ALTER TABLE ONLY "DBLP"."Inproceedings"
+ALTER TABLE ONLY dblp."inproceedings"
 ADD CONSTRAINT key_inproceedings PRIMARY KEY (key);
 
 
-ALTER TABLE ONLY "DBLP"."Mastersthesis"
+ALTER TABLE ONLY dblp."mastersthesis"
 ADD CONSTRAINT key_mastersthesis PRIMARY KEY (key);
 
 
-ALTER TABLE ONLY "DBLP"."Phdthesis"
+ALTER TABLE ONLY dblp."phdthesis"
 ADD CONSTRAINT key_phdthesis PRIMARY KEY (key);
 
-ALTER TABLE ONLY "DBLP"."Proceedings"
+ALTER TABLE ONLY dblp."proceedings"
 ADD CONSTRAINT key_proceedings PRIMARY KEY (key);
 
 
-ALTER TABLE ONLY "DBLP"."Www"
+ALTER TABLE ONLY dblp."www"
 ADD CONSTRAINT key_www PRIMARY KEY (key);
 

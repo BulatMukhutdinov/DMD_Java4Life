@@ -1,5 +1,10 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
+/**
+ * @author Nikolay Yushkevich,
+ * created on 16.09.2015
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,35 +42,9 @@ public class Record {
     private String school;
     private String chapter;
 
-    //    key character varying NOT NULL,
-    //    mdate character varying,
-    //    publtype character varying,
-    //    reviewid character varying,
-    //    rating character varying,
-    //    editor character varying,
-    //    title character varying,
-    //    booktitle character varying,
-    //    pages character varying,
-    //    year character varying,
-    //    address character varying,
-    //    journal character varying,
-    //    volume character varying,
-    //    number character varying,
-    //    month character varying,
-    //    url character varying,
-    //    ee character varying,
-    //    cdrom character varying,
-    //    cite character varying,
-    //    publisher character varying,
-    //    note character varying,
-    //    crossref character varying,
-    //    isbn character varying,
-    //    series character varying,
-    //    school character varying,
-    //    chapter character varying
-
     public Record() {
-        List<String> authors = new ArrayList<String>();
+        this.authors = new ArrayList<String>();
+        this.title = "";
     }
 
     /**
@@ -113,12 +92,17 @@ public class Record {
         this.chapter = chapter;
     }
 
+    public void appendTitle(String append) {
+        append = append.replaceAll("'", "''");
+        this.title += append;
+    }
+
     public String getMdate() {
         return mdate;
     }
 
     public void setMdate(String mdate) {
-        this.mdate = mdate;
+        this.mdate = mdate.replaceAll("'", "''");
     }
 
     public String getKey() {
@@ -126,7 +110,7 @@ public class Record {
     }
 
     public void setKey(String key) {
-        this.key = key;
+        this.key = key.replaceAll("'", "''");
     }
 
     public String getPubltype() {
@@ -134,7 +118,7 @@ public class Record {
     }
 
     public void setPubltype(String publtype) {
-        this.publtype = publtype;
+        this.publtype = publtype.replaceAll("'", "''");
     }
 
     public String getReviewid() {
@@ -142,7 +126,7 @@ public class Record {
     }
 
     public void setReviewid(String reviewid) {
-        this.reviewid = reviewid;
+        this.reviewid = reviewid.replaceAll("'", "''");
     }
 
     public String getRating() {
@@ -150,6 +134,7 @@ public class Record {
     }
 
     public void setRating(String rating) {
+        rating = rating.replaceAll("'", "''");
         this.rating = rating;
     }
 
@@ -166,6 +151,7 @@ public class Record {
     }
 
     public void setEditor(String editor) {
+        editor = editor.replaceAll("'", "''");
         this.editor = editor;
     }
 
@@ -174,6 +160,7 @@ public class Record {
     }
 
     public void setTitle(String title) {
+        title = title.replaceAll("'", "''");
         this.title = title;
     }
 
@@ -182,7 +169,7 @@ public class Record {
     }
 
     public void setBooktitle(String booktitle) {
-        this.booktitle = booktitle;
+        this.booktitle = booktitle.replaceAll("'", "''");
     }
 
     public String getPages() {
@@ -190,7 +177,7 @@ public class Record {
     }
 
     public void setPages(String pages) {
-        this.pages = pages;
+        this.pages = pages.replaceAll("'", "''");
     }
 
     public String getYear() {
@@ -198,7 +185,7 @@ public class Record {
     }
 
     public void setYear(String year) {
-        this.year = year;
+        this.year = year.replaceAll("'", "''");
     }
 
     public String getAddress() {
@@ -206,7 +193,7 @@ public class Record {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address = address.replaceAll("'", "''");
     }
 
     public String getVolume() {
@@ -214,7 +201,7 @@ public class Record {
     }
 
     public void setVolume(String volume) {
-        this.volume = volume;
+        this.volume = volume.replaceAll("'", "''");
     }
 
     public String getJournal() {
@@ -222,7 +209,7 @@ public class Record {
     }
 
     public void setJournal(String journal) {
-        this.journal = journal;
+        this.journal = journal.replaceAll("'", "''");
     }
 
     public String getNumber() {
@@ -230,7 +217,7 @@ public class Record {
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        this.number = number.replaceAll("'", "''");
     }
 
     public String getMonth() {
@@ -238,7 +225,7 @@ public class Record {
     }
 
     public void setMonth(String month) {
-        this.month = month;
+        this.month = month.replaceAll("'", "''");
     }
 
     public String getUrl() {
@@ -246,7 +233,7 @@ public class Record {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.url = url.replaceAll("'", "''");
     }
 
     public String getEe() {
@@ -254,7 +241,7 @@ public class Record {
     }
 
     public void setEe(String ee) {
-        this.ee = ee;
+        this.ee = ee.replaceAll("'", "''");
     }
 
     public String getCdrom() {
@@ -262,7 +249,7 @@ public class Record {
     }
 
     public void setCdrom(String cdrom) {
-        this.cdrom = cdrom;
+        this.cdrom = cdrom.replaceAll("'", "''");
     }
 
     public String getCite() {
@@ -270,7 +257,7 @@ public class Record {
     }
 
     public void setCite(String cite) {
-        this.cite = cite;
+        this.cite = cite.replaceAll("'", "''");
     }
 
     public String getPublisher() {
@@ -278,7 +265,7 @@ public class Record {
     }
 
     public void setPublisher(String publisher) {
-        this.publisher = publisher;
+        this.publisher = publisher.replaceAll("'", "''");
     }
 
     public String getNote() {
@@ -286,7 +273,7 @@ public class Record {
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note = note.replaceAll("'", "''");
     }
 
     public String getCrossref() {
@@ -294,7 +281,7 @@ public class Record {
     }
 
     public void setCrossref(String crossref) {
-        this.crossref = crossref;
+        this.crossref = crossref.replaceAll("'", "''");
     }
 
     public String getIsbn() {
@@ -302,7 +289,7 @@ public class Record {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn;
+        this.isbn = isbn.replaceAll("'", "''");
     }
 
     public String getSeries() {
@@ -310,7 +297,7 @@ public class Record {
     }
 
     public void setSeries(String series) {
-        this.series = series;
+        this.series = series.replaceAll("'", "''");
     }
 
     public String getSchool() {
@@ -318,7 +305,7 @@ public class Record {
     }
 
     public void setSchool(String school) {
-        this.school = school;
+        this.school = school.replaceAll("'", "''");
     }
 
     public String getChapter() {
@@ -326,7 +313,7 @@ public class Record {
     }
 
     public void setChapter(String chapter) {
-        this.chapter = chapter;
+        this.chapter = chapter.replaceAll("'", "''");
     }
 
     @Override
@@ -439,3 +426,4 @@ public class Record {
         return result;
     }
 }
+

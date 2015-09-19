@@ -19,6 +19,8 @@ public class App {
         //getDataSource();
         DBManager.createDB();
         DBManager.createTables();
+        XMLParser xmlParser = new XMLParser();
+        xmlParser.STAXParse("example.xml");
     }
 
     private static void getDataSource() {

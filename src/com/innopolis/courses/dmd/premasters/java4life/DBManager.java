@@ -92,7 +92,7 @@ public class DBManager {
             }
             logger.wrapper.log(Level.INFO, "Database successfully created");
         } catch (FileNotFoundException e) {
-            logger.wrapper.log(Level.SEVERE, "SQL script file NOT founded. Failed to initialized database.");
+            logger.wrapper.log(Level.SEVERE, "SQL script file was not found. Failed to initialize the database.");
         } catch (IOException e) {
             logger.wrapper.log(Level.SEVERE, "Input/Output exception:  ", e);
         } catch (SQLException sqlException) {
