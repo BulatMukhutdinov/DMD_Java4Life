@@ -5399,3 +5399,1321 @@ Message: JAXP00010001: The parser has encountered more than "64000" entity expan
   <message>Unexpected SQL exception: org.postgresql.util.PSQLException: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "key_author"
   Подробности: Ключ "(key, author)=(journals/cii/DvorakHNP03, ák)" уже существует.</message>
 </record>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-20T17:12:30</date>
+  <millis>1442758350291</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Check if driver set...</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:30</date>
+  <millis>1442758350681</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Driver set correctly</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:31</date>
+  <millis>1442758351573</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:31</date>
+  <millis>1442758351575</millis>
+  <sequence>3</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start reading from script...</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:31</date>
+  <millis>1442758351576</millis>
+  <sequence>4</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Successfully read script</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:31</date>
+  <millis>1442758351578</millis>
+  <sequence>5</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start executing queries...</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:32</date>
+  <millis>1442758352518</millis>
+  <sequence>6</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>DROP DATABASE IF EXISTS "DBLP"</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363481</millis>
+  <sequence>7</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE DATABASE "DBLP"</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363503</millis>
+  <sequence>8</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER DATABASE "DBLP" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363504</millis>
+  <sequence>9</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Queries successfully executed</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363548</millis>
+  <sequence>10</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363549</millis>
+  <sequence>11</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start reading from script...</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363551</millis>
+  <sequence>12</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Successfully read script</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363553</millis>
+  <sequence>13</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start executing queries...</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363605</millis>
+  <sequence>14</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>DROP SCHEMA IF EXISTS "public"</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363630</millis>
+  <sequence>15</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE SCHEMA dblp</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363631</millis>
+  <sequence>16</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER SCHEMA dblp OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363729</millis>
+  <sequence>17</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363779</millis>
+  <sequence>18</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language'</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363784</millis>
+  <sequence>19</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET search_path = dblp, pg_catalog</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363785</millis>
+  <sequence>20</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET default_tablespace = ''</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:43</date>
+  <millis>1442758363786</millis>
+  <sequence>21</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET default_with_oids = false</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364259</millis>
+  <sequence>22</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE "dblp"."article" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  reviewid character varying,  rating character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364287</millis>
+  <sequence>23</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."article" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364393</millis>
+  <sequence>24</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."authors" (  key character varying NOT NULL,  author character varying NOT NULL)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364395</millis>
+  <sequence>25</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."authors" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364456</millis>
+  <sequence>26</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."book" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364459</millis>
+  <sequence>27</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."book" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364518</millis>
+  <sequence>28</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."incollection" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364520</millis>
+  <sequence>29</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."incollection" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364561</millis>
+  <sequence>30</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."inproceedings" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364563</millis>
+  <sequence>31</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."inproceedings" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364607</millis>
+  <sequence>32</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."mastersthesis" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364609</millis>
+  <sequence>33</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."mastersthesis" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364650</millis>
+  <sequence>34</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."phdthesis" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364651</millis>
+  <sequence>35</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."phdthesis" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364719</millis>
+  <sequence>36</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."proceedings" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364720</millis>
+  <sequence>37</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."proceedings" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364768</millis>
+  <sequence>38</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."www" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364770</millis>
+  <sequence>39</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."www" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364857</millis>
+  <sequence>40</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."article"ADD CONSTRAINT key_article PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364913</millis>
+  <sequence>41</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."authors"ADD CONSTRAINT key_author PRIMARY KEY (key, author)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364951</millis>
+  <sequence>42</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."book"ADD CONSTRAINT key_book PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:44</date>
+  <millis>1442758364981</millis>
+  <sequence>43</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."incollection"ADD CONSTRAINT key_incollection PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365034</millis>
+  <sequence>44</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."inproceedings"ADD CONSTRAINT key_inproceedings PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365112</millis>
+  <sequence>45</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."mastersthesis"ADD CONSTRAINT key_mastersthesis PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365178</millis>
+  <sequence>46</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."phdthesis"ADD CONSTRAINT key_phdthesis PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365239</millis>
+  <sequence>47</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."proceedings"ADD CONSTRAINT key_proceedings PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365307</millis>
+  <sequence>48</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."www"ADD CONSTRAINT key_www PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:12:45</date>
+  <millis>1442758365307</millis>
+  <sequence>49</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Queries successfully executed</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-20T17:17:53</date>
+  <millis>1442758673945</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Check if driver set...</message>
+</record>
+<record>
+  <date>2015-09-20T17:17:54</date>
+  <millis>1442758674400</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Driver set correctly</message>
+</record>
+<record>
+  <date>2015-09-20T17:17:54</date>
+  <millis>1442758674932</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:17:54</date>
+  <millis>1442758674934</millis>
+  <sequence>3</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+<record>
+  <date>2015-09-20T17:17:54</date>
+  <millis>1442758674971</millis>
+  <sequence>4</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:17:54</date>
+  <millis>1442758674973</millis>
+  <sequence>5</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-20T17:19:11</date>
+  <millis>1442758751935</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Check if driver set...</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:11</date>
+  <millis>1442758751995</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Driver set correctly</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:12</date>
+  <millis>1442758752129</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:12</date>
+  <millis>1442758752131</millis>
+  <sequence>3</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:12</date>
+  <millis>1442758752167</millis>
+  <sequence>4</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:12</date>
+  <millis>1442758752169</millis>
+  <sequence>5</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-20T17:19:42</date>
+  <millis>1442758782840</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Check if driver set...</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:42</date>
+  <millis>1442758782889</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Driver set correctly</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:43</date>
+  <millis>1442758783005</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:43</date>
+  <millis>1442758783007</millis>
+  <sequence>3</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:43</date>
+  <millis>1442758783041</millis>
+  <sequence>4</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:19:43</date>
+  <millis>1442758783045</millis>
+  <sequence>5</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>SEVERE</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SQL script file was not found. Failed to initialize the database.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-09-20T17:20:57</date>
+  <millis>1442758857996</millis>
+  <sequence>0</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Check if driver set...</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858064</millis>
+  <sequence>1</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>createDB</method>
+  <thread>1</thread>
+  <message>Driver set correctly</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858211</millis>
+  <sequence>2</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858212</millis>
+  <sequence>3</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start reading from script...</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858214</millis>
+  <sequence>4</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Successfully read script</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858217</millis>
+  <sequence>5</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start executing queries...</message>
+</record>
+<record>
+  <date>2015-09-20T17:20:58</date>
+  <millis>1442758858543</millis>
+  <sequence>6</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>DROP DATABASE IF EXISTS "DBLP"</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866775</millis>
+  <sequence>7</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE DATABASE "DBLP"</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866776</millis>
+  <sequence>8</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER DATABASE "DBLP" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866777</millis>
+  <sequence>9</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Queries successfully executed</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866804</millis>
+  <sequence>10</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Looking for script</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866806</millis>
+  <sequence>11</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start reading from script...</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866807</millis>
+  <sequence>12</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Successfully read script</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866809</millis>
+  <sequence>13</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Start executing queries...</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866812</millis>
+  <sequence>14</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>DROP SCHEMA IF EXISTS "public"</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866814</millis>
+  <sequence>15</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE SCHEMA dblp</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866815</millis>
+  <sequence>16</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER SCHEMA dblp OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866818</millis>
+  <sequence>17</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866820</millis>
+  <sequence>18</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language'</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866821</millis>
+  <sequence>19</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET search_path = dblp, pg_catalog</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866823</millis>
+  <sequence>20</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET default_tablespace = ''</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866824</millis>
+  <sequence>21</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>SET default_with_oids = false</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866926</millis>
+  <sequence>22</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE "dblp"."article" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  reviewid character varying,  rating character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866928</millis>
+  <sequence>23</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."article" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866984</millis>
+  <sequence>24</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."authors" (  key character varying NOT NULL,  author character varying NOT NULL)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:06</date>
+  <millis>1442758866986</millis>
+  <sequence>25</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."authors" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867026</millis>
+  <sequence>26</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."book" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867029</millis>
+  <sequence>27</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."book" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867071</millis>
+  <sequence>28</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."incollection" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867074</millis>
+  <sequence>29</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."incollection" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867125</millis>
+  <sequence>30</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."inproceedings" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867127</millis>
+  <sequence>31</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."inproceedings" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867182</millis>
+  <sequence>32</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."mastersthesis" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867183</millis>
+  <sequence>33</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."mastersthesis" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867255</millis>
+  <sequence>34</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."phdthesis" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867257</millis>
+  <sequence>35</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."phdthesis" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867326</millis>
+  <sequence>36</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."proceedings" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867327</millis>
+  <sequence>37</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."proceedings" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867382</millis>
+  <sequence>38</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>CREATE TABLE dblp."www" (  key character varying NOT NULL,  mdate character varying,  publtype character varying,  editor character varying,  title character varying,  booktitle character varying,  pages character varying,  year character varying,  address character varying,  journal character varying,  volume character varying,  number character varying,  month character varying,  url character varying,  ee character varying,  cdrom character varying,  cite character varying,  publisher character varying,  note character varying,  crossref character varying,  isbn character varying,  series character varying,  school character varying,  chapter character varying)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867383</millis>
+  <sequence>39</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE dblp."www" OWNER TO postgres</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867426</millis>
+  <sequence>40</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."article"ADD CONSTRAINT key_article PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867463</millis>
+  <sequence>41</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."authors"ADD CONSTRAINT key_author PRIMARY KEY (key, author)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867507</millis>
+  <sequence>42</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."book"ADD CONSTRAINT key_book PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867563</millis>
+  <sequence>43</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."incollection"ADD CONSTRAINT key_incollection PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867603</millis>
+  <sequence>44</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."inproceedings"ADD CONSTRAINT key_inproceedings PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867655</millis>
+  <sequence>45</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."mastersthesis"ADD CONSTRAINT key_mastersthesis PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867711</millis>
+  <sequence>46</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."phdthesis"ADD CONSTRAINT key_phdthesis PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867773</millis>
+  <sequence>47</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."proceedings"ADD CONSTRAINT key_proceedings PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867813</millis>
+  <sequence>48</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>ALTER TABLE ONLY dblp."www"ADD CONSTRAINT key_www PRIMARY KEY (key)</message>
+</record>
+<record>
+  <date>2015-09-20T17:21:07</date>
+  <millis>1442758867814</millis>
+  <sequence>49</sequence>
+  <logger>com.innopolis.courses.dmd.premasters.java4life.LoggerWrapper</logger>
+  <level>INFO</level>
+  <class>com.innopolis.courses.dmd.premasters.java4life.DBManager</class>
+  <method>executeSQLScript</method>
+  <thread>1</thread>
+  <message>Queries successfully executed</message>
+</record>
+</log>
