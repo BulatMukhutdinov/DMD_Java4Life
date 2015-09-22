@@ -1,7 +1,6 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Record {
     private String mdate;
@@ -9,7 +8,7 @@ public class Record {
     private String publtype;
     private String reviewid;
     private String rating;
-    private List<String> authors;
+    private Set<String> authors;
     private String editor;
     private String title; // could be long
     private String booktitle;
@@ -33,7 +32,7 @@ public class Record {
     private String chapter;
 
     public Record() {
-        this.authors = new ArrayList<String>();
+        this.authors = new HashSet<String>();
         this.title = "";
     }
 
@@ -51,7 +50,7 @@ public class Record {
      * @param url     The link of DBLP
      * @param ee      The link in DOI system
      */
-    public Record(String mdate, String key, String publtype, String reviewid, String rating, ArrayList<String> authors, String editor, String title, String booktitle, String pages, String year, String address, String volume, String journal, String number, String month, String url, String ee, String cdrom, String cite, String publisher, String note, String crossref, String isbn, String series, String school, String chapter) {
+    public Record(String mdate, String key, String publtype, String reviewid, String rating, Set<String> authors, String editor, String title, String booktitle, String pages, String year, String address, String volume, String journal, String number, String month, String url, String ee, String cdrom, String cite, String publisher, String note, String crossref, String isbn, String series, String school, String chapter) {
         this.mdate = mdate;
         this.key = key;
         this.publtype = publtype;
@@ -127,12 +126,16 @@ public class Record {
         this.rating = rating;
     }
 
-    public List<String> getAuthors() {
-        return authors;
+    public String [] getAuthors() {
+        String auth[] = authors.toArray(new String[authors.size()]);
+        return auth;
     }
 
-    public void setAuthors(List<String> authors) {
-        this.authors = new ArrayList<String>(authors);
+    public void addAuthor(String auth){
+        authors.add(auth);
+    }
+    public void setAuthors(Set<String> authors) {
+        this.authors = new HashSet<String>(authors);
     }
 
     public String getEditor() {
