@@ -31,7 +31,7 @@ public class App {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             logger.wrapper.log(Level.INFO, "Downloading successfully complete");
             Compressor compressor = new Compressor();
-            compressor.unGunzipFile("src/main/resources/" + FILE_NAME, "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+            compressor.unGunzipFile("src/main/resources/" + FILE_NAME, "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
             fos.flush();
             fos.close();
         } catch (MalformedURLException e) {
