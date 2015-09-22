@@ -27,11 +27,11 @@ public class App {
             logger.wrapper.log(Level.INFO, "Downloading source...");
             website = new URL(URL + FILE_NAME);
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream("resources/" + FILE_NAME);
+            FileOutputStream fos = new FileOutputStream("src/main/resources/" + FILE_NAME);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             logger.wrapper.log(Level.INFO, "Downloading successfully complete");
             Compressor compressor = new Compressor();
-            compressor.unGunzipFile("resources/" + FILE_NAME, "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+            compressor.unGunzipFile("src/main/resources/" + FILE_NAME, "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
             fos.flush();
             fos.close();
         } catch (MalformedURLException e) {
@@ -45,12 +45,12 @@ public class App {
             System.exit(1);
         }
         logger.wrapper.log(Level.INFO, "Deleting compressed file...");
-        File compressedFile = new File("resources/" + FILE_NAME);
+        File compressedFile = new File("src/main/resources/" + FILE_NAME);
         if (compressedFile.delete()) {
             logger.wrapper.log(Level.INFO, "Deleting successfully complete");
         } else {
             logger.wrapper.log(Level.WARNING, "Deleting failed");
         }
-        return "resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
+        return "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
     }
 }
