@@ -17,8 +17,8 @@ public class App {
 
     public static void main(String[] args) {
         DBManager.createDB();
-//        XMLParser xmlParser = new XMLParser();
-//        xmlParser.STAXParse(getDataSource());
+        XMLParser xmlParser = new XMLParser();
+        xmlParser.STAXParse(getDataSource());
     }
 
     private static String getDataSource() {

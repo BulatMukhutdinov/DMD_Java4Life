@@ -24,10 +24,6 @@ public class XMLParser {
     private static void createConnection(){
         try {
             connection = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
-        } catch (SQLException e) {
-            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-          }
-        try {
             statement = connection.createStatement();
         } catch (SQLException e) {
             logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
@@ -71,6 +67,7 @@ public class XMLParser {
         Record currRec = null;
         String tagContent = "";
         XMLInputFactory factory = XMLInputFactory.newInstance();
+        factory.setProperty(XMLInputFactory.IS_COALESCING, true);
         XMLStreamReader reader = null;
         try {
             reader = factory.createXMLStreamReader(new FileInputStream(new File(path)));
