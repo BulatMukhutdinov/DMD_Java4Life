@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class App {
@@ -18,7 +20,8 @@ public class App {
     public static void main(String[] args) {
         DBManager.createDB();
         XMLParser xmlParser = new XMLParser();
-        xmlParser.STAXParse(getDataSource());
+        xmlParser.STAXParse("src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+
     }
 
     private static String getDataSource() {

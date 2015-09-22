@@ -1,0 +1,36 @@
+-- Create function that shows related articles by authors.
+
+CREATE OR REPLACE FUNCTION dblp.related_articles_by_author(article_key character varying)
+  RETURNS dblp.article AS
+  $BODY$select distinct art1.* from dblp."authors" auth1
+join dblp."article" art1 on art1.key = auth1.key
+where auth1.author in
+(select auth.author from dblp."article" art
+join dblp."authors" auth on art.key=auth.key
+where art.key = article_key)$BODY$
+LANGUAGE sql VOLATILE
+COST 100;
+ALTER FUNCTION dblp.related_articles_by_author(character varying)
+OWNER TO postgres;
+
+-- Create function that shows related articles by journal.
+
+CREATE OR REPLACE FUNCTION dblp.related_articles_by_journal(article_key character varying)
+  RETURNS dblp.article AS
+  $BODY$select distinct a2.* from dblp."article" a1
+join dblp."article" a2 on a1.journal=a2.journal
+where a1.key = article_key
+except all
+select * from dblp."article"
+where key = article_key$BODY$
+LANGUAGE sql VOLATILE
+COST 100;
+ALTER FUNCTION dblp.related_articles_by_journal(character varying)
+OWNER TO postgres;
+
+
+
+-- Example of usage.
+SELECT * from dblp.related_articles_by_author(
+    'journals/acta/GoodmanS83'
+);

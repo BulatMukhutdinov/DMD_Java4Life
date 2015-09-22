@@ -15,8 +15,8 @@ public class DBManager {
     public static final String TABLES_CREATION = "src/main/resources/tablesCreation.sql";
     public static final String DB_NAME = "DBLP";
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
-    private static Connection conn = null;
-    private static Statement stmt = null;
+    public static Connection conn = null;
+    public static Statement stmt = null;
 
     /*
         public static List<LeaderBoard> getRecords() {

@@ -7,64 +7,50 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 
 public class XMLParser {
 
-    public static final String URL = "jdbc:postgresql://localhost:5432/";
-    public static final String USER = "postgres";
-    public static final String PASS = "postgres";
-    public static final String DB_NAME = "DBLP";
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
-    private static Connection connection;
-    private static Statement statement;
 
-    private static void createConnection(){
-        try {
-            connection = DriverManager.getConnection(URL + DB_NAME, USER, PASS);
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-        }
-    }
 
     private static void insertRecordIntoDbUserTable(Record record, String table) {
         String insertTableSQL = "";
-        if  (table == "article"){
-            insertTableSQL = "INSERT INTO " + "dblp."+table+" "
+        if (table == "article") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
                     + "(key, mdate, publtype, reviewid, rating, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
-                    "('"+ record.getKey() +"', '"+ record.getMdate() +"', '"+ record.getPubltype() +"', '"+ record.getReviewid() +"', '"+ record.getRating() +"', '"+ record.getEditor() +"', '"+ record.getTitle() +"', '"+ record.getBooktitle() +"', '"+ record.getPages() +"', '"+ record.getYear() +"', '"+ record.getAddress() +"', '"+ record.getJournal() +"', '"+ record.getVolume() +"', '"+ record.getNumber() +"', '"+ record.getMonth() +"', '"+ record.getUrl() +"', '"+ record.getEe() +"', '"+ record.getCdrom() +"', '"+ record.getCite() +"', '"+ record.getPublisher() +"', '"+ record.getNote() +"', '"+ record.getCrossref() +"', '"+ record.getIsbn() +"', '"+ record.getSeries() +"', '"+ record.getSchool() +"', '"+ record.getChapter()+"')";
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getPubltype() + "', '" + record.getReviewid() + "', '" + record.getRating() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getBooktitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
             try {
-                statement.executeUpdate(insertTableSQL);
+                DBManager.stmt.executeUpdate(insertTableSQL);
             } catch (SQLException e) {
                 logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
             }
             for (int i = 0; i < record.getAuthors().length; i++) {
                 String insertTableSQL2 = "INSERT INTO " + "dblp.article_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") +"', '"+ record.getAuthors()[i].replaceAll("'", "''")+"')";
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
                 try {
-                    statement.executeUpdate(insertTableSQL2);
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
                 } catch (SQLException e) {
                     logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
                 }
                 insertTableSQL2 = null;
             }
         } else {
-            insertTableSQL = "INSERT INTO " + "dblp."+table+" "
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
                     + "(key, mdate, publtype, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
-                    "('"+ record.getKey() +"', '"+ record.getMdate() +"', '"+ record.getPubltype() +"', '"+ record.getEditor() +"', '"+ record.getTitle() +"', '"+ record.getBooktitle() +"', '"+ record.getPages() +"', '"+ record.getYear() +"', '"+ record.getAddress() +"', '"+ record.getJournal() +"', '"+ record.getVolume() +"', '"+ record.getNumber() +"', '"+ record.getMonth() +"', '"+ record.getUrl() +"', '"+ record.getEe() +"', '"+ record.getCdrom() +"', '"+ record.getCite() +"', '"+ record.getPublisher() +"', '"+ record.getNote() +"', '"+ record.getCrossref() +"', '"+ record.getIsbn() +"', '"+ record.getSeries() +"', '"+ record.getSchool() +"', '"+ record.getChapter()+"')";
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getPubltype() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getBooktitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
             try {
-                statement.executeUpdate(insertTableSQL);
+                DBManager.stmt.executeUpdate(insertTableSQL);
             } catch (SQLException e) {
                 logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
             }
             for (int i = 0; i < record.getAuthors().length; i++) {
                 String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") +"', '"+ record.getAuthors()[i].replaceAll("'", "''")+"')";
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
                 try {
-                    statement.executeUpdate(insertTableSQL2);
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
                 } catch (SQLException e) {
                     logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
                 }
@@ -74,8 +60,6 @@ public class XMLParser {
     }
 
     public void STAXParse(String path) {
-        createConnection();
-
         Record currRec = null;
         String tagContent = "";
         XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -95,15 +79,15 @@ public class XMLParser {
 
                 switch (event) {
                     case XMLStreamConstants.START_ELEMENT:
-                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) || "masterthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())){
+                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) || "masterthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())) {
                             currRec = new Record();
                             currRec.setMdate(reader.getAttributeValue(0)); //set mdate
                             currRec.setKey(reader.getAttributeValue(1)); //set key
                         } else if ("dblp".equals(reader.getLocalName())) {
                             logger.wrapper.log(Level.INFO, "XMLParser started in " + LocalDateTime.now());
-                        } else if ("sup".equals(reader.getLocalName()) || "sub".equals(reader.getLocalName()) || "tt".equals(reader.getLocalName()) || "i".equals(reader.getLocalName())){
-                                currRec.appendTitle(tagContent);
-                                break;
+                        } else if ("sup".equals(reader.getLocalName()) || "sub".equals(reader.getLocalName()) || "tt".equals(reader.getLocalName()) || "i".equals(reader.getLocalName())) {
+                            currRec.appendTitle(tagContent);
+                            break;
                         }
                         break;
 
@@ -112,39 +96,11 @@ public class XMLParser {
                         break;
 
                     case XMLStreamConstants.END_ELEMENT:
-                        switch (reader.getLocalName()) {
-                            case "article":
-                                insertRecordIntoDbUserTable(currRec, "article");
-                                currRec = null;
-                                break;
-                            case "book":
-                                insertRecordIntoDbUserTable(currRec, "book");
-                                currRec = null;
-                                break;
-                            case "incollection":
-                                insertRecordIntoDbUserTable(currRec, "incollection");
-                                currRec = null;
-                                break;
-                            case "inproceedings":
-                                insertRecordIntoDbUserTable(currRec, "inproceedings");
-                                currRec = null;
-                                break;
-                            case "masterthesis":
-                                insertRecordIntoDbUserTable(currRec, "masterthesis");
-                                currRec = null;
-                                break;
-                            case "phdthesis":
-                                insertRecordIntoDbUserTable(currRec, "phdthesis");
-                                currRec = null;
-                                break;
-                            case "proceedings":
-                                insertRecordIntoDbUserTable(currRec, "proceedings");
-                                currRec = null;
-                                break;
-                            case "www":
-                                insertRecordIntoDbUserTable(currRec, "www");
-                                currRec = null;
-                                break;
+                        String str = reader.getLocalName();
+                        if ("article".equals(str) || "book".equals(str) || "incollection".equals(str) || "masterthesis".equals(str) || "phdthesis".equals(str) || "proceedings".equals(str) || "www".equals(str)) {
+                            insertRecordIntoDbUserTable(currRec, str);
+                        }
+                        switch (str) {
                             case "author":
                                 currRec.addAuthor(tagContent);
                                 break;
