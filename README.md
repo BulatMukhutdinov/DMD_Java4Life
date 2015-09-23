@@ -7,3 +7,5 @@ Features:
 • GZ decompressor
 • Creation of DB schema, according to DTD structure
 • Maven
+
+Run the application with following JVM properties: -Xmx1G -DentityExpansionLimit=25000000
