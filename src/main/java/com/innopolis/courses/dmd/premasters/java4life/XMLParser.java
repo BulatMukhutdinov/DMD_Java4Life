@@ -35,7 +35,6 @@ public class XMLParser {
                 } catch (SQLException e) {
                     logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
                 }
-                insertTableSQL2 = null;
             }
         } else {
             insertTableSQL = "INSERT INTO " + "dblp." + table + " "
@@ -54,7 +53,6 @@ public class XMLParser {
                 } catch (SQLException e) {
                     logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
                 }
-                insertTableSQL2 = null;
             }
         }
     }
@@ -79,7 +77,7 @@ public class XMLParser {
 
                 switch (event) {
                     case XMLStreamConstants.START_ELEMENT:
-                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) || "masterthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())) {
+                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) ||  "inproceedings".equals(reader.getLocalName()) || "mastersthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())) {
                             currRec = new Record();
                             currRec.setMdate(reader.getAttributeValue(0)); //set mdate
                             currRec.setKey(reader.getAttributeValue(1)); //set key
@@ -103,9 +101,6 @@ public class XMLParser {
                         switch (str) {
                             case "author":
                                 currRec.addAuthor(tagContent);
-                                break;
-                            case "ref":
-                                System.out.println(tagContent);
                                 break;
                             case "publtype":
                                 currRec.setPubltype(tagContent);
