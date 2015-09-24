@@ -15,15 +15,10 @@ SET default_with_oids = false;
 CREATE TABLE "dblp"."article" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
-  reviewid character varying,
-  rating character varying,
   editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
   journal character varying,
   volume character varying,
   number character varying,
@@ -34,11 +29,7 @@ CREATE TABLE "dblp"."article" (
   cite character varying,
   publisher character varying,
   note character varying,
-  crossref character varying,
-  isbn character varying,
-  series character varying,
-  school character varying,
-  chapter character varying
+  crossref character varying
 );
 
 CREATE TABLE dblp."article_author" (
@@ -49,16 +40,11 @@ CREATE TABLE dblp."article_author" (
 CREATE TABLE dblp."book" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
   editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
   volume character varying,
-  number character varying,
   month character varying,
   url character varying,
   ee character varying,
@@ -66,7 +52,6 @@ CREATE TABLE dblp."book" (
   cite character varying,
   publisher character varying,
   note character varying,
-  crossref character varying,
   isbn character varying,
   series character varying,
   school character varying,
@@ -81,17 +66,10 @@ CREATE TABLE dblp."book_author" (
 CREATE TABLE dblp."incollection" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
-  editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
-  volume character varying,
   number character varying,
-  month character varying,
   url character varying,
   ee character varying,
   cdrom character varying,
@@ -99,9 +77,6 @@ CREATE TABLE dblp."incollection" (
   publisher character varying,
   note character varying,
   crossref character varying,
-  isbn character varying,
-  series character varying,
-  school character varying,
   chapter character varying
 );
 
@@ -113,28 +88,18 @@ CREATE TABLE dblp."incollection_author" (
 CREATE TABLE dblp."inproceedings" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
   editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
-  volume character varying,
   number character varying,
   month character varying,
   url character varying,
   ee character varying,
   cdrom character varying,
   cite character varying,
-  publisher character varying,
   note character varying,
-  crossref character varying,
-  isbn character varying,
-  series character varying,
-  school character varying,
-  chapter character varying
+  crossref character varying
 );
 
 CREATE TABLE dblp."inproceedings_author" (
@@ -145,28 +110,12 @@ CREATE TABLE dblp."inproceedings_author" (
 CREATE TABLE dblp."mastersthesis" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
-  editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
-  volume character varying,
-  number character varying,
-  month character varying,
   url character varying,
   ee character varying,
-  cdrom character varying,
-  cite character varying,
-  publisher character varying,
-  note character varying,
-  crossref character varying,
-  isbn character varying,
-  series character varying,
-  school character varying,
-  chapter character varying
+  school character varying
 );
 
 CREATE TABLE dblp."mastersthesis_author" (
@@ -177,28 +126,18 @@ CREATE TABLE dblp."mastersthesis_author" (
 CREATE TABLE dblp."phdthesis" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
-  editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
   volume character varying,
   number character varying,
-  month character varying,
   url character varying,
   ee character varying,
-  cdrom character varying,
-  cite character varying,
   publisher character varying,
   note character varying,
-  crossref character varying,
   isbn character varying,
   series character varying,
-  school character varying,
-  chapter character varying
+  school character varying
 );
 
 CREATE TABLE dblp."phdthesis_author" (
@@ -209,28 +148,21 @@ CREATE TABLE dblp."phdthesis_author" (
 CREATE TABLE dblp."proceedings" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
   editor character varying,
   title character varying,
-  booktitle character varying,
   pages character varying,
   year character varying,
   address character varying,
   journal character varying,
   volume character varying,
   number character varying,
-  month character varying,
   url character varying,
   ee character varying,
-  cdrom character varying,
-  cite character varying,
   publisher character varying,
   note character varying,
   crossref character varying,
   isbn character varying,
-  series character varying,
-  school character varying,
-  chapter character varying
+  series character varying
 );
 
 CREATE TABLE dblp."proceedings_author" (
@@ -241,28 +173,13 @@ CREATE TABLE dblp."proceedings_author" (
 CREATE TABLE dblp."www" (
   key character varying NOT NULL,
   mdate date,
-  publtype character varying,
   editor character varying,
   title character varying,
-  booktitle character varying,
-  pages character varying,
   year character varying,
-  address character varying,
-  journal character varying,
-  volume character varying,
-  number character varying,
-  month character varying,
   url character varying,
-  ee character varying,
-  cdrom character varying,
   cite character varying,
-  publisher character varying,
   note character varying,
-  crossref character varying,
-  isbn character varying,
-  series character varying,
-  school character varying,
-  chapter character varying
+  crossref character varying
 );
 
 CREATE TABLE dblp."www_author" (

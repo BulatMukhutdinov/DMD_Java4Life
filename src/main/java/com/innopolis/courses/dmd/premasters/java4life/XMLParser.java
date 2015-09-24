@@ -20,8 +20,8 @@ public class XMLParser {
         String insertTableSQL = "";
         if (table == "article") {
             insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, publtype, reviewid, rating, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getPubltype() + "', '" + record.getReviewid() + "', '" + record.getRating() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getBooktitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
+                    + "(key, mdate, editor, title, pages, year, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
             try {
                 DBManager.stmt.executeUpdate(insertTableSQL);
             } catch (SQLException e) {
@@ -36,10 +36,118 @@ public class XMLParser {
                     logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
                 }
             }
-        } else {
+        } else if (table == "book") {
             insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, publtype, editor, title, booktitle, pages, year, address, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref, isbn, series, school, chapter) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getPubltype() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getBooktitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
+                    + "(key, mdate, editor, title, pages, year, volume, month, url, ee, cdrom, cite, publisher, note, isbn, series, school, chapter) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate()  + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getVolume() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "incollection") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, title, pages, year, number, url, ee, cdrom, cite, publisher, note, crossref, chapter) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle()  + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getChapter() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "inproceedings") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, editor, title, pages, year, number, month, url, ee, cdrom, cite, note, crossref) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "mastersthesis") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, title, pages, year, url, ee, school) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getSchool() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "phdthesis") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, title, pages, year, volume, number, url, ee, publisher, note, isbn, series, school) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "proceedings") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, editor, title, pages, year, address, journal, volume, number, url, ee, publisher, note, crossref, isbn, series) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "')";
+            try {
+                DBManager.stmt.executeUpdate(insertTableSQL);
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+            }
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
+                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
+                try {
+                    DBManager.stmt.executeUpdate(insertTableSQL2);
+                } catch (SQLException e) {
+                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+                }
+            }
+        } else if (table == "www") {
+            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
+                    + "(key, mdate, editor, title, year, url, cite, note, crossref ) " + "VALUES" +
+                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getYear() + "', '" + record.getUrl() + "', '" + record.getCite() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
             try {
                 DBManager.stmt.executeUpdate(insertTableSQL);
             } catch (SQLException e) {
