@@ -14,7 +14,7 @@ SET default_with_oids = false;
 
 CREATE TABLE "dblp"."article" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   reviewid character varying,
   rating character varying,
@@ -48,7 +48,7 @@ CREATE TABLE dblp."article_author" (
 
 CREATE TABLE dblp."book" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -80,7 +80,7 @@ CREATE TABLE dblp."book_author" (
 
 CREATE TABLE dblp."incollection" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -112,7 +112,7 @@ CREATE TABLE dblp."incollection_author" (
 
 CREATE TABLE dblp."inproceedings" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -144,7 +144,7 @@ CREATE TABLE dblp."inproceedings_author" (
 
 CREATE TABLE dblp."mastersthesis" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -176,7 +176,7 @@ CREATE TABLE dblp."mastersthesis_author" (
 
 CREATE TABLE dblp."phdthesis" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -208,7 +208,7 @@ CREATE TABLE dblp."phdthesis_author" (
 
 CREATE TABLE dblp."proceedings" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,
@@ -240,7 +240,7 @@ CREATE TABLE dblp."proceedings_author" (
 
 CREATE TABLE dblp."www" (
   key character varying NOT NULL,
-  mdate character varying,
+  mdate date,
   publtype character varying,
   editor character varying,
   title character varying,

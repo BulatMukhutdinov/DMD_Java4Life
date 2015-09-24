@@ -20,7 +20,8 @@ public class App {
     public static void main(String[] args) {
         DBManager.createDB();
         XMLParser xmlParser = new XMLParser();
-        xmlParser.STAXParse("src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+        //xmlParser.STAXParse("src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+        xmlParser.STAXParse("src/main/resources/dblp.xml");
 
     }
 

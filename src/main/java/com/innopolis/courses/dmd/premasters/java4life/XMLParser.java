@@ -95,7 +95,7 @@ public class XMLParser {
 
                     case XMLStreamConstants.END_ELEMENT:
                         String str = reader.getLocalName();
-                        if ("article".equals(str) || "book".equals(str) || "incollection".equals(str) || "masterthesis".equals(str) || "phdthesis".equals(str) || "proceedings".equals(str) || "www".equals(str)) {
+                        if ("article".equals(str) || "book".equals(str) || "incollection".equals(str) || "mastersthesis".equals(str) || "phdthesis".equals(str) || "proceedings".equals(str) || "inproceedings".equals(reader.getLocalName()) ||  "www".equals(str)) {
                             insertRecordIntoDbUserTable(currRec, str);
                         }
                         switch (str) {
