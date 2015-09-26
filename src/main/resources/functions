@@ -1,22 +1,23 @@
 -- Create function that shows related articles by authors.
 
 CREATE OR REPLACE FUNCTION dblp.related_articles_by_author(article_key character varying)
-  RETURNS dblp.article AS
-  $BODY$select distinct art1.* from dblp."authors" auth1
-join dblp."article" art1 on art1.key = auth1.key
-where auth1.author in
-(select auth.author from dblp."article" art
-join dblp."authors" auth on art.key=auth.key
-where art.key = article_key)$BODY$
+  RETURNS SETOF dblp.article AS
+  $BODY$select distinct art1.* from dblp."article_author" auth1
+    join dblp."article" art1 on art1.key = auth1.key
+  where auth1.author in
+        (select auth.author from dblp."article" art
+          join dblp."article_author" auth on art.key=auth.key
+        where art.key = article_key)$BODY$
 LANGUAGE sql VOLATILE
-COST 100;
+COST 100
+ROWS 10000;
 ALTER FUNCTION dblp.related_articles_by_author(character varying)
 OWNER TO postgres;
 
 -- Create function that shows related articles by journal.
 
 CREATE OR REPLACE FUNCTION dblp.related_articles_by_journal(article_key character varying)
-  RETURNS dblp.article AS
+  RETURNS SETOF dblp.article AS
   $BODY$select distinct a2.* from dblp."article" a1
 join dblp."article" a2 on a1.journal=a2.journal
 where a1.key = article_key
@@ -24,7 +25,8 @@ except all
 select * from dblp."article"
 where key = article_key$BODY$
 LANGUAGE sql VOLATILE
-COST 100;
+COST 100
+ROWS 10000;
 ALTER FUNCTION dblp.related_articles_by_journal(character varying)
 OWNER TO postgres;
 
@@ -34,3 +36,32 @@ OWNER TO postgres;
 SELECT * from dblp.related_articles_by_author(
     'journals/acta/GoodmanS83'
 );
+
+-- Create function that sorts 'proceedings' table by 'title' column and returns first 'a_count' tuple (100 by default)
+
+CREATE OR REPLACE FUNCTION dblp.sorted_proceedings_by_title(a_count integer DEFAULT 100)
+  RETURNS SETOF dblp.proceedings AS
+  'select * from dblp.proceedings order by title limit a_count'
+LANGUAGE sql VOLATILE
+COST 100
+ROWS 1000;
+ALTER FUNCTION dblp.sorted_proceedings_by_title(integer)
+OWNER TO postgres;
+
+-- Create function that sorts 'proceedings' table by count of 'crossref' of table 'article' and returns rows where count  >= 'minimal_count_of_crossrefs' (10 by default)
+
+CREATE OR REPLACE FUNCTION dblp.sorted_proceedings_by_crossref(IN minimal_count_of_crossrefs integer DEFAULT 10, OUT crossref_count bigint, OUT proceedings dblp.proceedings)
+  RETURNS SETOF record AS
+  $BODY$select crossref_count, i  from dblp.proceedings i
+    join
+    (select crossref, count(crossref) crossref_count from dblp.article group by crossref having crossref <> 'null' and count(crossref) >= minimal_count_of_crossrefs order by count(crossref) desc) as sub
+      on sub.crossref = i.key$BODY$
+LANGUAGE sql VOLATILE
+COST 100
+ROWS 1000;
+ALTER FUNCTION dblp.sorted_proceedings_by_crossref(integer)
+OWNER TO postgres;
+
+-- Example of usage.
+
+select * from dblp.sorted_proceedings_by_crossref()
