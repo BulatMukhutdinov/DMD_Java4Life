@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{dblp}
+dblp: computer science bibliography.
+\newblock \url{http://dblp.uni-trier.de/db/}.
+\newblock Accessed: 2015-09-11.
+
+\bibitem{dbschema}
+Dbschema - universal database designer and sql tool.
+\newblock \url{http://www.dbschema.com/}.
+\newblock Accessed: 2015-09-12.
+
+\bibitem{java}
+Java programming language.
+\newblock \url{https://www.oracle.com/java/index.html}.
+\newblock Accessed: 2015-09-12.
+
+\bibitem{postgresql}
+Postgresql.
+\newblock \url{http://www.postgresql.org/}.
+\newblock Accessed: 2015-09-12.
+
+\bibitem{herlihy:methodology}
+M.~Herlihy.
+\newblock A methodology for implementing highly concurrent data objects.
+\newblock {\em ACM Trans. Program. Lang. Syst.}, 15(5):745--770, November 1993.
+
+\bibitem{Lamport:LaTeX}
+L.~Lamport.
+\newblock {\em LaTeX User's Guide and Document Reference Manual}.
+\newblock Addison-Wesley Publishing Company, Reading, Massachusetts, 1986.
+
+\bibitem{salas:calculus}
+S.~Salas and E.~Hille.
+\newblock {\em Calculus: One and Several Variable}.
+\newblock John Wiley and Sons, New York, 1978.
+
+\end{thebibliography}
