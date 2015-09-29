@@ -1,6 +1,7 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Record {
     private String mdate;
@@ -81,231 +82,229 @@ public class Record {
     }
 
     public void appendTitle(String append) {
-        append = append.replaceAll("'", "''");
+        append = append.replaceAll("'", "''").replaceAll(";", ",").replaceAll("\\\\", "");
         this.title += append;
     }
 
     public String getMdate() {
-        return mdate;
+        return mdate == null ? mdate : mdate.replaceAll("\\\\", "");
     }
 
     public void setMdate(String mdate) {
-        this.mdate = mdate.replaceAll("'", "''");
+        this.mdate = mdate.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getKey() {
-        return key;
+        return key == null ? key : key.replaceAll("\\\\", "");
     }
 
     public void setKey(String key) {
-        this.key = key.replaceAll("'", "''");
+        this.key = key.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getPubltype() {
-        return publtype;
+        return publtype == null ? publtype : publtype.replaceAll("\\\\", "");
     }
 
     public void setPubltype(String publtype) {
-        this.publtype = publtype.replaceAll("'", "''");
+        this.publtype = publtype.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getReviewid() {
-        return reviewid;
+        return reviewid == null ? reviewid : reviewid.replaceAll("\\\\", "");
     }
 
     public void setReviewid(String reviewid) {
-        this.reviewid = reviewid.replaceAll("'", "''");
+        this.reviewid = reviewid.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getRating() {
-        return rating;
+        return rating == null ? rating : rating.replaceAll("\\\\", "");
     }
 
     public void setRating(String rating) {
-        rating = rating.replaceAll("'", "''");
-        this.rating = rating;
+        this.rating = rating.replaceAll("'", "''").replaceAll(";", ",");
     }
 
-    public String [] getAuthors() {
+    public String[] getAuthors() {
         String auth[] = authors.toArray(new String[authors.size()]);
         return auth;
     }
 
-    public void addAuthor(String auth){
-        authors.add(auth);
+    public void addAuthor(String auth) {
+        authors.add(auth.replaceAll(";", ",").replaceAll("\\\\", ""));
     }
+
     public void setAuthors(Set<String> authors) {
         this.authors = new HashSet<String>(authors);
     }
 
     public String getEditor() {
-        return editor;
+        return editor == null ? editor : editor.replaceAll("\\\\", "");
     }
 
     public void setEditor(String editor) {
-        editor = editor.replaceAll("'", "''");
-        this.editor = editor;
+        this.editor = editor.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? title : title.replaceAll("\\\\", "");
     }
 
     public void setTitle(String title) {
-        title = title.replaceAll("'", "''");
-        this.title = title;
+        this.title = title.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getBooktitle() {
-        return booktitle;
+        return booktitle == null ? booktitle : booktitle.replaceAll("\\\\", "");
     }
 
     public void setBooktitle(String booktitle) {
-        this.booktitle = booktitle.replaceAll("'", "''");
+        this.booktitle = booktitle.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getPages() {
-        return pages;
+        return pages == null ? pages : pages.replaceAll("\\\\", "");
     }
 
     public void setPages(String pages) {
-        this.pages = pages.replaceAll("'", "''");
+        this.pages = pages.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getYear() {
-        return year;
+        return year == null ? year : year.replaceAll("\\\\", "");
     }
 
     public void setYear(String year) {
-        this.year = year.replaceAll("'", "''");
+        this.year = year.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getAddress() {
-        return address;
+        return address == null ? address : address.replaceAll("\\\\", "");
     }
 
     public void setAddress(String address) {
-        this.address = address.replaceAll("'", "''");
+        this.address = address.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getVolume() {
-        return volume;
+        return volume == null ? volume : volume.replaceAll("\\\\", "");
     }
 
     public void setVolume(String volume) {
-        this.volume = volume.replaceAll("'", "''");
+        this.volume = volume.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getJournal() {
-        return journal;
+        return journal == null ? journal : journal.replaceAll("\\\\", "");
     }
 
     public void setJournal(String journal) {
-        this.journal = journal.replaceAll("'", "''");
+        this.journal = journal.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getNumber() {
-        return number;
+        return number == null ? number : number.replaceAll("\\\\", "");
     }
 
     public void setNumber(String number) {
-        this.number = number.replaceAll("'", "''");
+        this.number = number.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getMonth() {
-        return month;
+        return month == null ? month : month.replaceAll("\\\\", "");
     }
 
     public void setMonth(String month) {
-        this.month = month.replaceAll("'", "''");
+        this.month = month.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getUrl() {
-        return url;
+        return url == null ? url : url.replaceAll("\\\\", "");
     }
 
     public void setUrl(String url) {
-        this.url = url.replaceAll("'", "''");
+        this.url = url.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getEe() {
-        return ee;
+        return ee == null ? ee : ee.replaceAll("\\\\", "");
     }
 
     public void setEe(String ee) {
-        this.ee = ee.replaceAll("'", "''");
+        this.ee = ee.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getCdrom() {
-        return cdrom;
+        return cdrom == null ? cdrom : cdrom.replaceAll("\\\\", "");
     }
 
     public void setCdrom(String cdrom) {
-        this.cdrom = cdrom.replaceAll("'", "''");
+        this.cdrom = cdrom.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getCite() {
-        return cite;
+        return cite == null ? cite : cite.replaceAll("\\\\", "");
     }
 
     public void setCite(String cite) {
-        this.cite = cite.replaceAll("'", "''");
+        this.cite = cite.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getPublisher() {
-        return publisher;
+        return publisher == null ? publisher : publisher.replaceAll("\\\\", "");
     }
 
     public void setPublisher(String publisher) {
-        this.publisher = publisher.replaceAll("'", "''");
+        this.publisher = publisher.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getNote() {
-        return note;
+        return note == null ? note : note.replaceAll("\\\\", "");
     }
 
     public void setNote(String note) {
-        this.note = note.replaceAll("'", "''");
+        this.note = note.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getCrossref() {
-        return crossref;
+        return crossref == null ? crossref : crossref.replaceAll("\\\\", "");
     }
 
     public void setCrossref(String crossref) {
-        this.crossref = crossref.replaceAll("'", "''");
+        this.crossref = crossref.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getIsbn() {
-        return isbn;
+        return isbn == null ? isbn : isbn.replaceAll("\\\\", "");
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn.replaceAll("'", "''");
+        this.isbn = isbn.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getSeries() {
-        return series;
+        return series == null ? series : series.replaceAll("\\\\", "");
     }
 
     public void setSeries(String series) {
-        this.series = series.replaceAll("'", "''");
+        this.series = series.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getSchool() {
-        return school;
+        return school == null ? school : school.replaceAll("\\\\", "");
     }
 
     public void setSchool(String school) {
-        this.school = school.replaceAll("'", "''");
+        this.school = school.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     public String getChapter() {
-        return chapter;
+        return chapter == null ? chapter : chapter.replaceAll("\\\\", "");
     }
 
     public void setChapter(String chapter) {
-        this.chapter = chapter.replaceAll("'", "''");
+        this.chapter = chapter.replaceAll("'", "''").replaceAll(";", ",");
     }
 
     @Override

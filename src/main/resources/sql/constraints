@@ -1,0 +1,73 @@
+BEGIN;
+ALTER TABLE ONLY dblp."article"
+ADD CONSTRAINT key_article PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."article_author"
+ADD CONSTRAINT key_article_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."book"
+ADD CONSTRAINT key_book PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."book_author"
+ADD CONSTRAINT key_book_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."incollection"
+ADD CONSTRAINT key_incollection PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."incollection_author"
+ADD CONSTRAINT key_incollection_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."inproceedings"
+ADD CONSTRAINT key_inproceedings PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."inproceedings_author"
+ADD CONSTRAINT key_inproceedings_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."mastersthesis"
+ADD CONSTRAINT key_mastersthesis PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."mastersthesis_author"
+ADD CONSTRAINT key_mastersthesis_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."phdthesis"
+ADD CONSTRAINT key_phdthesis PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."phdthesis_author"
+ADD CONSTRAINT key_phdthesis_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."proceedings"
+ADD CONSTRAINT key_proceedings PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."proceedings_author"
+ADD CONSTRAINT key_proceedings_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."www"
+ADD CONSTRAINT key_www PRIMARY KEY (key);
+
+ALTER TABLE ONLY dblp."www_author"
+ADD CONSTRAINT key_www_author PRIMARY KEY (key, author);
+
+ALTER TABLE ONLY dblp."article_author"
+ADD CONSTRAINT fk_article_author FOREIGN KEY (key) REFERENCES dblp."article"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."book_author"
+ADD CONSTRAINT fk_book_author FOREIGN KEY (key) REFERENCES dblp."book"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."incollection_author"
+ADD CONSTRAINT fk_incollection_author FOREIGN KEY (key) REFERENCES dblp."incollection"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."inproceedings_author"
+ADD CONSTRAINT fk_inproceedings_author FOREIGN KEY (key) REFERENCES dblp."inproceedings"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."mastersthesis_author"
+ADD CONSTRAINT fk_mastersthesis_author FOREIGN KEY (key) REFERENCES dblp."mastersthesis"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."phdthesis_author"
+ADD CONSTRAINT fk_phdthesis_author FOREIGN KEY (key) REFERENCES dblp."phdthesis"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."proceedings_author"
+ADD CONSTRAINT fk_proceedings_author FOREIGN KEY (key) REFERENCES dblp."proceedings"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY dblp."www_author"
+ADD CONSTRAINT fk_www_author FOREIGN KEY (key) REFERENCES dblp."www"(key) ON UPDATE CASCADE ON DELETE CASCADE;
+END;

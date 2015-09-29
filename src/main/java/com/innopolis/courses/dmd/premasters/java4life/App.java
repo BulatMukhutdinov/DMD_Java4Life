@@ -14,12 +14,15 @@ public class App {
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
     public static final String URL = "http://dblp.uni-trier.de/xml/";
     public static final String FILE_NAME = "dblp.xml.gz";
+    public static final String PATH = "src/main/resources/";
 
     public static void main(String[] args) {
         DBManager.createDB();
+        clearCSV();
         XMLParser xmlParser = new XMLParser();
         xmlParser.STAXParse("src/main/resources/dblp.xml");
-
+        DBManager.copyCSV();
+        DBManager.createConstraints();
     }
 
     private static String getDataSource() {
@@ -28,11 +31,11 @@ public class App {
             logger.wrapper.log(Level.INFO, "Downloading source...");
             website = new URL(URL + FILE_NAME);
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream("src/main/resources/" + FILE_NAME);
+            FileOutputStream fos = new FileOutputStream(PATH + FILE_NAME);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             logger.wrapper.log(Level.INFO, "Downloading successfully complete");
             Compressor compressor = new Compressor();
-            compressor.unGunzipFile("src/main/resources/" + FILE_NAME, "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+            compressor.unGunzipFile(PATH + FILE_NAME, PATH + FILE_NAME.substring(0, FILE_NAME.length() - 3));
             fos.flush();
             fos.close();
         } catch (MalformedURLException e) {
@@ -46,12 +49,23 @@ public class App {
             System.exit(1);
         }
         logger.wrapper.log(Level.INFO, "Deleting compressed file...");
-        File compressedFile = new File("src/main/resources/" + FILE_NAME);
+        File compressedFile = new File(PATH + FILE_NAME);
         if (compressedFile.delete()) {
             logger.wrapper.log(Level.INFO, "Deleting successfully complete");
         } else {
             logger.wrapper.log(Level.WARNING, "Deleting failed");
         }
-        return "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
+        return PATH + FILE_NAME.substring(0, FILE_NAME.length() - 3);
+    }
+
+    private static void clearCSV() {
+        File folder = new File(CSVCreator.CSV_PATH);
+        File[] listOfFiles = folder.listFiles();
+        for (File file : listOfFiles) {
+            if (!file.delete()) {
+                logger.wrapper.log(Level.WARNING, "Deleting of CSV file failed");
+            }
+        }
+        logger.wrapper.log(Level.INFO, "Deleting of CSV files successfully complete");
     }
 }

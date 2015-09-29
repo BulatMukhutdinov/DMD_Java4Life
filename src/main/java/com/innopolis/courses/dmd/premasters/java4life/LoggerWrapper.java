@@ -18,7 +18,7 @@ public class LoggerWrapper {
 
     private static void createLogger() {
         try {
-            FileHandler fileHandler = new FileHandler(LOG_PATH, true);
+            FileHandler fileHandler = new FileHandler(LOG_PATH + ".txt", true);
             wrapper.addHandler(fileHandler);
             HtmlFormatter htmlformatter = new HtmlFormatter();
             FileHandler htmlFile = new FileHandler(LOG_PATH + ".htm", true);

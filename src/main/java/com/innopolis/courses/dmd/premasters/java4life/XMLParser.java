@@ -7,161 +7,190 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class XMLParser {
 
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
+    private final static String DELIMITER = ";";
+    private final static int MAX_ELEMS = 100000;
+    private static final int Mb = (int) Math.pow(1024, 2);
+
+    private static List<String> articles = new ArrayList<>();
+    private static List<String> articleAuthors = new ArrayList<>();
+    private static List<String> books = new ArrayList<>();
+    private static List<String> bookAuthors = new ArrayList<>();
+    private static List<String> incollections = new ArrayList<>();
+    private static List<String> incollectionAuthors = new ArrayList<>();
+    private static List<String> inproceedings = new ArrayList<>();
+    private static List<String> inproceedingsAuthors = new ArrayList<>();
+    private static List<String> mastersthesises = new ArrayList<>();
+    private static List<String> mastersthesisAuthors = new ArrayList<>();
+    private static List<String> phdthesises = new ArrayList<>();
+    private static List<String> phdthesisAuthors = new ArrayList<>();
+    private static List<String> proceedings = new ArrayList<>();
+    private static List<String> proceedingsAuthors = new ArrayList<>();
+    private static List<String> wwws = new ArrayList<>();
+    private static List<String> wwwAuthors = new ArrayList<>();
 
 
     private static void insertRecordIntoDbUserTable(Record record, String table) {
-        String insertTableSQL = "";
-        if (table == "article") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, editor, title, pages, year, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp.article_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+        try {
+            if (table == "article") {
+                if (articles.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("article", articles, 4 * Mb);
+                }
+                articles.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getEditor()
+                        + DELIMITER + record.getTitle() + DELIMITER + record.getPages() + DELIMITER
+                        + record.getYear() + DELIMITER + record.getJournal() + DELIMITER + record.getVolume() + DELIMITER
+                        + record.getNumber() + DELIMITER + record.getMonth() + DELIMITER + record.getUrl() + DELIMITER
+                        + record.getEe() + DELIMITER + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
+                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER + record.getCrossref() + "\n");
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (articleAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("article_author", articleAuthors, 4 * Mb);
+                    }
+                    articleAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+                }
+            } else if (table == "book") {
+                if (books.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("book", books, 4 * Mb);
+                }
+                books.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER
+                        + record.getEditor() + DELIMITER + record.getTitle()
+                        + DELIMITER + record.getPages() + DELIMITER + record.getYear() + DELIMITER
+                        + record.getVolume() + DELIMITER + record.getMonth() + DELIMITER
+                        + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
+                        + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
+                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
+                        + record.getIsbn() + DELIMITER + record.getSeries() + DELIMITER
+                        + record.getSchool() + DELIMITER + record.getChapter() + "\n");
+
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (bookAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("book_author", bookAuthors, 4 * Mb);
+                    }
+                    bookAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
+                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+
+                }
+            } else if (table == "incollection") {
+                if (incollections.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("incollection", incollections, 4 * Mb);
+                }
+                incollections.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER
+                        + record.getTitle() + DELIMITER + record.getPages() + DELIMITER
+                        + record.getYear() + DELIMITER + record.getNumber() + DELIMITER
+                        + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
+                        + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
+                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
+                        + record.getCrossref() + DELIMITER + record.getChapter() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (incollectionAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("incollection_author", incollectionAuthors, 4 * Mb);
+                    }
+                    incollectionAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
+                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+                }
+            } else if (table == "inproceedings") {
+                if (inproceedings.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("inproceedings", inproceedings, 4 * Mb);
+                }
+                inproceedings.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER +
+                        record.getEditor() + DELIMITER + record.getTitle() + DELIMITER +
+                        record.getPages() + DELIMITER + record.getYear() + DELIMITER +
+                        record.getNumber() + DELIMITER + record.getMonth() + DELIMITER +
+                        record.getUrl() + DELIMITER + record.getEe() + DELIMITER + record.getCdrom() + DELIMITER +
+                        record.getCite() + DELIMITER + record.getNote() + DELIMITER + record.getCrossref() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (inproceedingsAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("inproceedings_author", inproceedingsAuthors, 4 * Mb);
+                    }
+                    inproceedingsAuthors.add(record.getKey().replaceAll("'", "''")
+                            + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+                }
+            } else if (table == "mastersthesis") {
+                if (mastersthesises.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("mastersthesis", mastersthesises, 4 * Mb);
+                }
+                mastersthesises.add(record.getKey() + DELIMITER + record.getMdate()
+                        + DELIMITER + record.getTitle() + DELIMITER
+                        + record.getPages() + DELIMITER + record.getYear()
+                        + DELIMITER + record.getUrl() + DELIMITER + record.getEe()
+                        + DELIMITER + record.getSchool() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (mastersthesisAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("mastersthesis_author", mastersthesisAuthors, 4 * Mb);
+                    }
+                    mastersthesisAuthors.add(record.getKey().replaceAll("'", "''")
+                            + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+
+                }
+            } else if (table == "phdthesis") {
+                if (phdthesises.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("phdthesis", phdthesises, 4 * Mb);
+                }
+                phdthesises.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getTitle()
+                        + DELIMITER + record.getPages() + DELIMITER + record.getYear() + DELIMITER
+                        + record.getVolume() + DELIMITER + record.getNumber() + DELIMITER + record.getUrl()
+                        + DELIMITER + record.getEe() + DELIMITER + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
+                        + record.getIsbn() + DELIMITER + record.getSeries() + DELIMITER + record.getSchool() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (phdthesisAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("phdthesis_author", phdthesisAuthors, 4 * Mb);
+                    }
+                    phdthesisAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
+                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+
+                }
+            } else if (table == "proceedings") {
+                if (proceedings.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("proceedings", proceedings, 4 * Mb);
+                }
+                proceedings.add(record.getKey() + DELIMITER + record.getMdate()
+                        + DELIMITER + record.getEditor() + DELIMITER + record.getTitle() + DELIMITER
+                        + record.getPages() + DELIMITER + record.getYear() + DELIMITER + record.getAddress()
+                        + DELIMITER + record.getJournal() + DELIMITER + record.getVolume() + DELIMITER
+                        + record.getNumber() + DELIMITER + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
+                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
+                        + record.getCrossref() + DELIMITER + record.getIsbn() + DELIMITER + record.getSeries() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (proceedingsAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("proceedings_author", proceedingsAuthors, 4 * Mb);
+                    }
+                    proceedingsAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
+                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
+
+                }
+            } else if (table == "www") {
+                if (wwws.size() == MAX_ELEMS) {
+                    CSVCreator.writeBuffered("www", wwws, 4 * Mb);
+                }
+                wwws.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getEditor()
+                        + DELIMITER + record.getTitle() + DELIMITER + record.getYear() + DELIMITER
+                        + record.getUrl() + DELIMITER + record.getCite() + DELIMITER
+                        + record.getNote() + DELIMITER + record.getCrossref() + "\n");
+
+                for (int i = 0; i < record.getAuthors().length; i++) {
+                    if (wwwAuthors.size() == MAX_ELEMS) {
+                        CSVCreator.writeBuffered("www_author", wwwAuthors, 4 * Mb);
+                    }
+                    wwwAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
+                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
                 }
             }
-        } else if (table == "book") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, editor, title, pages, year, volume, month, url, ee, cdrom, cite, publisher, note, isbn, series, school, chapter) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate()  + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getVolume() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "', '" + record.getChapter() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "incollection") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, title, pages, year, number, url, ee, cdrom, cite, publisher, note, crossref, chapter) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle()  + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getChapter() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "inproceedings") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, editor, title, pages, year, number, month, url, ee, cdrom, cite, note, crossref) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getNumber() + "', '" + record.getMonth() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getCdrom() + "', '" + record.getCite() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "mastersthesis") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, title, pages, year, url, ee, school) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getSchool() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "phdthesis") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, title, pages, year, volume, number, url, ee, publisher, note, isbn, series, school) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "', '" + record.getSchool() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "proceedings") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, editor, title, pages, year, address, journal, volume, number, url, ee, publisher, note, crossref, isbn, series) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getPages() + "', '" + record.getYear() + "', '" + record.getAddress() + "', '" + record.getJournal() + "', '" + record.getVolume() + "', '" + record.getNumber() + "', '" + record.getUrl() + "', '" + record.getEe() + "', '" + record.getPublisher() + "', '" + record.getNote() + "', '" + record.getCrossref() + "', '" + record.getIsbn() + "', '" + record.getSeries() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
-        } else if (table == "www") {
-            insertTableSQL = "INSERT INTO " + "dblp." + table + " "
-                    + "(key, mdate, editor, title, year, url, cite, note, crossref ) " + "VALUES" +
-                    "('" + record.getKey() + "', '" + record.getMdate() + "', '" + record.getEditor() + "', '" + record.getTitle() + "', '" + record.getYear() + "', '" + record.getUrl() + "', '" + record.getCite() + "', '" + record.getNote() + "', '" + record.getCrossref() + "')";
-            try {
-                DBManager.stmt.executeUpdate(insertTableSQL);
-            } catch (SQLException e) {
-                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-            }
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                String insertTableSQL2 = "INSERT INTO " + "dblp." + table + "_author " +
-                        "(\"key\", \"author\")" + " VALUES " + "('" + record.getKey().replaceAll("'", "''") + "', '" + record.getAuthors()[i].replaceAll("'", "''") + "')";
-                try {
-                    DBManager.stmt.executeUpdate(insertTableSQL2);
-                } catch (SQLException e) {
-                    logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
-                }
-            }
+        } catch (IOException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected IO exception: " + e);
         }
     }
 
@@ -185,7 +214,7 @@ public class XMLParser {
 
                 switch (event) {
                     case XMLStreamConstants.START_ELEMENT:
-                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) ||  "inproceedings".equals(reader.getLocalName()) || "mastersthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())) {
+                        if ("article".equals(reader.getLocalName()) || "book".equals(reader.getLocalName()) || "incollection".equals(reader.getLocalName()) || "inproceedings".equals(reader.getLocalName()) || "mastersthesis".equals(reader.getLocalName()) || "phdthesis".equals(reader.getLocalName()) || "proceedings".equals(reader.getLocalName()) || "www".equals(reader.getLocalName())) {
                             currRec = new Record();
                             currRec.setMdate(reader.getAttributeValue(0)); //set mdate
                             currRec.setKey(reader.getAttributeValue(1)); //set key
@@ -203,7 +232,7 @@ public class XMLParser {
 
                     case XMLStreamConstants.END_ELEMENT:
                         String str = reader.getLocalName();
-                        if ("article".equals(str) || "book".equals(str) || "incollection".equals(str) || "mastersthesis".equals(str) || "phdthesis".equals(str) || "proceedings".equals(str) || "inproceedings".equals(reader.getLocalName()) ||  "www".equals(str)) {
+                        if ("article".equals(str) || "book".equals(str) || "incollection".equals(str) || "mastersthesis".equals(str) || "phdthesis".equals(str) || "proceedings".equals(str) || "inproceedings".equals(reader.getLocalName()) || "www".equals(str)) {
                             insertRecordIntoDbUserTable(currRec, str);
                         }
                         switch (str) {
@@ -306,6 +335,26 @@ public class XMLParser {
             }
         } catch (XMLStreamException e) {
             logger.wrapper.log(Level.SEVERE, "Unexpected XML exception during parsing: " + e);
+        }
+        try {
+            CSVCreator.writeBuffered("article", articles, 4 * Mb);
+            CSVCreator.writeBuffered("article_author", articleAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("book", books, 4 * Mb);
+            CSVCreator.writeBuffered("book_author", bookAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("incollection", incollections, 4 * Mb);
+            CSVCreator.writeBuffered("incollection_author", incollectionAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("inproceedings", inproceedings, 4 * Mb);
+            CSVCreator.writeBuffered("inproceedings_author", inproceedingsAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("mastersthesis", mastersthesises, 4 * Mb);
+            CSVCreator.writeBuffered("mastersthesis_author", mastersthesisAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("phdthesis", phdthesises, 4 * Mb);
+            CSVCreator.writeBuffered("phdthesis_author", phdthesisAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("proceedings", proceedings, 4 * Mb);
+            CSVCreator.writeBuffered("proceedings_author", proceedingsAuthors, 4 * Mb);
+            CSVCreator.writeBuffered("www", wwws, 4 * Mb);
+            CSVCreator.writeBuffered("www_author", wwws, 4 * Mb);
+        } catch (IOException e) {
+            logger.wrapper.log(Level.SEVERE, "Unexpected IO exception: " + e);
         }
     }
 }
