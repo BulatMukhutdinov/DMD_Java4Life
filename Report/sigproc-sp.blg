@@ -1,11 +1,4 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: sigproc-sp.aux
-The style file: abbrv.bst
-Database file #1: sigproc.bib
-Warning--I didn't find a database entry for "bowman:reasoning"
-Warning--I didn't find a database entry for "clark:pct"
-Warning--I didn't find a database entry for "braams:babel"
-Warning--to sort, need author or key in dblp
-Warning--to sort, need author or key in postgresql
-Warning--to sort, need author or key in dbschema
-Warning--to sort, need author or key in java
-(There were 7 warnings)
+I found no \bibdata command---while reading file sigproc-sp.aux
+I found no \bibstyle command---while reading file sigproc-sp.aux
+(There were 2 error messages)

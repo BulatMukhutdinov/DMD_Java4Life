@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.5.18)  26 SEP 2015 16:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.5.18)  29 SEP 2015 20:09
 entering extended mode
 **sigproc-sp.tex
 (sigproc-sp.tex
@@ -238,85 +238,71 @@ Overfull \hbox (1.26794pt too wide) in paragraph at lines 114--115
 /n/9 ]: Mis-cel-la-neous;
  []
 
+
+LaTeX Warning: Citation `dblp' on page \thepage  undefined on input line 121.
+
+
+LaTeX Warning: Citation `postgresql' on page \thepage  undefined on input line 
+122.
+
+
+LaTeX Warning: Citation `dbschema' on page \thepage  undefined on input line 12
+3.
+
+
+LaTeX Warning: Citation `java' on page \thepage  undefined on input line 124.
+
 <ER.jpg, id=1, 663.22781pt x 714.41907pt>
 File: ER.jpg Graphic file (type jpg)
  <use ER.jpg>
-Package pdftex.def Info: ER.jpg used on input line 132.
+Package pdftex.def Info: ER.jpg used on input line 131.
 (pdftex.def)             Requested size: 167.99927pt x 180.95897pt.
  [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
  <./ER.jpg>]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 141.
+Overfull \hbox (25.37839pt too wide) in paragraph at lines 144--145
+\T1/aer/m/n/9 this count is more or equal to the 'min-i-mal_count_of_crossrefs'
 
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\ae\t1aett.fd"
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-
-LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 202.
-
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-02.
-
-
-LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 202.
-
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-04.
-
-[2]
-\c@theorem=\count115
-
-Underfull \hbox (badness 1603) in paragraph at lines 315--319
-[]\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
-ment, cre-ated by the
  []
 
-\c@definition=\count116
 
-Overfull \hbox (15.60826pt too wide) detected at line 360
-\OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
-/m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
-m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9  [] [] \OT1/cmr/m/n/9 = 0 \OMS/cmsy
-/m/n/9  \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
+Overfull \hbox (2.16805pt too wide) in paragraph at lines 144--145
+\T1/aer/m/n/9 ar-gu-ment (min-i-mal_count_of_crossrefs = 10 by de-fault). 
  []
 
-(sigproc-sp.bbl [3]) [4
+<ProjectStructure.jpg, id=14, 246.1697pt x 290.58563pt>
+File: ProjectStructure.jpg Graphic file (type jpg)
 
-] (sigproc-sp.aux) ) 
+<use ProjectStructure.jpg>
+Package pdftex.def Info: ProjectStructure.jpg used on input line 150.
+(pdftex.def)             Requested size: 167.99927pt x 198.31834pt.
+
+Overfull \hbox (2.58115pt too wide) in paragraph at lines 161--162
+[]\T1/aer/m/n/9 HTMLFormatter is re-spon-si-ble for cre-at-ing HTML doc-
+ []
+
+[2 <./ProjectStructure.jpg>] (sigproc-sp.aux) ) 
 Here is how much of TeX's memory you used:
- 2561 strings out of 493698
- 29932 string characters out of 3144397
- 94910 words of memory out of 3000000
- 5823 multiletter control sequences out of 15000+200000
- 61996 words of font info for 85 fonts, out of 3000000 for 9000
+ 2500 strings out of 493698
+ 29273 string characters out of 3144397
+ 89897 words of memory out of 3000000
+ 5786 multiletter control sequences out of 15000+200000
+ 49629 words of font info for 66 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,12n,28p,759b,310s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.en
-c}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helv
-etic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on sigproc-sp.pdf (4 pages, 360016 bytes).
+ 41i,12n,28p,658b,310s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fon
+ts/enc/dvips/fontname/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/time
+s/utmb8a.pfb>
+Output written on sigproc-sp.pdf (2 pages, 271979 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
+ 44 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
