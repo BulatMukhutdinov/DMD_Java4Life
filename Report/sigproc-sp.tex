@@ -28,6 +28,7 @@
 
 \documentclass{acm_proc_article-sp}
 \usepackage{url}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -125,14 +126,14 @@ The project's aim is to design and implement a publication records management sy
 
 
 \section{Phase 1. Design and implementation of the Relational Model}
-The aim of this phase is to use the database of different publications for real life problems. As it was mentioned before, dblp bibliography is used to crawl publications data. Therefore, the relational model is based on the structure of dblp. There are 16 entities in it: Article,  Inproceedings, Proceedings, Book, Incollection, Phdthesis, Mastersthesis, www, Article\_author,  Inproceedings\_author, Proceedings\_author,\\ Book\_author, Incollection\_author, Phdthesis\_author, Mastersthesis\_author, www\_author. ER diagram is shown on Figure \ref{fig:ER}.
-\begin{figure}[h]
+The aim of this phase is to use the database of different publications for real life problems. As it was mentioned before, dblp bibliography is used to crawl publications data. Therefore, the relational model is based on the structure of dblp. There are 16 entities in it: Article,  Inproceedings, Proceedings, Book, Incollection, Phdthesis, Mastersthesis, www, Article\_author,  Inproceedings\_author, Proceedings\_author,\\ Book\_author, Incollection\_author, Phdthesis\_author, Mastersthesis\_author, www\_author. ER diagram is shown on Figure \ref{fig:ER}. You can see the full size image at \\ \href{https://github.com/BulatMukhutdinov/DMD_Java4Life/blob/master/Report/ER.jpg}{https://github.com/BulatMukhutdinov/DMD\_Java4Life/\\blob/master/Report/ER.jpg}.
+\begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{ER}
 	\caption{ER diagram}
 	\label{fig:ER}
 \end{figure}
-\\All publications are connected with their authors as 'one to many'. For example, one Article can have many Article\_authors, one Book can have many Book\_authors and so on. The ER model is based on dblp.dtd and dblp.xml files, that are crawled in real time from http://dblp.uni-trier.de.
+\\All publications are connected with their authors as 'one to many'. For example, one Article can have many Article\_authors, one Book can have many Book\_authors and so on. The ER model is based on dblp.dtd and dblp.xml files, that are crawled in real time from \href{http://dblp.uni-trier.de}{http://dblp.uni-trier.de}.
 \subsection{Fillig the database}
 After the database structure is created, our XML parser starts to work. This XML parse is based on the standart javax.xml library. Basically, it takes the data from different XML tags and writes them into CSV file, in order to copy this data into our database using COPY FROM command. The COPY FROM command operates much faster than a normal INSERT command because the data is read as a single transaction directly to the target table. On the other hand, it is a very strict format, and the entire COPY procedure will fail if just one line is malformed.	So our CSV file is accurately created using dblp.xml, all the data has ";" delimiters.
 \subsection{Functions}
@@ -145,14 +146,16 @@ There are 4 different functions, that were created for Phase 1.
 \end{itemize}
 \subsection{Other technical details}
 
+The project structure is shown on the Figure \ref{fig:ProjectStructure}. 
+
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.7\linewidth]{ProjectStructure}
-\caption{Project structure}
-\label{fig:ProjectStructure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{ProjectStructure}
+	\caption{Project structure}
+	\label{fig:ProjectStructure}
 \end{figure}
 
-The project structure is shown on the Figure \ref{fig:ProjectStructure}. The project is divided into 8 classes.
+The project is divided into 8 classes.
 \begin{itemize}
 	\item App is a class with a 'main()' method.
 	\item Compressor is responsible for zipping and unzipping files.
@@ -163,5 +166,9 @@ The project structure is shown on the Figure \ref{fig:ProjectStructure}. The pro
 	\item Record is used in XMLParser for proper data processing.
 	\item XMLParser is responsible for parsing dblp.xml file in order to get data from it.
 \end{itemize}
+
+\bibliographystyle{unsrt}
+\bibliography{sigproc}
+
 
 \end{document}

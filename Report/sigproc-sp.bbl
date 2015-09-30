@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{dblp}
+dblp: computer science bibliography.
+\newblock \url{http://dblp.uni-trier.de/db/}.
+\newblock Accessed: 2015-09-11.
+
+\bibitem{postgresql}
+Postgresql.
+\newblock \url{http://www.postgresql.org/}.
+\newblock Accessed: 2015-09-12.
+
+\bibitem{dbschema}
+Dbschema - universal database designer and sql tool.
+\newblock \url{http://www.dbschema.com/}.
+\newblock Accessed: 2015-09-12.
+
+\bibitem{java}
+Java programming language.
+\newblock \url{https://www.oracle.com/java/index.html}.
+\newblock Accessed: 2015-09-12.
+
+\end{thebibliography}
