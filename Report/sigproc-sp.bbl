@@ -20,4 +20,9 @@ Java programming language.
 \newblock \url{https://www.oracle.com/java/index.html}.
 \newblock Accessed: 2015-09-12.
 
+\bibitem{copy}
+Postgresql 9.4 copy.
+\newblock \url{http://www.postgresql.org/docs/current/static/sql-copy.html}.
+\newblock Accessed: 2015-09-12.
+
 \end{thebibliography}

@@ -155,7 +155,7 @@ The aim of this phase is to use the database of different publications for real 
 	\item www\_author(\underline{key}, author)
 \end{enumerate}
 \subsection{Fillig the database}
-After the database structure is created, our XML parser starts to work. This XML parse is based on the standart javax.xml library. Basically, it takes the data from different XML tags and writes them into CSV file, in order to copy this data into our database using COPY FROM command. The COPY FROM command operates much faster than a normal INSERT command because the data is read as a single transaction directly to the target table. On the other hand, it is a very strict format, and the entire COPY procedure will fail if just one line is malformed.	So our CSV file is accurately created using dblp.xml, all the data has ";" delimiters.
+After the database structure is created, our XML parser starts to work. This XML parser is based on the standart javax.xml library. Basically, it takes the data from different XML tags and writes them into CSV file, in order to copy this data into our database using COPY FROM command. The COPY FROM command operates much faster than a normal INSERT command because the data is read as a single transaction directly to the target table. On the other hand, it is a very strict format, and the entire COPY procedure will fail if just one line is malformed\cite{copy}.	So our CSV file is accurately created using dblp.xml, all the data has ";" delimiters.
 \subsection{Functions}
 There are 4 different functions, that were created for Phase 1.
 \begin{itemize}
