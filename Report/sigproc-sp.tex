@@ -33,7 +33,7 @@
 \begin{document}
 
 \title{{\ttlit DMD} Project}
-\subtitle{Desing and implementation of a Publication Management System}
+\subtitle{Design and implementation of a Publication Management System}
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -134,6 +134,26 @@ The aim of this phase is to use the database of different publications for real 
 	\label{fig:ER}
 \end{figure}
 \\All publications are connected with their authors as 'one to many'. For example, one Article can have many Article\_authors, one Book can have many Book\_authors and so on. The ER model is based on dblp.dtd and dblp.xml files, that are crawled in real time from \href{http://dblp.uni-trier.de}{http://dblp.uni-trier.de}.
+\\
+\\The Relations are:
+\begin{enumerate}
+	\item Article(\underline{key}, mdate, editor, title, pages, year, journal, volume, number, month, url, ee, cdrom, cite, publisher, note, crossref)
+	\item Article\_author(\underline{key}, author)
+	\item Book(\underline{key}, mdate, editor, title, pages, year, volume, month, url, ee, cdrom, cite, publisher, note, isbn, series, school, chapter)
+	\item Book\_author(\underline{key}, author)
+	\item Proceedings(\underline{key}, mdate, editor, title, pages, year, address, journal, volume, number, url, ee, publisher, note, crossref, isbn, series)
+	\item Proceedings\_author(\underline{key}, author)
+	\item Incollection(\underline{key}, mdate, title, pages, year, number, url, ee, cdrom, cite, publisher, note, crossref, chapter)
+	\item Incollection\_author(\underline{key}, author)
+	\item Inproceedings(\underline{key}, mdate, editor, title, pages, year, number, month, url, ee, cdrom, cite, note, crossref)
+	\item Inproceedings\_author(\underline{key}, author)
+	\item Masterthesis(\underline{key}, mdate, title, pages, year, url, ee, school)
+	\item Masterthesis\_author(\underline{key}, author)
+	\item Phdthesis(\underline{key}, mdate, title, pages, year, volume, number, url, ee, publisher, note, isbn, series, school)
+	\item Phdthesis\_author(\underline{key}, author)
+	\item www(\underline{key}, mdate, editor, title, year, url, cite, note, crossref)
+	\item www\_author(\underline{key}, author)
+\end{enumerate}
 \subsection{Fillig the database}
 After the database structure is created, our XML parser starts to work. This XML parse is based on the standart javax.xml library. Basically, it takes the data from different XML tags and writes them into CSV file, in order to copy this data into our database using COPY FROM command. The COPY FROM command operates much faster than a normal INSERT command because the data is read as a single transaction directly to the target table. On the other hand, it is a very strict format, and the entire COPY procedure will fail if just one line is malformed.	So our CSV file is accurately created using dblp.xml, all the data has ";" delimiters.
 \subsection{Functions}
