@@ -82,7 +82,7 @@ public class Record {
     }
 
     public void appendTitle(String append) {
-        append = append.replaceAll("'", "''").replaceAll(";", ",").replaceAll("\\\\", "");
+        append = append.replaceAll("'", "''").replaceAll(";", ",").replaceAll("\\\\", "").replaceAll("\"","");
         this.title += append;
     }
 
@@ -148,7 +148,7 @@ public class Record {
     }
 
     public String getTitle() {
-        return title == null ? title : title.replaceAll("\\\\", "");
+        return title == null ? title : title.replaceAll("\\\\", "").replaceAll("\"", "");
     }
 
     public void setTitle(String title) {
@@ -156,7 +156,7 @@ public class Record {
     }
 
     public String getBooktitle() {
-        return booktitle == null ? booktitle : booktitle.replaceAll("\\\\", "");
+        return booktitle == null ? booktitle : booktitle.replaceAll("\\\\", "").replaceAll("\"", "");
     }
 
     public void setBooktitle(String booktitle) {
@@ -220,7 +220,7 @@ public class Record {
     }
 
     public String getUrl() {
-        return url == null ? url : url.replaceAll("\\\\", "");
+        return url == null ? url : url.replaceAll("\\\\", "").replaceAll("\"","");
     }
 
     public void setUrl(String url) {

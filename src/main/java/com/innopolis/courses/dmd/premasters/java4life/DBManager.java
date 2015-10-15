@@ -29,13 +29,14 @@ public class DBManager {
         logger.wrapper.log(Level.INFO, "Starting copy values from CSV files to DB...");
         File folder = new File(CSVCreator.CSV_PATH);
         File[] listOfFiles = folder.listFiles();
-        try {
-            for (File file : listOfFiles) {
-                stmt.executeUpdate("COPY dblp.\"" + file.getName() + "\" from '" + file.getAbsolutePath() + "' (DELIMITER '" + COPY_DELIMITER + "')");
+        for (File file : listOfFiles) {
+            try {
+                stmt.executeUpdate("COPY dblp.\"" + file.getName() + "\" from '" + file.getAbsolutePath() + "' DELIMITER '" + COPY_DELIMITER + "' csv header encoding 'windows-1251'");
                 logger.wrapper.log(Level.INFO, "Values for " + file.getName().toUpperCase() + " table successfully copied");
+            } catch (SQLException e) {
+                logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
             }
-        } catch (SQLException e) {
-            logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
+
         }
         logger.wrapper.log(Level.INFO, "All values successfully copied!");
     }
