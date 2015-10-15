@@ -42,6 +42,7 @@ public class DBManager {
     }
 
     public static void createDB() {
+        long s1 = System.currentTimeMillis();
         try {
             logger.wrapper.log(Level.INFO, "Check if driver set...");
             Class.forName("org.postgresql.Driver");
@@ -61,6 +62,7 @@ public class DBManager {
         } catch (SQLException sqlException) {
             logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
         }
+        System.out.println(System.currentTimeMillis() - s1);
     }
 
     public static void createConstraints() {
