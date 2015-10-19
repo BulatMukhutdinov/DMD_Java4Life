@@ -25,10 +25,16 @@
         <processorPath useClasspath="true" />
         <module name="DMD" />
       </profile>
+      <profile default="false" name="Annotation profile for DMD_Java4Life" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="DMD" target="1.8" />
+      <module name="DMD_Java4Life" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
-

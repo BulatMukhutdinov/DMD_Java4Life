@@ -1,0 +1,18 @@
+$( "#next" ).click(function() {
+		  $.ajax({
+					type: "POST",
+					url: 'article_table.php',
+					data: {next: 1, prev: 0}
+				});
+			$('#datatable_body').load('article_table.php').hide().fadeIn('slow');	
+		});
+		$( "#next" ).click(function() {
+		  $.ajax({
+					type: "POST",
+					url: 'article_table.php',
+					data: {next: 0, prev: 1},
+				});
+			$("body").animate({ opacity: 0, backgroundColor: '#000' }, function() {
+											  window.location = '/browse.php'
+					})
+		});

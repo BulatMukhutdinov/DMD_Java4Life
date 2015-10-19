@@ -1,0 +1,141 @@
+@font-face {
+    font-family: "ProximaNovaRegular";
+    src: url("../fonts/ProximaNovaRegular/ProximaNovaRegular.eot");
+    src: url("../fonts/ProximaNovaRegular/ProximaNovaRegular.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/ProximaNovaRegular/ProximaNovaRegular.woff") format("woff"),
+    url("../fonts/ProximaNovaRegular/ProximaNovaRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "ProximaNovaBold"; */
+@font-face {
+    font-family: "ProximaNovaBold";
+    src: url("../fonts/ProximaNovaBold/ProximaNovaBold.eot");
+    src: url("../fonts/ProximaNovaBold/ProximaNovaBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/ProximaNovaBold/ProximaNovaBold.woff") format("woff"),
+    url("../fonts/ProximaNovaBold/ProximaNovaBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "ProximaNovaBlack"; */
+@font-face {
+    font-family: "ProximaNovaBlack";
+    src: url("../fonts/ProximaNovaBlack/ProximaNovaBlack.eot");
+    src: url("../fonts/ProximaNovaBlack/ProximaNovaBlack.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/ProximaNovaBlack/ProximaNovaBlack.woff") format("woff"),
+    url("../fonts/ProximaNovaBlack/ProximaNovaBlack.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+body{
+	margin: auto;
+}
+.title h1{
+	font-family: "ProximaNovaBold";
+	text-align: center;
+	font-size: 70px;
+    font-weight: 100;
+    margin: 40px 0;
+}
+.title h2 {
+	font-family: "ProximaNovaRegular";
+	font-weight: 100;
+	text-align: center;
+	font-size: 1.5em;
+    font-weight: 100;
+    margin: 1em 0;
+}
+.pure-g-valign-fix{display:block;}
+.buttons  a{
+    display: inline-block;
+    border: 2px solid #000;
+    color: #000;
+    padding: 1em 1.25em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 140px;
+    line-height: 1.3em;
+}
+.buttons p {
+		text-align: center;
+}
+.buttons {
+	float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+a.login{
+	margin-left: 20px;
+    border-color: transparent;
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+}
+/*
+ * -- MENU STYLES --
+ * I want to customize how my .pure-menu looks at the top of the page
+ */
+
+.home-menu {
+    padding: 0.5em;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+	position: relative;
+}
+.home-menu {
+    background: #001831;
+}
+.pure-menu.pure-menu-fixed {
+    /* Fixed menus normally have a border at the bottom. */
+    border-bottom: none;
+    /* I need a higher z-index here because of the scroll-over effect. */
+    z-index: 4;
+}
+
+.home-menu .pure-menu-heading {
+    color: white;
+    font-weight: 400;
+    font-size: 120%;
+}
+
+.home-menu .pure-menu-selected a {
+    color: #FFF !important;
+}
+
+.home-menu a {
+    color: #6FBEF3;
+}
+.home-menu li a:hover,
+.home-menu li a:focus {
+    background: none;
+    border: none;
+    color: #AECFE5;
+}
+.home-menu {
+        text-align: left;
+    }
+.home-menu ul {
+      float: right;
+	  top: 3px;
+    }
+.datatable_wrapper {
+	width: 90%;
+	padding: 50px;
+}
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+    padding-bottom: 8px;
+}
+div.CodeMirror{
+	border: 1px solid black;
+	width: 60%;
+	margin-left: 100px;
+    margin-top: 20px;
+}
+.queryForm {
+	margin-left: 100px;
+    margin-top: 20px;
+}
+

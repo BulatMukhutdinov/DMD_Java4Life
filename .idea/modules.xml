@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DMD.iml" filepath="$PROJECT_DIR$/DMD.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DMD_Java4Life.iml" filepath="$PROJECT_DIR$/DMD_Java4Life.iml" />
     </modules>
   </component>
 </project>
