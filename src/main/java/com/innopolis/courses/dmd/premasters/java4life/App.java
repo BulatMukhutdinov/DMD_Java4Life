@@ -16,10 +16,10 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
 
     public static void main(String[] args) {
-        //DBManager.createDB();
-        //XMLParser xmlParser = new XMLParser();
-        //xmlParser.STAXParse("src/main/resources/dblp.xml");
-
+        DBManager.createDB();
+        XMLParser xmlParser = new XMLParser();
+        xmlParser.STAXParse(getDataSource());
+        DBManager.copyCSV();
     }
 
     private static String getDataSource() {
