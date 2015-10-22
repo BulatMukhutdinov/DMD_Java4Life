@@ -2,7 +2,7 @@
 Autumn semester project for the DMD course by the team named "Java4Life": Bulat Mukhutdinov, Nikolay Yushkevich, Timur Shakirov.
 
 Features:
-• Realtime StAX parser of DBLP database
+• Realtime StAX parser of DBLP database<br>
 • Both HTML and console loggers
 • GZ decompressor
 • Creation of DB schema, according to DTD structure
