@@ -1,4 +1,10 @@
 DROP DATABASE IF EXISTS "DBLP";
 
-CREATE DATABASE "DBLP";
---WITH TEMPLATE template0 ENCODING 'LATIN1' LC_COLLATE 'English_Sweden.28591' LC_CTYPE = 'English_Sweden.28591';
+CREATE DATABASE "DBLP"
+  WITH OWNER = postgres
+	template = template0
+      ENCODING = 'SQL_ASCII'
+      TABLESPACE = pg_default
+      LC_COLLATE = 'Russian_Russia.1251'
+      LC_CTYPE = 'Russian_Russia.1251'
+      CONNECTION LIMIT = -1;

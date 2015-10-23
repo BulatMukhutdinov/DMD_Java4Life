@@ -16,9 +16,11 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
 
     public static void main(String[] args) {
+        clearCSV();
         DBManager.createDB();
         XMLParser xmlParser = new XMLParser();
-        xmlParser.STAXParse(getDataSource());
+        //  xmlParser.STAXParse(getDataSource());
+        xmlParser.STAXParse("src/main/resources/dblp.xml");
         DBManager.copyCSV();
     }
 
@@ -53,5 +55,14 @@ public class App {
             logger.wrapper.log(Level.WARNING, "Deleting failed");
         }
         return "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
+    }
+
+    private static void clearCSV() {
+        File csvs = new File(CSVCreator.CSV_PATH);
+        logger.wrapper.log(Level.INFO, "Deleting csv files...");
+        for (File csv : csvs.listFiles()) {
+            csv.delete();
+        }
+        logger.wrapper.log(Level.INFO, "Deleting successfully complete");
     }
 }
