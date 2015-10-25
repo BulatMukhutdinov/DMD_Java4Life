@@ -1,39 +1,38 @@
 <?php 
 	session_start();
-	if(!isset($_SESSION['article_offset']))
+	if(!isset($_SESSION['book_offset']))
 	{
-		$_SESSION['article_offset'] = 0;
+		$_SESSION['book_offset'] = 0;
 	}
 	$next = $_POST['next'];
 	$prev = $_POST['prev'];
 	if ($next === "1") {
-		if(isset($_SESSION['article_offset']))
+		if(isset($_SESSION['book_offset']))
 		{
-			$_SESSION['article_offset'] += 50;
+			$_SESSION['book_offset'] += 50;
 		}
 	} else if ($prev === "1") {
-		if(isset($_SESSION['article_offset']))
+		if(isset($_SESSION['book_offset']))
 		{
-			if($_SESSION['article_offset'] >= 50) {
-				$_SESSION['article_offset'] -= 50;
+			if($_SESSION['book_offset'] >= 50) {
+				$_SESSION['book_offset'] -= 50;
 			} else {
-				$_SESSION['article_offset'] = 0;
+				$_SESSION['book_offset'] = 0;
 			}
 			
 		}
 	} 
-	$offset = $_SESSION['article_offset'];
+	$offset = $_SESSION['book_offset'];
 	$d=pg_connect('host=localhost port=5432 user=postgres dbname=DBLP connect_timeout=5') or die('failed');
-	$query = "SELECT 
-	  article.key, 
-	  article.mdate, 
-	  article.title, 
-	  article.year, 
-	  article.journal, 
-	  article.volume, 
-	  article.number
+	$query = "SELECT DISTINCT
+	  book.editor,	
+	  book.title,
+	  book.mdate,
+	  book.year,   
+	  book.isbn
 	FROM 
-	  dblp.article
+	  dblp.book
+	ORDER BY editor ASC
 	LIMIT 50
 	OFFSET $offset;";
 	$result = pg_query($d, $query);

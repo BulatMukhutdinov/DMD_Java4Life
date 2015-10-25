@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php 
-			include('header.inc.php');
-		?>
-		<!-- Create a simple CodeMirror instance -->
+	<?php 
+		include('header.inc.php');
+	?>
 	<link rel="stylesheet" href="css/codemirror.css">
 	<script src="js/codemirror.js"></script>
 	<script src="js/sql.js"></script>
@@ -17,28 +16,52 @@
 			include('topnav.inc.php');
 	?>
 	<div class="pure-g" id="content_wrapper">
-		<div id="menu" class="pure-u-1-8">
-			<div class="pure-menu">
-				<a class="pure-menu-heading" href="#">TABLES</a>
-
-				<ul class="pure-menu-list">
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Articles</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Books</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Incollections</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Inproceedings</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Masters Thesises</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">PHD Thesises</a></li>
-					<li class="pure-menu-item"><a href="#" class="pure-menu-link">Proceedings</a></li>
-				</ul>
+		<div id="content" class="pure-u-1">
+				<form class="pure-form queryForm">
+					<textarea id="queryCode" name="queryCode"></textarea>
+					<button type="submit" class="pure-button pure-button-primary" id="send_query">Submit</button>
+				</form>
+			<div class="datatable_wrapper">
+				<table class="datatable pure-table pure-table-bordered">
+					<thead>
+					</thead>
+					<tbody id="datatable_body">
+						
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<div id="content" class="pure-u-7-8">
-				<form class="pure-form queryForm">
-					<textarea id="queryCode" name="queryCode">SELECT * FROM database;</textarea>
-					<button type="submit" class="pure-button pure-button-primary">Submit</button>
-				</form>
-		</div>
 	</div>
+		<script>
+		$('#send_query').click(function(event){
+			$('#datatable_body').html('');
+			var query = editor.getValue();
+			event.preventDefault();
+            event.stopPropagation();
+			$.ajax({
+				   type: "POST",
+				   url: 'query_send.php',
+				   data: ({"query" : query}),
+				   success: function(data)
+				   {
+					   var substr = data.substring(0, 5);
+					   if (substr == "ERROR") {
+						    var error = data.replace("ERROR: ", "");
+							if (error == '') {
+								error = "Warning: Empty input";
+							}
+							vex.dialog.open({
+												className: 'vex-theme-top', 
+												message: '<div>' + error + '</div>',
+												buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})]
+							});
+					   } else {
+						   $('#datatable_body').html(data);
+					   }
+				   }
+			   });
+		});
+		</script>
 		<script>
 		window.onload = function() {
 		  var mime = 'text/x-sql';
@@ -49,112 +72,37 @@
 			lineNumbers: true,
 			matchBrackets : true,
 			autofocus: true,
+			onBlur: function() { editor.save() },
 			extraKeys: {"Ctrl-Space": "autocomplete"},
 			hintOptions: {tables: {
-			  users: {name: null, score: null, birthDate: null},
-			  countries: {name: null, population: null, size: null}
+			  article: {key: null, mdate: null, editor: null, title: null, pages: null, year: null, journal: null, volume: null, number: null, month: null, url: null, ee: null, cdrom: null, cite: null, publisher: null, note: null, crossref: null},
+			  article_author: {key: null, author: null},
+              book: {key: null, mdate: null, editor: null, title: null, pages: null, year: null, volume: null, month: null, url: null, ee: null, cdrom: null, cite: null, publisher: null, note: null, isbn: null, series: null, school: null, chapter: null},
+			  book_author: {key: null, author: null},
+              incollection: {key: null, mdate: null, title: null, pages: null, year: null, number: null, url: null, ee: null, cdrom: null, cite: null, publisher: null, note: null, crossref: null, chapter: null},
+			  incollection_author: {key: null, author: null},
+              inproceedings: {key: null, mdate: null, editor: null, title: null, pages: null, year: null, number: null, month: null, url: null, ee: null, cdrom: null, cite: null, note: null, crossref: null},
+			  inproceedings_author: {key: null, author: null},
+              mastersthesis: {key: null, mdate: null, title: null, pages: null, year: null, url: null, ee: null, school: null},
+			  mastersthesis_author: {key: null, author: null},
+              phdthesis: {key: null, mdate: null, title: null, pages: null, year: null, volume: null, number: null, url: null, ee: null, publisher: null, note: null, isbn: null, series: null, school: null},
+			  phdthesis_author: {key: null, author: null},
+              proceedings: {key: null, mdate: null, editor: null, title: null, pages: null, year: null, address: null, jornal: null, volume: null, number: null, url: null, ee: null, publisher: null, note: null, crossref: null, isbn: null, series: null},
+			  proceedings_author: {key: null, author: null},
+              www: {key: null, mdate: null, editor: null, title: null, year: null, url: null, cite: null, note: null, crossref: null},
+              proceedings_author: {key: null, author: null}
 			}}
 		  });
 		};
 		</script>
-		<script>
-	$('a.top-login').click(function(event){
-    event.preventDefault();
-    vex.dialog.open({
-	  message: 'Please enter your username and password:',
-	  input: "<input name=\"username\" type=\"text\" placeholder=\"Username\" required />\n<input name=\"password\" type=\"password\" placeholder=\"Password\" required />",
-	  buttons: [
-		$.extend({}, vex.dialog.buttons.YES, {
-		  text: 'Login'
-		}), $.extend({}, vex.dialog.buttons.NO, {
-		  text: 'Back'
-		}),
-		$.extend({}, vex.dialog.buttons.NO, { text: 'Register', click: function($vexContent, event) {
-			vex.close();
-            vex.dialog.open({ 
-							message: 'Please, enter your credentials to create account',
-							input: '<input name=\"username\" type=\"text\" placeholder=\"Username\" required />\n<input name=\"email\" type=\"email\" placeholder=\"Email\"/>\n<input name=\"password\" type=\"password\" placeholder=\"Password\" required />\n<input name=\"password_conf\" type=\"password\" placeholder=\"Password confirm\" required />',
-							buttons: [$.extend({}, vex.dialog.buttons.YES, {
-								  text: 'Register'
-								})],
-							onSubmit: function(event) {
-								var $vexContent2;
-								event.preventDefault();
-								event.stopPropagation();
-								$vexContent2 = $(this).parent();
-								  $.ajax({
-									   type: "POST",
-									   url: 'register.php',
-									   data: $(this).serialize(),
-									   success: function(data)
-									   {
-										  var $username = document.getElementsByName("username")[0].value;
-										  if (data == "Success!") {
-											vex.dialog.open({
-												className: 'vex-theme-top', 
-												message: '<div>Welcome to our website, ' + $username + '</div>',
-												buttons: []	// sets a primary content
-											});
-											$("body").delay(1000).animate({ opacity: 0, backgroundColor: '#000' }, function() {
-											  window.location = '/index.html'
-											})
-										  }
-										  else if (data ==="You cannot use this login to register"){
-											vex.dialog.open({
-												className: 'vex-theme-top', 
-												message: '<div>Invalid credentials: ' + $username + '</div>',
-												buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})]
-											});
-										  }
-										  else if (data ==="Password and its confirmation should match!"){
-											vex.dialog.open({
-												className: 'vex-theme-top', 
-												message: '<div>Password and confirmation should match</div>',
-												buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})]
-											});
-										  }
-									   }
-								   });	
-							}
-															
-							});
-								}})
-				],
-	  onSubmit: function(event) {
-            var $vexContent;
-            event.preventDefault();
-            event.stopPropagation();
-            $vexContent = $(this).parent();
-			  $.ajax({
-				   type: "POST",
-				   url: 'login.php',
-				   data: $(this).serialize(),
-				   success: function(data)
-				   {
-					  var $username = document.getElementsByName("username")[0].value;
-					  if (data == "true") {
-						vex.dialog.open({
-							className: 'vex-theme-top', 
-							message: '<div>Hello, ' + $username + '</div>',
-							buttons: []	// sets a primary content
-						});
-						$("body").delay(1000).animate({ opacity: 0, backgroundColor: '#000' }, function() {
-						  window.location = '/user-page.php'
-						})
-					  }
-					  else {
-						vex.dialog.open({
-							className: 'vex-theme-top', 
-							message: '<div>Invalid credentials: ' + $username + '</div>',
-							buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})]
-						});
-					  }
-				   }
-			   });
-			  
-        }
-	});	
-	});
+	<script src="js/login-top.js">
+	</script>
+	<script type="text/javascript">
+	$(document).ajaxStart(function() {
+		Pace.restart();
+	}).ajaxStop( function() { 
+		Pace.stop();
+	})
 	</script>
 	</body>
 </html>

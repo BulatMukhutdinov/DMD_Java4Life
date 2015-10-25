@@ -200,7 +200,8 @@
   -ms-animation: vex-fadein 0.5s;
   -o-animation: vex-fadein 0.5s;
   -webkit-backface-visibility: hidden;
-  background: #fff; }
+  background: #fff;
+  z-index: 20;}
   .vex.vex-closing .vex-content {
     animation: vex-fadeout 0.5s;
     -webkit-animation: vex-fadeout 0.5s;
