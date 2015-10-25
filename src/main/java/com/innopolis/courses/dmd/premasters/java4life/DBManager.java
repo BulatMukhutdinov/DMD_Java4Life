@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class DBManager {
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles) {
             try {
-                stmt.executeUpdate("COPY dblp.\"" + file.getName() + "\" from '" + file.getAbsolutePath() + "' DELIMITER '" + COPY_DELIMITER + "' csv header encoding 'windows-1251'");
+                stmt.executeUpdate("COPY dblp.\"" + file.getName() + "\" from '" + file.getAbsolutePath() + "' DELIMITER '" + COPY_DELIMITER + "'");
                 logger.wrapper.log(Level.INFO, "Values for " + file.getName().toUpperCase() + " table successfully copied");
             } catch (SQLException e) {
                 logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + e);
@@ -42,7 +43,6 @@ public class DBManager {
     }
 
     public static void createDB() {
-        long s1 = System.currentTimeMillis();
         try {
             logger.wrapper.log(Level.INFO, "Check if driver set...");
             Class.forName("org.postgresql.Driver");
@@ -62,7 +62,6 @@ public class DBManager {
         } catch (SQLException sqlException) {
             logger.wrapper.log(Level.SEVERE, "Unexpected SQL exception: " + sqlException);
         }
-        System.out.println(System.currentTimeMillis() - s1);
     }
 
     public static void createConstraints() {

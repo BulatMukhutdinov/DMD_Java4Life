@@ -1,7 +1,10 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Record {
     private String mdate;
@@ -82,12 +85,14 @@ public class Record {
     }
 
     public void appendTitle(String append) {
-        append = append.replaceAll("'", "''").replaceAll(";", ",").replaceAll("\\\\", "").replaceAll("\"","");
+        append = append.replaceAll("'", "''").replaceAll(";", ",").replaceAll("\\\\", "").replaceAll("\"", "");
         this.title += append;
     }
 
     public String getMdate() {
-        return mdate == null ? mdate : mdate.replaceAll("\\\\", "");
+        mdate = mdate == null ? mdate : mdate.replaceAll("\\\\", "");
+        mdate = process(mdate);
+        return mdate;
     }
 
     public void setMdate(String mdate) {
@@ -95,7 +100,9 @@ public class Record {
     }
 
     public String getKey() {
-        return key == null ? key : key.replaceAll("\\\\", "");
+        key = key == null ? key : key.replaceAll("\\\\", "");
+        key = process(key);
+        return key;
     }
 
     public void setKey(String key) {
@@ -103,7 +110,9 @@ public class Record {
     }
 
     public String getPubltype() {
-        return publtype == null ? publtype : publtype.replaceAll("\\\\", "");
+        publtype = publtype == null ? publtype : publtype.replaceAll("\\\\", "");
+        publtype = process(publtype);
+        return publtype;
     }
 
     public void setPubltype(String publtype) {
@@ -111,7 +120,9 @@ public class Record {
     }
 
     public String getReviewid() {
-        return reviewid == null ? reviewid : reviewid.replaceAll("\\\\", "");
+        reviewid = reviewid == null ? reviewid : reviewid.replaceAll("\\\\", "");
+        reviewid = process(reviewid);
+        return reviewid;
     }
 
     public void setReviewid(String reviewid) {
@@ -119,7 +130,9 @@ public class Record {
     }
 
     public String getRating() {
-        return rating == null ? rating : rating.replaceAll("\\\\", "");
+        rating = rating == null ? rating : rating.replaceAll("\\\\", "");
+        rating = process(rating);
+        return rating;
     }
 
     public void setRating(String rating) {
@@ -132,7 +145,9 @@ public class Record {
     }
 
     public void addAuthor(String auth) {
-        authors.add(auth.replaceAll(";", ",").replaceAll("\\\\", ""));
+        auth = auth == null ? auth : auth.replaceAll("\\\\", "");
+        auth = process(auth);
+        authors.add(auth.replaceAll(";", ","));
     }
 
     public void setAuthors(Set<String> authors) {
@@ -140,7 +155,9 @@ public class Record {
     }
 
     public String getEditor() {
-        return editor == null ? editor : editor.replaceAll("\\\\", "");
+        editor = editor == null ? editor : editor.replaceAll("\\\\", "");
+        editor = process(editor);
+        return editor;
     }
 
     public void setEditor(String editor) {
@@ -148,7 +165,9 @@ public class Record {
     }
 
     public String getTitle() {
-        return title == null ? title : title.replaceAll("\\\\", "").replaceAll("\"", "");
+        title = title.replaceAll("\\\\", "").replaceAll("\"", "");
+        title = process(title);
+        return title;
     }
 
     public void setTitle(String title) {
@@ -156,7 +175,9 @@ public class Record {
     }
 
     public String getBooktitle() {
-        return booktitle == null ? booktitle : booktitle.replaceAll("\\\\", "").replaceAll("\"", "");
+        booktitle = booktitle == null ? booktitle : booktitle.replaceAll("\\\\", "");
+        booktitle = process(booktitle);
+        return booktitle;
     }
 
     public void setBooktitle(String booktitle) {
@@ -164,7 +185,9 @@ public class Record {
     }
 
     public String getPages() {
-        return pages == null ? pages : pages.replaceAll("\\\\", "");
+        pages = pages == null ? pages : pages.replaceAll("\\\\", "");
+        pages = process(pages);
+        return pages;
     }
 
     public void setPages(String pages) {
@@ -172,7 +195,9 @@ public class Record {
     }
 
     public String getYear() {
-        return year == null ? year : year.replaceAll("\\\\", "");
+        year = year == null ? year : year.replaceAll("\\\\", "");
+        year = process(year);
+        return year;
     }
 
     public void setYear(String year) {
@@ -180,7 +205,9 @@ public class Record {
     }
 
     public String getAddress() {
-        return address == null ? address : address.replaceAll("\\\\", "");
+        address = address == null ? address : address.replaceAll("\\\\", "");
+        address = process(address);
+        return address;
     }
 
     public void setAddress(String address) {
@@ -188,7 +215,9 @@ public class Record {
     }
 
     public String getVolume() {
-        return volume == null ? volume : volume.replaceAll("\\\\", "");
+        volume = volume == null ? volume : volume.replaceAll("\\\\", "");
+        volume = process(volume);
+        return volume;
     }
 
     public void setVolume(String volume) {
@@ -196,7 +225,9 @@ public class Record {
     }
 
     public String getJournal() {
-        return journal == null ? journal : journal.replaceAll("\\\\", "");
+        journal = journal == null ? journal : journal.replaceAll("\\\\", "");
+        journal = process(journal);
+        return journal;
     }
 
     public void setJournal(String journal) {
@@ -204,7 +235,9 @@ public class Record {
     }
 
     public String getNumber() {
-        return number == null ? number : number.replaceAll("\\\\", "");
+        number = number == null ? number : number.replaceAll("\\\\", "");
+        number = process(number);
+        return number;
     }
 
     public void setNumber(String number) {
@@ -212,7 +245,9 @@ public class Record {
     }
 
     public String getMonth() {
-        return month == null ? month : month.replaceAll("\\\\", "");
+        month = month == null ? month : month.replaceAll("\\\\", "");
+        month = process(month);
+        return month;
     }
 
     public void setMonth(String month) {
@@ -220,7 +255,9 @@ public class Record {
     }
 
     public String getUrl() {
-        return url == null ? url : url.replaceAll("\\\\", "").replaceAll("\"","");
+        url = url == null ? url : url.replaceAll("\\\\", "");
+        url = process(url);
+        return url;
     }
 
     public void setUrl(String url) {
@@ -228,7 +265,9 @@ public class Record {
     }
 
     public String getEe() {
-        return ee == null ? ee : ee.replaceAll("\\\\", "");
+        ee = ee == null ? ee : ee.replaceAll("\\\\", "");
+        ee = process(ee);
+        return ee;
     }
 
     public void setEe(String ee) {
@@ -236,7 +275,9 @@ public class Record {
     }
 
     public String getCdrom() {
-        return cdrom == null ? cdrom : cdrom.replaceAll("\\\\", "");
+        cdrom = cdrom == null ? cdrom : cdrom.replaceAll("\\\\", "");
+        cdrom = process(cdrom);
+        return cdrom;
     }
 
     public void setCdrom(String cdrom) {
@@ -244,7 +285,9 @@ public class Record {
     }
 
     public String getCite() {
-        return cite == null ? cite : cite.replaceAll("\\\\", "");
+        cite = cite == null ? cite : cite.replaceAll("\\\\", "");
+        cite = process(cite);
+        return cite;
     }
 
     public void setCite(String cite) {
@@ -252,7 +295,9 @@ public class Record {
     }
 
     public String getPublisher() {
-        return publisher == null ? publisher : publisher.replaceAll("\\\\", "");
+        publisher = publisher == null ? publisher : publisher.replaceAll("\\\\", "");
+        publisher = process(publisher);
+        return publisher;
     }
 
     public void setPublisher(String publisher) {
@@ -260,7 +305,9 @@ public class Record {
     }
 
     public String getNote() {
-        return note == null ? note : note.replaceAll("\\\\", "");
+        note = note == null ? note : note.replaceAll("\\\\", "");
+        note = process(note);
+        return note;
     }
 
     public void setNote(String note) {
@@ -268,7 +315,9 @@ public class Record {
     }
 
     public String getCrossref() {
-        return crossref == null ? crossref : crossref.replaceAll("\\\\", "");
+        crossref = crossref == null ? crossref : crossref.replaceAll("\\\\", "");
+        crossref = process(crossref);
+        return crossref;
     }
 
     public void setCrossref(String crossref) {
@@ -276,7 +325,9 @@ public class Record {
     }
 
     public String getIsbn() {
-        return isbn == null ? isbn : isbn.replaceAll("\\\\", "");
+        isbn = isbn == null ? isbn : isbn.replaceAll("\\\\", "");
+        isbn = process(isbn);
+        return isbn;
     }
 
     public void setIsbn(String isbn) {
@@ -284,7 +335,9 @@ public class Record {
     }
 
     public String getSeries() {
-        return series == null ? series : series.replaceAll("\\\\", "");
+        series = series == null ? series : series.replaceAll("\\\\", "");
+        series = process(series);
+        return series;
     }
 
     public void setSeries(String series) {
@@ -292,7 +345,9 @@ public class Record {
     }
 
     public String getSchool() {
-        return school == null ? school : school.replaceAll("\\\\", "");
+        school = school == null ? school : school.replaceAll("\\\\", "");
+        school = process(school);
+        return school;
     }
 
     public void setSchool(String school) {
@@ -300,7 +355,9 @@ public class Record {
     }
 
     public String getChapter() {
-        return chapter == null ? chapter : chapter.replaceAll("\\\\", "");
+        chapter = chapter == null ? chapter : chapter.replaceAll("\\\\", "");
+        chapter = process(chapter);
+        return chapter;
     }
 
     public void setChapter(String chapter) {
@@ -383,6 +440,15 @@ public class Record {
         if (getSchool() != null ? !getSchool().equals(record.getSchool()) : record.getSchool() != null) return false;
         return !(getChapter() != null ? !getChapter().equals(record.getChapter()) : record.getChapter() != null);
 
+    }
+
+    private String process(String str) {
+        if (str==null) return str;
+        Pattern unicodeOutliers = Pattern.compile("[^\\x00-\\x7F]",
+                Pattern.UNICODE_CASE | Pattern.CANON_EQ
+                        | Pattern.CASE_INSENSITIVE);
+        Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(str);
+        return unicodeOutlierMatcher.replaceAll(" ");
     }
 
     @Override
