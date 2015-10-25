@@ -22,6 +22,7 @@ public class App {
         //  xmlParser.STAXParse(getDataSource());
         xmlParser.STAXParse("src/main/resources/dblp.xml");
         DBManager.copyCSV();
+        DBManager.createConstraints();
     }
 
     private static String getDataSource() {

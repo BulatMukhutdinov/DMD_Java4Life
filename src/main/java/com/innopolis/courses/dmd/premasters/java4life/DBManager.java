@@ -27,7 +27,6 @@ public class DBManager {
     public static Statement stmt = null;
 
     public static void copyCSV() {
-        //createConnection(URL + DB_NAME, USER, PASS);
         logger.wrapper.log(Level.INFO, "Starting copy values from CSV files to DB...");
         File folder = new File(CSVCreator.CSV_PATH);
         File[] listOfFiles = folder.listFiles();
