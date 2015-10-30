@@ -14,15 +14,16 @@ public class App {
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
     public static final String URL = "http://dblp.uni-trier.de/xml/";
     public static final String FILE_NAME = "dblp.xml.gz";
+    public static final DBManager dbManager = new DBManager();
 
     public static void main(String[] args) {
         clearCSV();
-        DBManager.createDB();
+        dbManager.createDB();
         XMLParser xmlParser = new XMLParser();
         //  xmlParser.STAXParse(getDataSource());
-        xmlParser.STAXParse("src/main/resources/dblp.xml");
-        DBManager.copyCSV();
-        DBManager.createConstraints();
+        xmlParser.STAXParse("dblp.xml");
+        dbManager.copyCSV();
+        dbManager.createConstraints();
     }
 
     private static String getDataSource() {
@@ -60,6 +61,9 @@ public class App {
 
     private static void clearCSV() {
         File csvs = new File(CSVCreator.CSV_PATH);
+        if (!csvs.exists()) {
+            csvs.mkdir();
+        }
         logger.wrapper.log(Level.INFO, "Deleting csv files...");
         for (File csv : csvs.listFiles()) {
             csv.delete();

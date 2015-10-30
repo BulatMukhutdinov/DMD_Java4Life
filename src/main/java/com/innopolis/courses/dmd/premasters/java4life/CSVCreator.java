@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CSVCreator {
 
-    public static final String CSV_PATH = "src/main/resources/csv/";
+    public static final String CSV_PATH = "csv/";
 
     public static void writeBuffered(String fileName, List<String> records, int bufSize) throws IOException {
         try (PrintWriter bufferedWriter = new PrintWriter(new BufferedWriter(new FileWriter(CSV_PATH + fileName, true), bufSize))) {

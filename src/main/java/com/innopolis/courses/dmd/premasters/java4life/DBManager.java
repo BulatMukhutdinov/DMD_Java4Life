@@ -1,8 +1,6 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -26,7 +24,7 @@ public class DBManager {
     public static Connection conn = null;
     public static Statement stmt = null;
 
-    public static void copyCSV() {
+    public void copyCSV() {
         logger.wrapper.log(Level.INFO, "Starting copy values from CSV files to DB...");
         File folder = new File(CSVCreator.CSV_PATH);
         File[] listOfFiles = folder.listFiles();
@@ -42,7 +40,7 @@ public class DBManager {
         logger.wrapper.log(Level.INFO, "All values successfully copied!");
     }
 
-    public static void createDB() {
+    public void createDB() {
         try {
             logger.wrapper.log(Level.INFO, "Check if driver set...");
             Class.forName("org.postgresql.Driver");
@@ -64,19 +62,23 @@ public class DBManager {
         }
     }
 
-    public static void createConstraints() {
-        //createConnection(URL + DB_NAME, USER, PASS);
+    public void createConstraints() {
         logger.wrapper.log(Level.INFO, "Try to set constraints...");
         executeSQLScript(CONSTRAINTS);
     }
 
-    private static void executeSQLScript(String fileLocation) {
+    private void executeSQLScript(String fileLocation) {
         try {
             logger.wrapper.log(Level.INFO, "Looking for script");
 
-            Path path = Paths.get(fileLocation);
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream(fileLocation);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            String sql = "";
             logger.wrapper.log(Level.INFO, "Start reading from script...");
-            String sql = java.nio.file.Files.lines(path).collect(Collectors.joining());
+            while ((line = reader.readLine()) != null) {
+                sql += line;
+            }
             logger.wrapper.log(Level.INFO, "Successfully read script");
             logger.wrapper.log(Level.INFO, "Start executing queries...");
             stmt.executeUpdate(sql);
@@ -90,7 +92,7 @@ public class DBManager {
         }
     }
 
-    private static void createConnection(String url, String user, String pass) {
+    public void createConnection(String url, String user, String pass) {
         try {
             conn = DriverManager.getConnection(url, user, pass);
             stmt = conn.createStatement();
