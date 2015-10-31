@@ -1,20 +1,14 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class DBManager {
     public static final String URL = "jdbc:postgresql://localhost:5432/";
-    public static final String USER = "postgres";
-    public static final String PASS = "postgres";
     public static final String DB_CREATION = "src/main/resources/sql/dbCreation";
     public static final String TABLES_CREATION = "src/main/resources/sql/tablesCreation";
     public static final String CONSTRAINTS = "src/main/resources/sql/constraints";
@@ -23,6 +17,13 @@ public class DBManager {
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
     public static Connection conn = null;
     public static Statement stmt = null;
+    private static String username;
+    private static String password;
+
+    public DBManager(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public void copyCSV() {
         logger.wrapper.log(Level.INFO, "Starting copy values from CSV files to DB...");
@@ -46,13 +47,13 @@ public class DBManager {
             Class.forName("org.postgresql.Driver");
             logger.wrapper.log(Level.INFO, "Driver set correctly");
             //DB creation
-            createConnection(URL, USER, PASS);
+            createConnection(URL);
             logger.wrapper.log(Level.INFO, "Try to create database...");
             executeSQLScript(DB_CREATION);
             conn.close();
             stmt.close();
             //tables creation
-            createConnection(URL + DB_NAME, USER, PASS);
+            createConnection(URL + DB_NAME);
             logger.wrapper.log(Level.INFO, "Try to create tables...");
             executeSQLScript(TABLES_CREATION);
         } catch (ClassNotFoundException e) {
@@ -92,9 +93,9 @@ public class DBManager {
         }
     }
 
-    public void createConnection(String url, String user, String pass) {
+    private void createConnection(String url) {
         try {
-            conn = DriverManager.getConnection(url, user, pass);
+            conn = DriverManager.getConnection(url, username, password);
             stmt = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
