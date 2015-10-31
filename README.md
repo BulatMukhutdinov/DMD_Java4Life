@@ -18,3 +18,8 @@ Run the application with following JVM properties: -Xmx1G -DentityExpansionLimit
 0. phdthesis – A PhD thesis.
 0. mastersthesis – A Master's thesis. There are only very few Master's theses in dblp.
 0. www – A web page. There are only very few web pages in dblp. See also the notes on person records.
+
+Jar runnig example:<br />
+java -jar DMD.jar -u postgres -p postgres<br />
+Will run app with username "postgres" and password "postgres" and dblp.xml should be placed in same directory.<br />
+For download source xml file add "-d" arg.<br />
