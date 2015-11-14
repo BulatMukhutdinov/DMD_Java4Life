@@ -1,12 +1,11 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.*;
 
 public class LoggerWrapper {
     public static final Logger wrapper = Logger.getLogger(LoggerWrapper.class.getName());
-    public static final String LOG_PATH = "logs/";
+    public static final String LOG_PATH = "logs/Log Info";
     private static LoggerWrapper instance = null;
 
     public static LoggerWrapper getInstance() {
@@ -19,16 +18,12 @@ public class LoggerWrapper {
 
     private static void createLogger() {
         try {
-            File log = new File(LOG_PATH);
-            if (!log.exists()) {
-                log.mkdir();
-            }
-            log = new File(LOG_PATH + "log.txt");
-            if (log.exists()) {
-                log.createNewFile();
-            }
-            FileHandler fileHandler = new FileHandler(LOG_PATH + "log.txt", true);
+            FileHandler fileHandler = new FileHandler(LOG_PATH + ".txt", true);
             wrapper.addHandler(fileHandler);
+            HtmlFormatter htmlformatter = new HtmlFormatter();
+            FileHandler htmlFile = new FileHandler(LOG_PATH + ".htm", true);
+            htmlFile.setFormatter(htmlformatter);
+            wrapper.addHandler(htmlFile);
             wrapper.addHandler(new Handler() {
                 @Override
                 public void publish(LogRecord record) {

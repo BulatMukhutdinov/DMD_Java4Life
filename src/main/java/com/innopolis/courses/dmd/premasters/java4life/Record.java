@@ -1,12 +1,13 @@
 package com.innopolis.courses.dmd.premasters.java4life;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Record {
+public class Record implements Serializable {
     private String mdate;
     private String key;
     private String publtype;
@@ -82,6 +83,36 @@ public class Record {
         this.series = series;
         this.school = school;
         this.chapter = chapter;
+    }
+
+    public Record(Record record) {
+        this.mdate = record.mdate;
+        this.key = record.key;
+        this.publtype = record.publtype;
+        this.reviewid = record.reviewid;
+        this.rating = record.rating;
+        this.authors = record.authors;
+        this.editor = record.editor;
+        this.title = record.title;
+        this.booktitle = record.booktitle;
+        this.pages = record.pages;
+        this.year = record.year;
+        this.address = record.address;
+        this.volume = record.volume;
+        this.journal = record.journal;
+        this.number = record.number;
+        this.month = record.month;
+        this.url = record.url;
+        this.ee = record.ee;
+        this.cdrom = record.cdrom;
+        this.cite = record.cite;
+        this.publisher = record.publisher;
+        this.note = record.note;
+        this.crossref = record.crossref;
+        this.isbn = record.isbn;
+        this.series = record.series;
+        this.school = record.school;
+        this.chapter = record.chapter;
     }
 
     public void appendTitle(String append) {
@@ -366,35 +397,11 @@ public class Record {
 
     @Override
     public String toString() {
-        return "Record{" +
-                "mdate='" + mdate + '\'' +
-                ", key='" + key + '\'' +
-                ", publtype='" + publtype + '\'' +
-                ", reviewid='" + reviewid + '\'' +
-                ", rating='" + rating + '\'' +
-                ", authors=" + authors +
-                ", editor='" + editor + '\'' +
-                ", title='" + title + '\'' +
-                ", booktitle='" + booktitle + '\'' +
-                ", pages='" + pages + '\'' +
-                ", year='" + year + '\'' +
-                ", address='" + address + '\'' +
-                ", volume='" + volume + '\'' +
-                ", journal='" + journal + '\'' +
-                ", number='" + number + '\'' +
-                ", month='" + month + '\'' +
-                ", url='" + url + '\'' +
-                ", ee='" + ee + '\'' +
-                ", cdrom='" + cdrom + '\'' +
-                ", cite='" + cite + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", note='" + note + '\'' +
-                ", crossref='" + crossref + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", series='" + series + '\'' +
-                ", school='" + school + '\'' +
-                ", chapter='" + chapter + '\'' +
-                '}';
+        return mdate + ";" + key + ";" + publtype + ";" + reviewid + ";" + rating + ";" + authors + ";" + editor
+                + ";" + title + ";" + booktitle + ";" + pages + ";" + year + ";" + address
+                + ";" + volume + ";" + journal + ";" + number + ";" + month
+                + ";" + url + ";" + ee + ";" + cdrom + ";" + cite + ";" + publisher + ";" + note + ";" + crossref
+                + ";" + isbn + ";" + series + ";" + school + ";" + chapter+"\n";
     }
 
     @Override
@@ -443,7 +450,7 @@ public class Record {
     }
 
     private String process(String str) {
-        if (str==null) return str;
+        if (str == null) return str;
         Pattern unicodeOutliers = Pattern.compile("[^\\x00-\\x7F]",
                 Pattern.UNICODE_CASE | Pattern.CANON_EQ
                         | Pattern.CASE_INSENSITIVE);

@@ -7,190 +7,76 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.logging.Level;
 
 public class XMLParser {
 
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
-    private final static String DELIMITER = ";";
-    private final static int MAX_ELEMS = 100000;
-    private static final int Mb = (int) Math.pow(1024, 2);
-
-    private static List<String> articles = new ArrayList<>();
-    private static List<String> articleAuthors = new ArrayList<>();
-    private static List<String> books = new ArrayList<>();
-    private static List<String> bookAuthors = new ArrayList<>();
-    private static List<String> incollections = new ArrayList<>();
-    private static List<String> incollectionAuthors = new ArrayList<>();
-    private static List<String> inproceedings = new ArrayList<>();
-    private static List<String> inproceedingsAuthors = new ArrayList<>();
-    private static List<String> mastersthesises = new ArrayList<>();
-    private static List<String> mastersthesisAuthors = new ArrayList<>();
-    private static List<String> phdthesises = new ArrayList<>();
-    private static List<String> phdthesisAuthors = new ArrayList<>();
-    private static List<String> proceedings = new ArrayList<>();
-    private static List<String> proceedingsAuthors = new ArrayList<>();
-    private static List<String> wwws = new ArrayList<>();
-    private static List<String> wwwAuthors = new ArrayList<>();
+    private ConcurrentNavigableMap<String, Record> articles = DBManager.getDb().treeMap("article");
+    private ConcurrentNavigableMap<String, String> articleAuthors = DBManager.getDb().treeMap("article_author");
+    private ConcurrentNavigableMap<String, Record> books = DBManager.getDb().treeMap("book");
+    private ConcurrentNavigableMap<String, String> bookAuthors = DBManager.getDb().treeMap("book_author");
+    private ConcurrentNavigableMap<String, Record> incollections = DBManager.getDb().treeMap("incollection");
+    private ConcurrentNavigableMap<String, String> incollectionAuthors = DBManager.getDb().treeMap("incollection_author");
+    private ConcurrentNavigableMap<String, Record> inproceedings = DBManager.getDb().treeMap("inproceeding");
+    private ConcurrentNavigableMap<String, String> inproceedingsAuthors = DBManager.getDb().treeMap("inproceedings_author");
+    private ConcurrentNavigableMap<String, Record> mastersthesises = DBManager.getDb().treeMap("mastersthesis");
+    private ConcurrentNavigableMap<String, String> mastersthesisAuthors = DBManager.getDb().treeMap("mastersthesis_author");
+    private ConcurrentNavigableMap<String, Record> phdthesises = DBManager.getDb().treeMap("phdthesis");
+    private ConcurrentNavigableMap<String, String> phdthesisAuthors = DBManager.getDb().treeMap("phdthesis_author");
+    private ConcurrentNavigableMap<String, Record> proceedings = DBManager.getDb().treeMap("proceeding");
+    private ConcurrentNavigableMap<String, String> proceedingsAuthors = DBManager.getDb().treeMap("proceedings_author");
+    private ConcurrentNavigableMap<String, Record> wwws = DBManager.getDb().treeMap("www");
+    private ConcurrentNavigableMap<String, String> wwwAuthors = DBManager.getDb().treeMap("www_author");
 
 
-    private static void insertRecordIntoDbUserTable(Record record, String table) {
-        try {
-            if (table == "article") {
-                if (articles.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("article", articles, 4 * Mb);
-                }
-                articles.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getEditor()
-                        + DELIMITER + record.getTitle() + DELIMITER + record.getPages() + DELIMITER
-                        + record.getYear() + DELIMITER + record.getJournal() + DELIMITER + record.getVolume() + DELIMITER
-                        + record.getNumber() + DELIMITER + record.getMonth() + DELIMITER + record.getUrl() + DELIMITER
-                        + record.getEe() + DELIMITER + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
-                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER + record.getCrossref() + "\n");
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (articleAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("article_author", articleAuthors, 4 * Mb);
-                    }
-                    articleAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-                }
-            } else if (table == "book") {
-                if (books.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("book", books, 4 * Mb);
-                }
-                books.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER
-                        + record.getEditor() + DELIMITER + record.getTitle()
-                        + DELIMITER + record.getPages() + DELIMITER + record.getYear() + DELIMITER
-                        + record.getVolume() + DELIMITER + record.getMonth() + DELIMITER
-                        + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
-                        + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
-                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
-                        + record.getIsbn() + DELIMITER + record.getSeries() + DELIMITER
-                        + record.getSchool() + DELIMITER + record.getChapter() + "\n");
-
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (bookAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("book_author", bookAuthors, 4 * Mb);
-                    }
-                    bookAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
-                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-
-                }
-            } else if (table == "incollection") {
-                if (incollections.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("incollection", incollections, 4 * Mb);
-                }
-                incollections.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER
-                        + record.getTitle() + DELIMITER + record.getPages() + DELIMITER
-                        + record.getYear() + DELIMITER + record.getNumber() + DELIMITER
-                        + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
-                        + record.getCdrom() + DELIMITER + record.getCite() + DELIMITER
-                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
-                        + record.getCrossref() + DELIMITER + record.getChapter() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (incollectionAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("incollection_author", incollectionAuthors, 4 * Mb);
-                    }
-                    incollectionAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
-                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-                }
-            } else if (table == "inproceedings") {
-                if (inproceedings.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("inproceedings", inproceedings, 4 * Mb);
-                }
-                inproceedings.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER +
-                        record.getEditor() + DELIMITER + record.getTitle() + DELIMITER +
-                        record.getPages() + DELIMITER + record.getYear() + DELIMITER +
-                        record.getNumber() + DELIMITER + record.getMonth() + DELIMITER +
-                        record.getUrl() + DELIMITER + record.getEe() + DELIMITER + record.getCdrom() + DELIMITER +
-                        record.getCite() + DELIMITER + record.getNote() + DELIMITER + record.getCrossref() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (inproceedingsAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("inproceedings_author", inproceedingsAuthors, 4 * Mb);
-                    }
-                    inproceedingsAuthors.add(record.getKey().replaceAll("'", "''")
-                            + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-                }
-            } else if (table == "mastersthesis") {
-                if (mastersthesises.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("mastersthesis", mastersthesises, 4 * Mb);
-                }
-                mastersthesises.add(record.getKey() + DELIMITER + record.getMdate()
-                        + DELIMITER + record.getTitle() + DELIMITER
-                        + record.getPages() + DELIMITER + record.getYear()
-                        + DELIMITER + record.getUrl() + DELIMITER + record.getEe()
-                        + DELIMITER + record.getSchool() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (mastersthesisAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("mastersthesis_author", mastersthesisAuthors, 4 * Mb);
-                    }
-                    mastersthesisAuthors.add(record.getKey().replaceAll("'", "''")
-                            + DELIMITER + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-
-                }
-            } else if (table == "phdthesis") {
-                if (phdthesises.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("phdthesis", phdthesises, 4 * Mb);
-                }
-                phdthesises.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getTitle()
-                        + DELIMITER + record.getPages() + DELIMITER + record.getYear() + DELIMITER
-                        + record.getVolume() + DELIMITER + record.getNumber() + DELIMITER + record.getUrl()
-                        + DELIMITER + record.getEe() + DELIMITER + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
-                        + record.getIsbn() + DELIMITER + record.getSeries() + DELIMITER + record.getSchool() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (phdthesisAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("phdthesis_author", phdthesisAuthors, 4 * Mb);
-                    }
-                    phdthesisAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
-                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-
-                }
-            } else if (table == "proceedings") {
-                if (proceedings.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("proceedings", proceedings, 4 * Mb);
-                }
-                proceedings.add(record.getKey() + DELIMITER + record.getMdate()
-                        + DELIMITER + record.getEditor() + DELIMITER + record.getTitle() + DELIMITER
-                        + record.getPages() + DELIMITER + record.getYear() + DELIMITER + record.getAddress()
-                        + DELIMITER + record.getJournal() + DELIMITER + record.getVolume() + DELIMITER
-                        + record.getNumber() + DELIMITER + record.getUrl() + DELIMITER + record.getEe() + DELIMITER
-                        + record.getPublisher() + DELIMITER + record.getNote() + DELIMITER
-                        + record.getCrossref() + DELIMITER + record.getIsbn() + DELIMITER + record.getSeries() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (proceedingsAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("proceedings_author", proceedingsAuthors, 4 * Mb);
-                    }
-                    proceedingsAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
-                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-
-                }
-            } else if (table == "www") {
-                if (wwws.size() == MAX_ELEMS) {
-                    CSVCreator.writeBuffered("www", wwws, 4 * Mb);
-                }
-                wwws.add(record.getKey() + DELIMITER + record.getMdate() + DELIMITER + record.getEditor()
-                        + DELIMITER + record.getTitle() + DELIMITER + record.getYear() + DELIMITER
-                        + record.getUrl() + DELIMITER + record.getCite() + DELIMITER
-                        + record.getNote() + DELIMITER + record.getCrossref() + "\n");
-
-                for (int i = 0; i < record.getAuthors().length; i++) {
-                    if (wwwAuthors.size() == MAX_ELEMS) {
-                        CSVCreator.writeBuffered("www_author", wwwAuthors, 4 * Mb);
-                    }
-                    wwwAuthors.add(record.getKey().replaceAll("'", "''") + DELIMITER
-                            + record.getAuthors()[i].replaceAll("'", "''") + "\n");
-                }
+    private void insertRecordIntoDbUserTable(Record record, String table) {
+        if (table == "article") {
+            articles.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                articleAuthors.put(record.getKey(), record.getAuthors()[i]);
             }
-        } catch (IOException e) {
-            logger.wrapper.log(Level.SEVERE, "Unexpected IO exception: " + e);
+        } else if (table == "book") {
+            books.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                bookAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "incollection") {
+            incollections.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                incollectionAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "inproceedings") {
+            inproceedings.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                inproceedingsAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "mastersthesis") {
+            mastersthesises.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                mastersthesisAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "phdthesis") {
+            phdthesises.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                phdthesisAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "proceedings") {
+            proceedings.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                proceedingsAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
+        } else if (table == "www") {
+            wwws.put(record.getKey(), record);
+            for (int i = 0; i < record.getAuthors().length; i++) {
+                wwwAuthors.put(record.getKey(), record.getAuthors()[i]);
+            }
         }
     }
 
@@ -336,25 +222,9 @@ public class XMLParser {
         } catch (XMLStreamException e) {
             logger.wrapper.log(Level.SEVERE, "Unexpected XML exception during parsing: " + e);
         }
-        try {
-            CSVCreator.writeBuffered("article", articles, 4 * Mb);
-            CSVCreator.writeBuffered("article_author", articleAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("book", books, 4 * Mb);
-            CSVCreator.writeBuffered("book_author", bookAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("incollection", incollections, 4 * Mb);
-            CSVCreator.writeBuffered("incollection_author", incollectionAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("inproceedings", inproceedings, 4 * Mb);
-            CSVCreator.writeBuffered("inproceedings_author", inproceedingsAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("mastersthesis", mastersthesises, 4 * Mb);
-            CSVCreator.writeBuffered("mastersthesis_author", mastersthesisAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("phdthesis", phdthesises, 4 * Mb);
-            CSVCreator.writeBuffered("phdthesis_author", phdthesisAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("proceedings", proceedings, 4 * Mb);
-            CSVCreator.writeBuffered("proceedings_author", proceedingsAuthors, 4 * Mb);
-            CSVCreator.writeBuffered("www", wwws, 4 * Mb);
-            CSVCreator.writeBuffered("www_author", wwws, 4 * Mb);
-        } catch (IOException e) {
-            logger.wrapper.log(Level.SEVERE, "Unexpected IO exception: " + e);
-        }
+        System.out.println("START commit");
+        DBManager.getDb().commit();
+        System.out.println("END commit");
+        DBManager.getDb().close();
     }
 }
