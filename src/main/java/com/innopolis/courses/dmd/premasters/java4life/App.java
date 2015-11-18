@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentNavigableMap;
@@ -21,20 +23,25 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
     static Map.Entry<String, Record> entry;
 
-    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         ConcurrentNavigableMap<String, Record> wwws = DBManager.getDb().treeMap("www");
         ConcurrentNavigableMap<String, Record> articles = DBManager.getDb().treeMap("article");
-        LinkedHashMap<String, Record> map = DBManager.groupBy(articles, "mdate", 10);
-        for (Map.Entry<String, Record> e : map.entrySet()) {
-            System.out.println(DBManager.toJSON(e.getValue()));
-        }
-        //Map<>
-        //XMLParser xmlParser = new XMLParser();
-        //  xmlParser.STAXParse(getDataSource());
-        //xmlParser.STAXParse("src/main/resources/dblp.xml");
+
+        // GROUP BY
+        // LinkedHashMap<String, Record> map = DBManager.groupBy(articles, "mdate", 10);
+        // SELECT
+        // String result = DBManager.parseAndExecute("select * from article 10 50");
+        // PROJECTION
+        // String result = DBManager.parseAndExecute("select key mdate rating from article 10 50");
+        // INSERT
+        // String result = DBManager.parseAndExecute("insert into article values " +
+        //       "test test test test test test test test test test test test test test test test test test test test test test test test test test test");
+        // UPDATE
+        //DBManager.parseAndExecute("update article set rating = NEW_RATING where mdate = test");
+
+        //  XMLParser xmlParser = new XMLParser();
+        //    xmlParser.STAXParse("src/main/resources/dblp.xml");
         DBManager.getDb().close();
-        Server server = new Server();
-        server.start(6666);
     }
 
     private static String getDataSource() {

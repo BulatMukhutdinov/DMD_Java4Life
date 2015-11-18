@@ -5,6 +5,8 @@ import org.mapdb.*;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -122,13 +124,15 @@ public class DBManager {
         return result;
     }
 
-    public static String parseAndExecute(String line) {
+    public static String parseAndExecute(String line) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         String args[] = line.split(" ");
         String result = "";
-        Map<String, Record> resultTable = null;
+        List<String> fields = new LinkedList<>();
+        Map<String, Record> resultTable = new HashMap<>();
+        ConcurrentNavigableMap<String, Record> table;
         if (args[0].equalsIgnoreCase("join")) {
-            ConcurrentNavigableMap<String, Record> table1 = DBManager.getDb().treeMap(args[1].toLowerCase());
-            ConcurrentNavigableMap<String, Record> table2 = DBManager.getDb().treeMap(args[2].toLowerCase());
+            ConcurrentNavigableMap<String, Record> table1 = db.treeMap(args[1].toLowerCase());
+            ConcurrentNavigableMap<String, Record> table2 = db.treeMap(args[2].toLowerCase());
             try {
                 resultTable = join(table1, table2, Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5]);
             } catch (NoSuchFieldException e) {
@@ -138,7 +142,7 @@ public class DBManager {
                 return null;
             }
         } else if (args[0].equalsIgnoreCase("groupBy")) {
-            ConcurrentNavigableMap<String, Record> table = DBManager.getDb().treeMap(args[1]);
+            table = DBManager.getDb().treeMap(args[1]);
             try {
                 resultTable = groupBy(table, args[2], Integer.parseInt(args[3]));
             } catch (NoSuchFieldException e) {
@@ -146,9 +150,67 @@ public class DBManager {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        } else if (args[0].equalsIgnoreCase("select")) {
+            int offset;
+            int limit;
+            if (args[1].equals("*")) { // select * from article 10 50
+                table = DBManager.getDb().treeMap(args[3].toLowerCase());
+                offset = Integer.parseInt(args[5]);
+                limit = Integer.parseInt(args[4]);
+
+            } else { // select key mdate from article 10 50
+                int i = 1;
+                while (!args[i].equals("from")) {
+                    fields.add(args[i]);
+                    i++;
+                }
+                table = DBManager.getDb().treeMap(args[++i].toLowerCase());
+                limit = Integer.parseInt(args[++i]);
+                offset = Integer.parseInt(args[++i]);
+
+            }
+            resultTable = new ConcurrentSkipListMap();
+            for (Map.Entry<String, Record> entry : table.entrySet()) {
+                if (offset > 0) {
+                    offset--;
+                    continue;
+                }
+                if (limit == 0) {
+                    break;
+                }
+                limit--;
+                resultTable.put(entry.getKey(), entry.getValue());
+            }
+            // isert into author values key mdate ...
+        } else if (args[0].equalsIgnoreCase("insert")) { // авторы через ;
+            table = db.treeMap(args[2].toLowerCase());
+            Set<String> authors = new HashSet<>();
+            for (String auth : args[9].split(";")) {
+                authors.add(auth);
+            }
+            Record record = new Record(args[4], args[5], args[6], args[7], args[8], authors, args[10], args[11],
+                    args[12], args[13], args[14], args[15],
+                    args[16], args[17], args[18], args[19], args[20], args[21], args[22], args[23], args[24], args[25], args[26], args[27], args[28], args[29], args[30]);
+            table.put(record.getKey(), record);
+            db.commit();
+        } else if (args[0].equalsIgnoreCase("update")) { // update article set mdate = newMdate where key = myKey
+            table = db.treeMap(args[1].toLowerCase());
+            String updateField = args[3];
+            String value = args[5];
+            Field field;
+            Method method;
+            for (Map.Entry<String, Record> entry : table.entrySet()) {
+                field = entry.getValue().getClass().getDeclaredField(updateField);
+                field.setAccessible(true);
+                if (field.get(entry.getValue()) != null && field.get(entry.getValue()).toString().equals(value)) {
+                    method = entry.getValue().getClass().getMethod("set" + args[7].substring(0, 1).toUpperCase() + args[7].substring(1), String.class);
+                    method.invoke(entry.getValue(), args[9]);
+                }
+            }
+            db.commit();
         }
         for (Record rec : resultTable.values()) {
-            result += toJSON(rec) + "\n";
+            result += toJSON(rec, fields) + "\n";
         }
         return result;
     }
@@ -174,7 +236,7 @@ public class DBManager {
         return record;
     }
 
-    public static String toJSON(Record rec) {
+    public static String toJSON(Record rec, List<String> fields) {
         JSONObject obj = new JSONObject();
         JSONObject auths = new JSONObject();
         int num = 0;
@@ -182,85 +244,86 @@ public class DBManager {
             num++;
             auths.put(num, a);
         }
-        if (rec.getMdate() != null) {
+
+        if (fields.size() > 0 && fields.contains("mdate") || fields.size() == 0 && rec.getMdate() != null) {
             obj.put("mdate", rec.getMdate());
         }
-        if (rec.getKey() != null) {
+        if (fields.size() > 0 && fields.contains("key") || fields.size() == 0 && rec.getKey() != null) {
             obj.put("key", rec.getKey());
         }
-        if (rec.getPubltype() != null) {
+        if (fields.size() > 0 && fields.contains("publtype") || fields.size() == 0 && rec.getPubltype() != null) {
             obj.put("publtype", rec.getPubltype());
         }
-        if (rec.getReviewid() != null) {
+        if (fields.size() > 0 && fields.contains("reviewid") || fields.size() == 0 && rec.getReviewid() != null) {
             obj.put("reviewid", rec.getReviewid());
         }
-        if (rec.getRating() != null) {
+        if (fields.size() > 0 && fields.contains("rating") || fields.size() == 0 && rec.getRating() != null) {
             obj.put("rating", rec.getRating());
         }
-        if (rec.getAuthors() != null) {
+        if (fields.size() > 0 && fields.contains("authors") || fields.size() == 0 && rec.getAuthors() != null) {
             obj.put("authors", auths);
         }
-        if (rec.getEditor() != null) {
+        if (fields.size() > 0 && fields.contains("editor") || fields.size() == 0 && rec.getEditor() != null) {
             obj.put("editor", rec.getEditor());
         }
-        if (rec.getTitle() != null) {
+        if (fields.size() > 0 && fields.contains("title") || fields.size() == 0 && rec.getTitle() != null) {
             obj.put("title", rec.getTitle());
         }
-        if (rec.getBooktitle() != null) {
+        if (fields.size() > 0 && fields.contains("booktitle") || fields.size() == 0 && rec.getBooktitle() != null) {
             obj.put("booktitle", rec.getBooktitle());
         }
-        if (rec.getPages() != null) {
+        if (fields.size() > 0 && fields.contains("pages") || fields.size() == 0 && rec.getPages() != null) {
             obj.put("pages", rec.getPages());
         }
-        if (rec.getYear() != null) {
+        if (fields.size() > 0 && fields.contains("year") || fields.size() == 0 && rec.getYear() != null) {
             obj.put("year", rec.getYear());
         }
-        if (rec.getAddress() != null) {
+        if (fields.size() > 0 && fields.contains("address") || fields.size() == 0 && rec.getAddress() != null) {
             obj.put("address", rec.getAddress());
         }
-        if (rec.getVolume() != null) {
+        if (fields.size() > 0 && fields.contains("volume") || fields.size() == 0 && rec.getVolume() != null) {
             obj.put("volume", rec.getVolume());
         }
-        if (rec.getJournal() != null) {
+        if (fields.size() > 0 && fields.contains("journal") || fields.size() == 0 && rec.getJournal() != null) {
             obj.put("journal", rec.getJournal());
         }
-        if (rec.getNumber() != null) {
+        if (fields.size() > 0 && fields.contains("number") || fields.size() == 0 && rec.getNumber() != null) {
             obj.put("number", rec.getNumber());
         }
-        if (rec.getMonth() != null) {
+        if (fields.size() > 0 && fields.contains("month") || fields.size() == 0 && rec.getMonth() != null) {
             obj.put("month", rec.getMonth());
         }
-        if (rec.getUrl() != null) {
+        if (fields.size() > 0 && fields.contains("url") || fields.size() == 0 && rec.getUrl() != null) {
             obj.put("url", rec.getUrl());
         }
-        if (rec.getEe() != null) {
+        if (fields.size() > 0 && fields.contains("ee") || fields.size() == 0 && rec.getEe() != null) {
             obj.put("ee", rec.getEe());
         }
-        if (rec.getCdrom() != null) {
+        if (fields.size() > 0 && fields.contains("cdrom") || fields.size() == 0 && rec.getCdrom() != null) {
             obj.put("cdrom", rec.getCdrom());
         }
-        if (rec.getCite() != null) {
+        if (fields.size() > 0 && fields.contains("cite") || fields.size() == 0 && rec.getCite() != null) {
             obj.put("cite", rec.getCite());
         }
-        if (rec.getPublisher() != null) {
+        if (fields.size() > 0 && fields.contains("publisher") || fields.size() == 0 && rec.getPublisher() != null) {
             obj.put("publisher", rec.getPublisher());
         }
-        if (rec.getNote() != null) {
+        if (fields.size() > 0 && fields.contains("note") || fields.size() == 0 && rec.getNote() != null) {
             obj.put("note", rec.getNote());
         }
-        if (rec.getCrossref() != null) {
+        if (fields.size() > 0 && fields.contains("crossref") || fields.size() == 0 && rec.getCrossref() != null) {
             obj.put("crossref", rec.getCrossref());
         }
-        if (rec.getIsbn() != null) {
+        if (fields.size() > 0 && fields.contains("isbn") || fields.size() == 0 && rec.getIsbn() != null) {
             obj.put("isbn", rec.getIsbn());
         }
-        if (rec.getSeries() != null) {
+        if (fields.size() > 0 && fields.contains("series") || fields.size() == 0 && rec.getSeries() != null) {
             obj.put("series", rec.getSeries());
         }
-        if (rec.getSchool() != null) {
+        if (fields.size() > 0 && fields.contains("school") || fields.size() == 0 && rec.getSchool() != null) {
             obj.put("school", rec.getSchool());
         }
-        if (rec.getChapter() != null) {
+        if (fields.size() > 0 && fields.contains("chapter") || fields.size() == 0 && rec.getChapter() != null) {
             obj.put("chapter", rec.getChapter());
         }
         return obj.toJSONString();
