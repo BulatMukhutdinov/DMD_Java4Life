@@ -38,7 +38,9 @@ public class App {
         //       "test test test test test test test test test test test test test test test test test test test test test test test test test test test");
         // UPDATE
         //DBManager.parseAndExecute("update article set rating = NEW_RATING where mdate = test");
-
+        // SORTED SELECT
+        String result = DBManager.parseAndExecute("select key mdate rating from article 10 50 order by mdate");
+        System.out.println(result);
         //  XMLParser xmlParser = new XMLParser();
         //    xmlParser.STAXParse("src/main/resources/dblp.xml");
         DBManager.getDb().close();

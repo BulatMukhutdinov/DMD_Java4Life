@@ -153,13 +153,14 @@ public class DBManager {
         } else if (args[0].equalsIgnoreCase("select")) {
             int offset;
             int limit;
+            int i = 1;
             if (args[1].equals("*")) { // select * from article 10 50
                 table = DBManager.getDb().treeMap(args[3].toLowerCase());
                 offset = Integer.parseInt(args[5]);
                 limit = Integer.parseInt(args[4]);
 
             } else { // select key mdate from article 10 50
-                int i = 1;
+
                 while (!args[i].equals("from")) {
                     fields.add(args[i]);
                     i++;
@@ -167,9 +168,34 @@ public class DBManager {
                 table = DBManager.getDb().treeMap(args[++i].toLowerCase());
                 limit = Integer.parseInt(args[++i]);
                 offset = Integer.parseInt(args[++i]);
-
             }
-            resultTable = new ConcurrentSkipListMap();
+
+            Comparator<Record> comparator = null;
+            if (args.length > i + 1) {
+                final Field field = new Record().getClass().getDeclaredField(args[i + 3]);
+                field.setAccessible(true);
+                comparator = new Comparator<Record>() {
+                    @Override
+                    public int compare(Record o1, Record o2) {
+                        try {
+                            if (field.get(o1) == null && field.get(o2) == null) {
+                                return 0;
+                            } else if (field.get(o1) == null) {
+                                return -1;
+                            } else if (field.get(o2) == null) {
+                                return 1;
+                            } else {
+                                return field.get(o1).toString().compareTo(field.get(o2).toString());
+                            }
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        return 0;
+                    }
+                };
+            }
+            List<Record> sortedList = new LinkedList<>();
+            resultTable = new LinkedHashMap<>();
             for (Map.Entry<String, Record> entry : table.entrySet()) {
                 if (offset > 0) {
                     offset--;
@@ -179,7 +205,13 @@ public class DBManager {
                     break;
                 }
                 limit--;
-                resultTable.put(entry.getKey(), entry.getValue());
+                sortedList.add(entry.getValue());
+            }
+            if (comparator != null) {
+                Collections.sort(sortedList, comparator);
+                for (Record r : sortedList) {
+                    resultTable.put(r.getKey(), r);
+                }
             }
             // isert into author values key mdate ...
         } else if (args[0].equalsIgnoreCase("insert")) { // авторы через ;
