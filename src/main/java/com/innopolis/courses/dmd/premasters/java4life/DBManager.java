@@ -173,10 +173,12 @@ public class DBManager {
                             String value = "";
                             do {
                                 w++;
-                                value += args[w];
+                                value += args[w] + " ";
                             } while (!args[w].contains(";"));
+                            value = value.substring(0, value.length() - 1);
                             int last = argsWithSingleWhere.size() - 1;
                             String lastValue = argsWithSingleWhere.get(last);
+                            System.out.println(lastValue + " " + value.substring(0, value.length() - 1));
                             argsWithSingleWhere.set(last, lastValue + " " + value.substring(0, value.length() - 1));
                         }
                     } else {
