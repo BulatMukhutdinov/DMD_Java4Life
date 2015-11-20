@@ -155,9 +155,42 @@ public class DBManager {
         } else if (args[0].equalsIgnoreCase("select")) {
             int offset;
             int limit;
-            int i = 1, j = 0;
+            int i = 1, j, w;
             boolean isWhere = line.contains("where");
-            if (args[1].equals("*")) { // select * from article where key = abc 10 50 order by mdate
+            List<String> argsWithSingleWhere = new LinkedList<>();
+            if (isWhere) {
+                for (w = 0; w < args.length; w++) {
+                    if (args[w].equals("where")) {
+                        argsWithSingleWhere.add(args[w]);
+                        argsWithSingleWhere.add(args[w + 1]);
+                        argsWithSingleWhere.add(args[w + 2]);
+                        argsWithSingleWhere.add(args[w + 3].substring(1));
+                        w += 3;
+                        if (args[w].indexOf(";", 1) != -1) {
+                            argsWithSingleWhere.set(argsWithSingleWhere.size() - 1, args[w].substring(1, args[w].length() - 1));
+                            continue;
+                        } else {
+                            String value = "";
+                            do {
+                                w++;
+                                value += args[w];
+                            } while (!args[w].contains(";"));
+                            int last = argsWithSingleWhere.size() - 1;
+                            String lastValue = argsWithSingleWhere.get(last);
+                            argsWithSingleWhere.set(last, lastValue + " " + value.substring(0, value.length() - 1));
+                        }
+                    } else {
+                        argsWithSingleWhere.add(args[w]);
+                    }
+                }
+                args = new String[argsWithSingleWhere.size()];
+                w = 0;
+                for (String s : argsWithSingleWhere) {
+                    args[w] = s;
+                    w++;
+                }
+            }
+            if (args[1].equals("*")) { // select * from article where key = ;abc cdd; 10 50 order by mdate
                 table = DBManager.getDb().treeMap(args[3].toLowerCase());
                 if (isWhere) {
                     offset = Integer.parseInt(args[9]);
