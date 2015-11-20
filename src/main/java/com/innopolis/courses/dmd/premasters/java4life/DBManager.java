@@ -155,42 +155,10 @@ public class DBManager {
         } else if (args[0].equalsIgnoreCase("select")) {
             int offset;
             int limit;
-            int i = 1, j, w;
+            int i = 1, j;
             boolean isWhere = line.contains("where");
-            List<String> argsWithSingleWhere = new LinkedList<>();
             if (isWhere) {
-                for (w = 0; w < args.length; w++) {
-                    if (args[w].equals("where")) {
-                        argsWithSingleWhere.add(args[w]);
-                        argsWithSingleWhere.add(args[w + 1]);
-                        argsWithSingleWhere.add(args[w + 2]);
-                        argsWithSingleWhere.add(args[w + 3].substring(1));
-                        w += 3;
-                        if (args[w].indexOf(";", 1) != -1) {
-                            argsWithSingleWhere.set(argsWithSingleWhere.size() - 1, args[w].substring(1, args[w].length() - 1));
-                            continue;
-                        } else {
-                            String value = "";
-                            do {
-                                w++;
-                                value += args[w] + " ";
-                            } while (!args[w].contains(";"));
-                            value = value.substring(0, value.length() - 1);
-                            int last = argsWithSingleWhere.size() - 1;
-                            String lastValue = argsWithSingleWhere.get(last);
-                            System.out.println(lastValue + " " + value.substring(0, value.length() - 1));
-                            argsWithSingleWhere.set(last, lastValue + " " + value.substring(0, value.length() - 1));
-                        }
-                    } else {
-                        argsWithSingleWhere.add(args[w]);
-                    }
-                }
-                args = new String[argsWithSingleWhere.size()];
-                w = 0;
-                for (String s : argsWithSingleWhere) {
-                    args[w] = s;
-                    w++;
-                }
+                args = processLongArgs(args, "where");
             }
             if (args[1].equals("*")) { // select * from article where key = ;abc cdd; 10 50 order by mdate
                 table = DBManager.getDb().treeMap(args[3].toLowerCase());
@@ -291,6 +259,9 @@ public class DBManager {
         } else if (args[0].equalsIgnoreCase("update")) { // update article set mdate = newMdate where key = myKey
             table = db.treeMap(args[1].toLowerCase());
             String updateField = args[3];
+            args = processLongArgs(args, "set");
+            args = processLongArgs(args, "where");
+
             String value = args[5];
             Field field;
             Method method;
@@ -308,6 +279,44 @@ public class DBManager {
             result += toJSON(rec, fields) + "\n";
         }
         return result;
+    }
+
+    private static String[] processLongArgs(String args[], String word) {
+        int w;
+        List<String> argsWithSingleArg = new LinkedList<>();
+        for (w = 0; w < args.length; w++) {
+            if (args[w].equals(word)) {
+                argsWithSingleArg.add(args[w]);
+                argsWithSingleArg.add(args[w + 1]);
+                argsWithSingleArg.add(args[w + 2]);
+                argsWithSingleArg.add(args[w + 3].substring(1));
+                w += 3;
+                if (args[w].indexOf(";", 1) != -1) {
+                    argsWithSingleArg.set(argsWithSingleArg.size() - 1, args[w].substring(1, args[w].length() - 1));
+                    continue;
+                } else {
+                    String value = "";
+                    do {
+                        w++;
+                        value += args[w] + " ";
+                    } while (!args[w].contains(";"));
+                    value = value.substring(0, value.length() - 1);
+                    int last = argsWithSingleArg.size() - 1;
+                    String lastValue = argsWithSingleArg.get(last);
+                    System.out.println(lastValue + " " + value.substring(0, value.length() - 1));
+                    argsWithSingleArg.set(last, lastValue + " " + value.substring(0, value.length() - 1));
+                }
+            } else {
+                argsWithSingleArg.add(args[w]);
+            }
+        }
+        args = new String[argsWithSingleArg.size()];
+        w = 0;
+        for (String s : argsWithSingleArg) {
+            args[w] = s;
+            w++;
+        }
+        return args;
     }
 
     public static DB getDb() {

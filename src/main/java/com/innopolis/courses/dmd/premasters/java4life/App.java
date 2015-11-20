@@ -33,10 +33,10 @@ public class App {
         // String result = DBManager.parseAndExecute("insert into article values " +
         //       "test test test test test test test test test test test test test test test test test test test test test test test test test test test");
         // UPDATE
-        //DBManager.parseAndExecute("update article set rating = NEW_RATING where mdate = test");
+        //String result = DBManager.parseAndExecute("update article set rating = ;NEW RATING; where mdate = ;test test;");
         // SORTED SELECT
-        String result = DBManager.parseAndExecute("select * from book where title = ;The no-nonsense guide to computing careers.; 1 0");
-        System.out.println(result);
+        //String result = DBManager.parseAndExecute("select * from book where title = ;The no-nonsense guide to computing careers.; 1 0");
+        //System.out.println(result);
         // XMLParser xmlParser = new XMLParser();
         // xmlParser.STAXParse("src/main/resources/dblp.xml");
         // Server server = new Server();
