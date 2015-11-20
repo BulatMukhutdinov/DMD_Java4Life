@@ -130,7 +130,9 @@ public class DBManager {
         List<String> fields = new LinkedList<>();
         Map<String, Record> resultTable = new HashMap<>();
         ConcurrentNavigableMap<String, Record> table;
-        if (args[0].equalsIgnoreCase("join")) {
+        if (args[0].equalsIgnoreCase("count")) {
+            return db.treeMap(args[1].toLowerCase()).size() + "";
+        } else if (args[0].equalsIgnoreCase("join")) {
             ConcurrentNavigableMap<String, Record> table1 = db.treeMap(args[1].toLowerCase());
             ConcurrentNavigableMap<String, Record> table2 = db.treeMap(args[2].toLowerCase());
             try {
@@ -153,25 +155,38 @@ public class DBManager {
         } else if (args[0].equalsIgnoreCase("select")) {
             int offset;
             int limit;
-            int i = 1;
-            if (args[1].equals("*")) { // select * from article 10 50
+            int i = 1, j = 0;
+            boolean isWhere = line.contains("where");
+            if (args[1].equals("*")) { // select * from article where key = abc 10 50 order by mdate
                 table = DBManager.getDb().treeMap(args[3].toLowerCase());
-                offset = Integer.parseInt(args[5]);
-                limit = Integer.parseInt(args[4]);
-
-            } else { // select key mdate from article 10 50
+                if (isWhere) {
+                    offset = Integer.parseInt(args[9]);
+                    limit = Integer.parseInt(args[8]);
+                } else {
+                    offset = Integer.parseInt(args[5]);
+                    limit = Integer.parseInt(args[4]);
+                }
+                j = 5;
+            } else { // select key mdate from article where key = abc 10 50 order by mdate
 
                 while (!args[i].equals("from")) {
                     fields.add(args[i]);
                     i++;
                 }
                 table = DBManager.getDb().treeMap(args[++i].toLowerCase());
-                limit = Integer.parseInt(args[++i]);
-                offset = Integer.parseInt(args[++i]);
-            }
+                j = i + 2;
+                if (isWhere) {
+                    i += 4;
+                    limit = Integer.parseInt(args[++i]);
+                    offset = Integer.parseInt(args[++i]);
+                } else {
+                    limit = Integer.parseInt(args[++i]);
+                    offset = Integer.parseInt(args[++i]);
+                }
 
+            }
             Comparator<Record> comparator = null;
-            if (args.length > i + 1) {
+            if (line.contains("order")) {
                 final Field field = new Record().getClass().getDeclaredField(args[i + 3]);
                 field.setAccessible(true);
                 comparator = new Comparator<Record>() {
@@ -194,6 +209,11 @@ public class DBManager {
                     }
                 };
             }
+            Field where = null;
+            if (isWhere) {
+                where = new Record().getClass().getDeclaredField(args[j]);
+                where.setAccessible(true);
+            }
             List<Record> sortedList = new LinkedList<>();
             resultTable = new LinkedHashMap<>();
             for (Map.Entry<String, Record> entry : table.entrySet()) {
@@ -204,14 +224,22 @@ public class DBManager {
                 if (limit == 0) {
                     break;
                 }
-                limit--;
-                sortedList.add(entry.getValue());
+                if (where != null) {
+                    if (where.get(entry.getValue()).toString().equals(args[j + 2])) {
+                        limit--;
+                        sortedList.add(entry.getValue());
+                    }
+                } else {
+                    limit--;
+                    sortedList.add(entry.getValue());
+                }
+
             }
             if (comparator != null) {
                 Collections.sort(sortedList, comparator);
-                for (Record r : sortedList) {
-                    resultTable.put(r.getKey(), r);
-                }
+            }
+            for (Record r : sortedList) {
+                resultTable.put(r.getKey(), r);
             }
             // isert into author values key mdate ...
         } else if (args[0].equalsIgnoreCase("insert")) { // авторы через ;

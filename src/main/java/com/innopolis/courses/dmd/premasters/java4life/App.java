@@ -21,12 +21,8 @@ public class App {
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
     public static final String URL = "http://dblp.uni-trier.de/xml/";
     public static final String FILE_NAME = "dblp.xml.gz";
-    static Map.Entry<String, Record> entry;
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        ConcurrentNavigableMap<String, Record> wwws = DBManager.getDb().treeMap("www");
-        ConcurrentNavigableMap<String, Record> articles = DBManager.getDb().treeMap("article");
-
         // GROUP BY
         // LinkedHashMap<String, Record> map = DBManager.groupBy(articles, "mdate", 10);
         // SELECT
@@ -39,11 +35,12 @@ public class App {
         // UPDATE
         //DBManager.parseAndExecute("update article set rating = NEW_RATING where mdate = test");
         // SORTED SELECT
-        String result = DBManager.parseAndExecute("select key mdate rating from article 10 50 order by mdate");
+        String result = DBManager.parseAndExecute("select key mdate rating volume from article where volume = 5 10 50 order by mdate");
         System.out.println(result);
-        //  XMLParser xmlParser = new XMLParser();
-        //    xmlParser.STAXParse("src/main/resources/dblp.xml");
-        DBManager.getDb().close();
+        // XMLParser xmlParser = new XMLParser();
+        // xmlParser.STAXParse("src/main/resources/dblp.xml");
+        // Server server = new Server();
+        //server.start(6666);
     }
 
     private static String getDataSource() {
