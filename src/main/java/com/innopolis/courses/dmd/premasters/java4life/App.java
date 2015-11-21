@@ -24,9 +24,6 @@ public class App {
     public static final String FILE_NAME = "dblp.xml.gz";
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        DBManager.parseAndExecute("update article set month = ;XUILA; where key = ;conf/www/BeszteriV07;");
-        System.out.println(DBManager.parseAndExecute("select * from article where key = ;conf/www/BeszteriV07; 1 0"));
-        DBManager.getDb().close();
         // GROUP BY
         // LinkedHashMap<String, Record> map = DBManager.groupBy(articles, "mdate", 10);
         // SELECT
@@ -43,6 +40,8 @@ public class App {
         // SORTED SELECT
         //String result = DBManager.parseAndExecute("select * from book where title = ;The no-nonsense guide to computing careers.; 1 0");
         //System.out.println(result);
+        // DELETE
+        System.out.println(DBManager.parseAndExecute("delete from article where volume = ;5;"));
         // XMLParser xmlParser = new XMLParser();
         // xmlParser.STAXParse("src/main/resources/dblp.xml");
         // Server server = new Server();

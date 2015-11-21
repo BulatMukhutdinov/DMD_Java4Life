@@ -244,8 +244,21 @@ public class DBManager {
             for (Record r : sortedList) {
                 resultTable.put(r.getKey(), r);
             }
-            // isert into author values key mdate ...
-        } else if (args[0].equalsIgnoreCase("insert")) { // авторы через ;
+        } else if (args[0].equalsIgnoreCase("delete")) { // delete from article where key = ;abc aa;
+            args = processLongArgs(args, "where");
+            table = db.treeMap(args[2].toLowerCase());
+            Field field = new Record().getClass().getDeclaredField(args[4]);
+            field.setAccessible(true);
+            for (Map.Entry<String, Record> entry : table.entrySet()) {
+                if (field.get(entry.getValue()) != null && field.get(entry.getValue()).toString().equals(args[6])) {
+                    table.remove(entry.getKey());
+                    break;
+                }
+            }
+            db.commit();
+            result = "DELETE COMPLETE";
+
+        } else if (args[0].equalsIgnoreCase("insert")) { // insert into author values key mdate ... // авторы через ;
             table = db.treeMap(args[2].toLowerCase());
             Set<String> authors = new HashSet<>();
             for (String auth : args[9].split(";")) {
@@ -256,6 +269,7 @@ public class DBManager {
                     args[16], args[17], args[18], args[19], args[20], args[21], args[22], args[23], args[24], args[25], args[26], args[27], args[28], args[29], args[30]);
             table.put(record.getKey(), record);
             db.commit();
+            result = "INSERT COMPLETE";
         } else if (args[0].equalsIgnoreCase("update")) { // update article set mdate = newMdate where key = myKey
             table = db.treeMap(args[1].toLowerCase());
             String updateField = args[7];
@@ -279,6 +293,9 @@ public class DBManager {
             if (record != null) {
                 table.put(record.getKey(), record);
                 db.commit();
+                result = "UPDATE COMPLETE";
+            } else {
+                result = "UPDATE INCOMPLETE";
             }
         }
         for (Record rec : resultTable.values()) {
