@@ -9,12 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
-import org.mapdb.*;
-
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.logging.Level;
 
 
@@ -41,11 +35,11 @@ public class App {
         //String result = DBManager.parseAndExecute("select * from book where title = ;The no-nonsense guide to computing careers.; 1 0");
         //System.out.println(result);
         // DELETE
-        System.out.println(DBManager.parseAndExecute("delete from article where volume = ;5;"));
+        // System.out.println(DBManager.parseAndExecute("delete from article where volume = ;5;"));
         // XMLParser xmlParser = new XMLParser();
         // xmlParser.STAXParse("src/main/resources/dblp.xml");
-        // Server server = new Server();
-        //server.start(6666);
+        Server server = new Server();
+        server.start(6666);
     }
 
     private static String getDataSource() {

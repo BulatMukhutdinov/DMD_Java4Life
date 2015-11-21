@@ -228,7 +228,7 @@ public class DBManager {
                     break;
                 }
                 if (where != null) {
-                    if (where.get(entry.getValue()).toString().equals(args[j + 2])) {
+                    if (where.get(entry.getValue()) != null && where.get(entry.getValue()).toString().equals(args[j + 2])) {
                         limit--;
                         sortedList.add(entry.getValue());
                     }

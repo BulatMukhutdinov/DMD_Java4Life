@@ -2,6 +2,7 @@ package com.innopolis.courses.dmd.premasters.java4life;
 
 import java.io.*;
 import java.net.*;
+import java.nio.channels.ClosedChannelException;
 import java.util.*;
 import java.util.concurrent.ConcurrentNavigableMap;
 
@@ -26,23 +27,14 @@ public class SocketThread extends Thread {
                 if (line == null) {
                     continue;
                 }
-                //charArray.add(line);
                 System.out.println("Message from client: \"" + line + "\"");
                 String res = DBManager.parseAndExecute(line);
-                /*ConcurrentNavigableMap<String, Record> articles = DBManager.getDb().treeMap("article");
-                //LinkedHashMap<String, Record> map = DBManager.groupBy(articles, "mdate", 100);
-                String res = "";
-                int i = 0;
-                for (Record rec : articles.values()) {
-                    if (i > 10000) {
-                        break;
-                    }
-                    res += rec.toString();
-                    i++;
-                }*/
                 outputStream.write(res.getBytes());
                 outputStream.flush();
+                outputStream.close();
             }
+        } catch (ClosedChannelException x) {
+            System.out.println("Client " + getName() + " closed");
         } catch (SocketException x) {
             System.out.println("Client " + getName() + " closed");
             System.out.println();
