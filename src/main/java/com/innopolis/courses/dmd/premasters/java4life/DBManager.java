@@ -258,22 +258,28 @@ public class DBManager {
             db.commit();
         } else if (args[0].equalsIgnoreCase("update")) { // update article set mdate = newMdate where key = myKey
             table = db.treeMap(args[1].toLowerCase());
-            String updateField = args[3];
+            String updateField = args[7];
             args = processLongArgs(args, "set");
             args = processLongArgs(args, "where");
 
             String value = args[5];
             Field field;
             Method method;
+            field = new Record().getClass().getDeclaredField(updateField);
+            field.setAccessible(true);
+            method = new Record().getClass().getMethod("set" + args[3].substring(0, 1).toUpperCase() + args[3].substring(1), String.class);
+            Record record = null;
             for (Map.Entry<String, Record> entry : table.entrySet()) {
-                field = entry.getValue().getClass().getDeclaredField(updateField);
-                field.setAccessible(true);
-                if (field.get(entry.getValue()) != null && field.get(entry.getValue()).toString().equals(value)) {
-                    method = entry.getValue().getClass().getMethod("set" + args[7].substring(0, 1).toUpperCase() + args[7].substring(1), String.class);
-                    method.invoke(entry.getValue(), args[9]);
+                if (field.get(entry.getValue()) != null && field.get(entry.getValue()).toString().equals(args[9])) {
+                    record = new Record(entry.getValue());
+                    method.invoke(record, value);
+                    break;
                 }
             }
-            db.commit();
+            if (record != null) {
+                table.put(record.getKey(), record);
+                db.commit();
+            }
         }
         for (Record rec : resultTable.values()) {
             result += toJSON(rec, fields) + "\n";
