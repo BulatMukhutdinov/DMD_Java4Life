@@ -19,64 +19,40 @@ public class XMLParser {
 
     private final static LoggerWrapper logger = LoggerWrapper.getInstance();
     private ConcurrentNavigableMap<String, Record> articles = DBManager.getDb().treeMap("article");
-    private ConcurrentNavigableMap<String, String> articleAuthors = DBManager.getDb().treeMap("article_author");
     private ConcurrentNavigableMap<String, Record> books = DBManager.getDb().treeMap("book");
-    private ConcurrentNavigableMap<String, String> bookAuthors = DBManager.getDb().treeMap("book_author");
     private ConcurrentNavigableMap<String, Record> incollections = DBManager.getDb().treeMap("incollection");
-    private ConcurrentNavigableMap<String, String> incollectionAuthors = DBManager.getDb().treeMap("incollection_author");
     private ConcurrentNavigableMap<String, Record> inproceedings = DBManager.getDb().treeMap("inproceeding");
-    private ConcurrentNavigableMap<String, String> inproceedingsAuthors = DBManager.getDb().treeMap("inproceedings_author");
     private ConcurrentNavigableMap<String, Record> mastersthesises = DBManager.getDb().treeMap("mastersthesis");
-    private ConcurrentNavigableMap<String, String> mastersthesisAuthors = DBManager.getDb().treeMap("mastersthesis_author");
     private ConcurrentNavigableMap<String, Record> phdthesises = DBManager.getDb().treeMap("phdthesis");
-    private ConcurrentNavigableMap<String, String> phdthesisAuthors = DBManager.getDb().treeMap("phdthesis_author");
     private ConcurrentNavigableMap<String, Record> proceedings = DBManager.getDb().treeMap("proceeding");
-    private ConcurrentNavigableMap<String, String> proceedingsAuthors = DBManager.getDb().treeMap("proceedings_author");
     private ConcurrentNavigableMap<String, Record> wwws = DBManager.getDb().treeMap("www");
-    private ConcurrentNavigableMap<String, String> wwwAuthors = DBManager.getDb().treeMap("www_author");
 
 
     private void insertRecordIntoDbUserTable(Record record, String table) {
         if (table == "article") {
             articles.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                articleAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "book") {
             books.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                bookAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "incollection") {
             incollections.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                incollectionAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "inproceedings") {
             inproceedings.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                inproceedingsAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "mastersthesis") {
             mastersthesises.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                mastersthesisAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "phdthesis") {
             phdthesises.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                phdthesisAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "proceedings") {
             proceedings.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                proceedingsAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         } else if (table == "www") {
             wwws.put(record.getKey(), record);
-            for (int i = 0; i < record.getAuthors().length; i++) {
-                wwwAuthors.put(record.getKey(), record.getAuthors()[i]);
-            }
+
         }
     }
 
@@ -225,6 +201,5 @@ public class XMLParser {
         System.out.println("START commit");
         DBManager.getDb().commit();
         System.out.println("END commit");
-        DBManager.getDb().close();
     }
 }

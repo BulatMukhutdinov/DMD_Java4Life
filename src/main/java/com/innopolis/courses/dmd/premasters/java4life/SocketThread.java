@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentNavigableMap;
 
 public class SocketThread extends Thread {
     protected Socket socket;
+    public static int numberOfObjectsInResponse;
+    public static long time;
 
     public SocketThread(Socket clientSocket) {
         this.socket = clientSocket;
@@ -15,7 +17,7 @@ public class SocketThread extends Thread {
 
     public void run() {
         try {
-            System.out.println("Got a client " + getName());
+            // System.out.println("Got a client " + getName());
             // Берем входной и выходной потоки сокета, теперь можем получать и отсылать данные клиенту.
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
@@ -27,19 +29,26 @@ public class SocketThread extends Thread {
                 if (line == null) {
                     continue;
                 }
-                System.out.println("Message from client: \"" + line + "\"");
+                System.out.println("Request: \"" + line + "\"");
                 String res = DBManager.parseAndExecute(line);
+
+                String objNum = "";
+                if (numberOfObjectsInResponse > 1) {
+                    objNum = numberOfObjectsInResponse + " objects ";
+                } else if (numberOfObjectsInResponse == 1) {
+                    objNum = numberOfObjectsInResponse + " object ";
+                }
+                System.out.println("Response sent(" + objNum + "in " + time + " ms)");
                 outputStream.write(res.getBytes());
                 outputStream.flush();
                 outputStream.close();
             }
         } catch (ClosedChannelException x) {
-            System.out.println("Client " + getName() + " closed");
+            //System.out.println("Client " + getName() + " closed");
         } catch (SocketException x) {
-            System.out.println("Client " + getName() + " closed");
-            System.out.println();
+            // System.out.println("Client " + getName() + " closed");
         } catch (EOFException x) {
-            System.out.println("Waiting for the next record...");
+            //System.out.println("Waiting for the next record...");
         } catch (Exception x) {
             x.printStackTrace();
         }

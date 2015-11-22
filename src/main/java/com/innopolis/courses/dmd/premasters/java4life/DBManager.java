@@ -4,15 +4,26 @@ import org.json.simple.JSONObject;
 import org.mapdb.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.logging.Level;
 
 public class DBManager {
     public static final String DB_NAME = "src/main/resources/dblp";
+    public static final String URL = "http://dblp.uni-trier.de/xml/";
+    public static final String FILE_NAME = "dblp.xml.gz";
+
     private static final DB db = DBMaker.newFileDB(new File(DB_NAME))
             .mmapFileEnable()
             .transactionDisable()
@@ -75,7 +86,8 @@ public class DBManager {
                     Field field = entry1.getValue().getClass().getDeclaredField(joinField);
                     field.setAccessible(true);
 
-                    if (!field.get(entry1.getValue()).toString().equals(field.get(entry2.getValue()).toString())) {
+                    if (field.get(entry1.getValue()) != null && field.get(entry2.getValue()) != null &&
+                            !field.get(entry1.getValue()).toString().equals(field.get(entry2.getValue()).toString())) {
                         join = false;
                         break;
                     }
@@ -130,6 +142,7 @@ public class DBManager {
         List<String> fields = new LinkedList<>();
         Map<String, Record> resultTable = new HashMap<>();
         ConcurrentNavigableMap<String, Record> table;
+        long time = System.currentTimeMillis();
         if (args[0].equalsIgnoreCase("count")) {
             return db.treeMap(args[1].toLowerCase()).size() + "";
         } else if (args[0].equalsIgnoreCase("join")) {
@@ -169,6 +182,7 @@ public class DBManager {
                     offset = Integer.parseInt(args[5]);
                     limit = Integer.parseInt(args[4]);
                 }
+                i = 9;
                 j = 5;
             } else { // select key mdate from article where key = abc 10 50 order by mdate
 
@@ -255,7 +269,6 @@ public class DBManager {
                     break;
                 }
             }
-            db.commit();
             result = "DELETE COMPLETE";
 
         } else if (args[0].equalsIgnoreCase("insert")) { // insert into author values key mdate ... // авторы через ;
@@ -268,14 +281,12 @@ public class DBManager {
                     args[12], args[13], args[14], args[15],
                     args[16], args[17], args[18], args[19], args[20], args[21], args[22], args[23], args[24], args[25], args[26], args[27], args[28], args[29], args[30]);
             table.put(record.getKey(), record);
-            db.commit();
             result = "INSERT COMPLETE";
         } else if (args[0].equalsIgnoreCase("update")) { // update article set mdate = newMdate where key = myKey
             table = db.treeMap(args[1].toLowerCase());
-            String updateField = args[7];
             args = processLongArgs(args, "set");
             args = processLongArgs(args, "where");
-
+            String updateField = args[7];
             String value = args[5];
             Field field;
             Method method;
@@ -292,15 +303,43 @@ public class DBManager {
             }
             if (record != null) {
                 table.put(record.getKey(), record);
-                db.commit();
                 result = "UPDATE COMPLETE";
             } else {
                 result = "UPDATE INCOMPLETE";
             }
+        } else if (args[0].equalsIgnoreCase("commit")) {
+            db.commit();
+            result = "COMMIT COMPLETE";
+        } else if (args[0].equalsIgnoreCase("buildDB")) { // чистая сборка бд
+            XMLParser xmlParser = new XMLParser();
+            Map<String, Record> articles = db.treeMap("article");
+            Map<String, Record> books = db.treeMap("book");
+            Map<String, Record> incollections = db.treeMap("incollection");
+            Map<String, Record> inproceedings = db.treeMap("inproceeding");
+            Map<String, Record> mastersthesises = db.treeMap("mastersthesis");
+            Map<String, Record> phdthesises = db.treeMap("phdthesis");
+            Map<String, Record> proceedings = db.treeMap("proceeding");
+            Map<String, Record> wwws = db.treeMap("www");
+            articles.clear();
+            books.clear();
+            incollections.clear();
+            inproceedings.clear();
+            mastersthesises.clear();
+            phdthesises.clear();
+            proceedings.clear();
+            wwws.clear();
+            if (args.length == 2) { // buildDB -d
+                xmlParser.STAXParse(getDataSource());
+            } else {
+                xmlParser.STAXParse(DB_NAME);
+            }
+            result = "DB CREATED";
         }
         for (Record rec : resultTable.values()) {
             result += toJSON(rec, fields) + "\n";
         }
+        SocketThread.time = System.currentTimeMillis() - time;
+        SocketThread.numberOfObjectsInResponse = resultTable.size();
         return result;
     }
 
@@ -326,7 +365,6 @@ public class DBManager {
                     value = value.substring(0, value.length() - 1);
                     int last = argsWithSingleArg.size() - 1;
                     String lastValue = argsWithSingleArg.get(last);
-                    System.out.println(lastValue + " " + value.substring(0, value.length() - 1));
                     argsWithSingleArg.set(last, lastValue + " " + value.substring(0, value.length() - 1));
                 }
             } else {
@@ -340,6 +378,39 @@ public class DBManager {
             w++;
         }
         return args;
+    }
+
+    private static String getDataSource() {
+        URL website;
+        try {
+            logger.wrapper.log(Level.INFO, "Downloading source...");
+            website = new URL(URL + FILE_NAME);
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream("src/main/resources/" + FILE_NAME);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            logger.wrapper.log(Level.INFO, "Downloading successfully complete");
+            Compressor compressor = new Compressor();
+            compressor.unGunzipFile("src/main/resources/" + FILE_NAME, "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3));
+            fos.flush();
+            fos.close();
+        } catch (MalformedURLException e) {
+            logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
+        } catch (FileNotFoundException e) {
+            logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
+        } catch (IOException e) {
+            logger.wrapper.log(Level.SEVERE, "Downloading failed: ", e);
+            System.exit(1);
+        }
+        logger.wrapper.log(Level.INFO, "Deleting compressed file...");
+        File compressedFile = new File("src/main/resources/" + FILE_NAME);
+        if (compressedFile.delete()) {
+            logger.wrapper.log(Level.INFO, "Deleting successfully complete");
+        } else {
+            logger.wrapper.log(Level.WARNING, "Deleting failed");
+        }
+        return "src/main/resources/" + FILE_NAME.substring(0, FILE_NAME.length() - 3);
     }
 
     public static DB getDb() {
